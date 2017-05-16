@@ -1,15 +1,10 @@
 package com.naijab.nextzytimeline.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
-
-/**
- * Created by Xiltron on 16/5/2560.
- */
 
 public abstract class BaseMvpActivity<P extends BaseMvpInterface.Presenter>
     extends AppCompatActivity
@@ -19,22 +14,20 @@ public abstract class BaseMvpActivity<P extends BaseMvpInterface.Presenter>
 
   @SuppressWarnings("unchecked")
   @Override
-  public void onCreate(@Nullable Bundle savedInstanceState,
-      @Nullable PersistableBundle persistentState) {
-    super.onCreate(savedInstanceState, persistentState);
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
     presenter = createPresenter();
-    presenter.attachView(this);
-    int layoutResID = getLayoutView();
-    if ( getLayoutView() == 0) throw new MvpNotSetLayoutException();
-    setContentView(layoutResID);
+    presenter.attachView( this );
+    int layoutResId = getLayoutView();
+    if( getLayoutView() == 0 ) throw new MvpNotSetLayoutException();
+    setContentView( layoutResId );
     bindView();
     setupInstance();
     setupView();
     getPresenter().onViewCreate();
-    if (savedInstanceState == null){
+    if( savedInstanceState == null ){
       initialize();
     }
-
   }
 
   @Override

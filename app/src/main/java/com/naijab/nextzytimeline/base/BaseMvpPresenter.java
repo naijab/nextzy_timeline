@@ -3,10 +3,6 @@ package com.naijab.nextzytimeline.base;
 import com.naijab.nextzytimeline.base.exception.MvpViewNotAttachedException;
 import java.lang.ref.WeakReference;
 
-/**
- * Created by Xiltron on 16/5/2560.
- */
-
 public abstract class BaseMvpPresenter<V extends BaseMvpInterface.View>
     implements BaseMvpInterface.Presenter<V> {
 

@@ -7,7 +7,6 @@ package com.naijab.nextzytimeline.base;
 public interface BaseMvpInterface {
 
   interface View {
-
     Presenter getPresenter();
   }
 
