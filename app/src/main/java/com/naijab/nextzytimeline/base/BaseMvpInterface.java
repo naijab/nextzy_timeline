@@ -17,11 +17,13 @@ public interface BaseMvpInterface {
 
     void detachView();
 
+    V getView();
+
+    void onViewCreate();
+
     void onViewStart();
 
     void onViewStop();
-
-    void onViewCreate();
 
     void onViewDestroy();
   }
