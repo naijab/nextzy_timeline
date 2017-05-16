@@ -17,4 +17,15 @@
     <item name="colorPrimaryDark">@color/colorGreyDarker</item>
   </style>
 
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+  <style name="MainToolbar">
+    <item name="contentInsetLeft">0dp</item>
+    <item name="contentInsetStart">0dp</item>
+    <item name="contentInsetRight">0dp</item>
+    <item name="contentInsetEnd">0dp</item>
+  </style>
+
 </resources>

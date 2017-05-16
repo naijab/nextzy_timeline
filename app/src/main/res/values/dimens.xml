@@ -14,4 +14,6 @@
   <dimen name="default_padding_margin_extra_large">24dp</dimen>
   <dimen name="default_padding_margin_extra_extra_large">48dp</dimen>
 
+  <dimen name="default_corner">@dimen/default_padding_margin_small</dimen>
+
 </resources>
