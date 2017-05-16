@@ -3,6 +3,7 @@ package com.naijab.nextzytimeline.ui.main;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
@@ -44,6 +45,26 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
 
   @Override
   public void setupView() {
+    setupToolbar();
+    setupViewPager();
+    setupTabLayout();
+  }
+
+  private void setupToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionbar = getSupportActionBar();
+    if( actionbar != null ){
+      actionbar.setDisplayHomeAsUpEnabled( false );
+      actionbar.setDisplayShowTitleEnabled( false );
+    }
+  }
+
+  private void setupViewPager() {
+    viewPager.setAdapter(nextzyPagerStateAdapter);
+  }
+
+  private void setupTabLayout() {
+    tabLayout.setupWithViewPager(viewPager);
   }
 
   @Override
