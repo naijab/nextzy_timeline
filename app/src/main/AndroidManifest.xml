@@ -21,7 +21,7 @@
 
     <activity
       android:label="@string/app_name"
-      android:name=".ui.Main.MainActivity"></activity>
+      android:name=".ui.main.MainActivity"></activity>
 
   </application>
 
