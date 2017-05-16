@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
-import com.naijab.nextzytimeline.ui.Main.MainActivity;
+import com.naijab.nextzytimeline.ui.main.MainActivity;
 
 public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityInterface.Presenter>
     implements SplashScreenActivityInterface.View {
