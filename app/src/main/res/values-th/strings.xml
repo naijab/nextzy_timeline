@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="add_people">เพิ่มบุคลากร</string>
+  <string name="delete_people">ลบบุคลากร</string>
+  <string name="edit_people">แก้บุคลากร</string>
+  <string name="question_birthday">วันเกิด</string>
+  <string name="question_date_start_job">วันที่เริ่มเข้าทำงาน</string>
+  <string name="question_game_like">เกมส์ที่ชอบ</string>
+  <string name="question_name">ชื่อ และ นามสกุล</string>
+  <string name="question_why_choose_this_job">ทำไมถึงเลือกงานนี้</string>
+  <string name="question_why_choose_this_phone">มือถือของคุณคือยี่ห้ออะไรและทำไมถึงเลือก</string>
+  <string name="take_photos">ถ่ายรูป</string>
+</resources>
