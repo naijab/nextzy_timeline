@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.Main.Home;
+package com.naijab.nextzytimeline.ui.main.home;
 
 
 import android.os.Bundle;

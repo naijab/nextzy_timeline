@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.Main.Contact;
+package com.naijab.nextzytimeline.ui.main.contact;
 
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
 

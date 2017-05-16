@@ -1,9 +1,9 @@
-package com.naijab.nextzytimeline.ui.Main.adapter;
+package com.naijab.nextzytimeline.ui.main.adapter;
 
 
 import android.support.v4.app.FragmentManager;
 
-public class MainFragmentPagerAdapterInterface {
+public class NextzyPagerStateAdapterInterface {
 
 
   public interface Adapter {
@@ -15,7 +15,7 @@ public class MainFragmentPagerAdapterInterface {
 
   public interface Presenter {
 
-    void setAdapter(Adapter adapter);
+    void setAdapter(NextzyPagerStateAdapterInterface.Adapter adapter);
 
     Adapter getAdapter();
   }

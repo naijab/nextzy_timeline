@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.Main.About;
+package com.naijab.nextzytimeline.ui.main.contact;
 
 
 import android.os.Bundle;
@@ -6,28 +6,28 @@ import android.view.View;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 
-public class AboutFragment extends BaseMvpFragment<AboutFragmentInterface.Presenter>
-        implements AboutFragmentInterface.View{
+public class ContactFragment extends BaseMvpFragment<ContactFragmentInterface.Presenter>
+        implements ContactFragmentInterface.View{
 
-    public AboutFragment() {
+    public ContactFragment() {
         super();
     }
 
-    public static AboutFragment newInstance() {
-        AboutFragment fragment = new AboutFragment();
+    public static ContactFragment newInstance() {
+        ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public AboutFragmentInterface.Presenter createPresenter(){
-        return AboutFragmentPresenter.create();
+    public ContactFragmentInterface.Presenter createPresenter(){
+        return ContactFragmentPresenter.create();
     }
 
     @Override
     public int getLayoutView(){
-        return R.layout.fragment_home;
+        return R.layout.fragment_contact;
     }
 
     @Override
