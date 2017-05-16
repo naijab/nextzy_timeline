@@ -3,13 +3,12 @@ package com.naijab.nextzytimeline.ui.Main;
 import android.os.Bundle;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
-import com.naijab.nextzytimeline.ui.Main.MainActivityInterface.Presenter;
 
-public class MainActivity extends BaseMvpActivity<Presenter>
+public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presenter>
     implements MainActivityInterface.View {
 
   @Override
-  public Presenter createPresenter() {
+  public MainActivityInterface.Presenter createPresenter() {
     return MainActivityPresenter.create();
   }
 
