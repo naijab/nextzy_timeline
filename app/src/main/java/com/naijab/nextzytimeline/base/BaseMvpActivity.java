@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
 
 /**
@@ -24,7 +25,7 @@ public abstract class BaseMvpActivity<P extends BaseMvpInterface.Presenter>
     presenter = createPresenter();
     presenter.attachView(this);
     int layoutResID = getLayoutView();
-    if ( getLayoutView() == 0);
+    if ( getLayoutView() == 0) throw new MvpNotSetLayoutException();
     setContentView(layoutResID);
     bindView();
     setupInstance();
