@@ -6,15 +6,14 @@ import android.os.Handler;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
 import com.naijab.nextzytimeline.ui.Main.MainActivity;
-import com.naijab.nextzytimeline.ui.SplashScreenActivityInterface.Presenter;
 
-public class SplashScreenActivity extends BaseMvpActivity<Presenter>
+public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityInterface.Presenter>
     implements SplashScreenActivityInterface.View {
 
   private static final long DELAY_TIME = 1000;
 
   @Override
-  public Presenter createPresenter() {
+  public SplashScreenActivityInterface.Presenter createPresenter() {
     return SplashScreenActivityPresenter.create();
   }
 
