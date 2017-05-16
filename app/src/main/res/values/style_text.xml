@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="NextzyTextView">
+    <item name="android:textSize">20sp</item>
+  </style>
+
+  <style name="NextzyTextView.Title">
+    <item name="android:textSize">25sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@android:color/white</item>
+  </style>
+
+</resources>
