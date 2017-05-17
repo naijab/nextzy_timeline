@@ -3,16 +3,15 @@ package com.naijab.nextzytimeline.ui.people;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.widget.FrameLayout;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
+import com.naijab.nextzytimeline.ui.people.addform.AddPeopleFragment;
 
 public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Presenter>
         implements PeopleActivityInterface.View {
 
     private Toolbar toolbar;
-    private FrameLayout frameLayout;
 
     public PeopleActivity() {
         super();
@@ -30,7 +29,6 @@ public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Pres
 
     @Override
     public void bindView() {
-        frameLayout = (FrameLayout) findViewById(R.id.container);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
@@ -55,7 +53,13 @@ public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Pres
 
     @Override
     public void initialize() {
+        setupFragment();
+    }
 
+    private void setupFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, AddPeopleFragment.newInstance())
+                .commit();
     }
 
     @Override
