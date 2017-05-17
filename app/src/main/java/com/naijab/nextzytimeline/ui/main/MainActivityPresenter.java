@@ -9,4 +9,5 @@ public class MainActivityPresenter extends BaseMvpPresenter<MainActivityInterfac
         return new MainActivityPresenter();
     }
 
+
 }
