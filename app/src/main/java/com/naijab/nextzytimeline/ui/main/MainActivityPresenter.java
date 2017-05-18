@@ -10,4 +10,12 @@ public class MainActivityPresenter extends BaseMvpPresenter<MainActivityInterfac
     }
 
 
+    @Override
+    public void updateFab() {
+        if (getView().hasTabHome()){
+            getView().showFab();
+        }else {
+            getView().hideFab();
+        }
+    }
 }

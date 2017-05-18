@@ -94,16 +94,6 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void showFab() {
-        fab.show();
-        Log.i("Main", "show fab");
-    }
-
-    public void hideFab() {
-        fab.hide();
-        Log.i("Main", "hide fab");
-    }
-
     @Override
     public void initialize() {
     }
@@ -118,6 +108,8 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    boolean isHasAtHome;
+
     private ViewPager.OnPageChangeListener onViewPagerPageListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,11 +120,13 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
         public void onPageSelected(int position) {
             switch (position) {
                 case 0:
-                    showFab();
+                    isHasAtHome = true;
+                    getPresenter().updateFab();
                     break;
 
                 default:
-                    hideFab();
+                    isHasAtHome = false;
+                    getPresenter().updateFab();
                     break;
             }
         }
@@ -144,6 +138,20 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     };
 
 
+    @Override
+    public boolean hasTabHome() {
+        if (isHasAtHome) return true;
+        else return false;
+    }
 
+    @Override
+    public void showFab() {
+        fab.show();
+    }
+
+    @Override
+    public void hideFab() {
+        fab.hide();
+    }
 }
 
