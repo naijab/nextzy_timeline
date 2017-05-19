@@ -10,12 +10,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 
@@ -30,8 +33,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
-    private EditText dateBirth;
-    private EditText dateJob;
+    private EditText nameAndLastName, dateBirth, dateJob, job, game, smartphone;
     private ImageView photo;
     private FloatingActionButton fab;
     private Uri uri;
@@ -62,15 +64,19 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void bindView(View view) {
+        nameAndLastName = (EditText) view.findViewById(R.id.edt_name_and_lastname);
         dateBirth = (EditText) view.findViewById(R.id.edt_birthday);
         dateJob = (EditText) view.findViewById(R.id.edt_startjob);
+        job = (EditText) view.findViewById(R.id.edt_job);
+        game = (EditText) view.findViewById(R.id.edt_game);
+        smartphone = (EditText) view.findViewById(R.id.edt_your_phone);
         photo = (ImageView) view.findViewById(R.id.iv_photo);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
     public void setupInstance() {
-
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -83,6 +89,21 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public void initialize() {
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.app_bar_done:
+                Toast.makeText(getActivity(), "Are done", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return false;
     }
 
     @Override

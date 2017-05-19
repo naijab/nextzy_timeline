@@ -3,6 +3,8 @@ package com.naijab.nextzytimeline.ui.people;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
@@ -46,7 +48,8 @@ public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Pres
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(false);
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setDisplayShowHomeEnabled(true);
             actionbar.setDisplayShowTitleEnabled(false);
         }
     }
@@ -60,6 +63,13 @@ public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Pres
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, AddPeopleFragment.newInstance())
                 .commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_add_people, menu);
+        return true;
     }
 
     @Override
