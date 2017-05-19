@@ -2,21 +2,24 @@ package com.naijab.nextzytimeline.ui.people.addform;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
     private EditText dateBirth;
     private EditText dateJob;
+    private ImageView photo;
+    private FloatingActionButton fab;
     private int mYear, mMonth, mDay;
 
     public AddPeopleFragment() {
@@ -44,6 +47,8 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public void bindView(View view) {
         dateBirth = (EditText) view.findViewById(R.id.edt_birthday);
         dateJob = (EditText) view.findViewById(R.id.edt_startjob);
+        photo = (ImageView) view.findViewById(R.id.iv_photo);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
@@ -55,6 +60,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public void setupView() {
         dateBirth.setOnClickListener(showDatePicker);
         dateJob.setOnClickListener(showDatePicker);
+        fab.setOnClickListener(takePhoto);
     }
 
     @Override
@@ -107,6 +113,14 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
             datePickerDialog.show();
         }
     };
+
+    private View.OnClickListener takePhoto = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
+
 
     private void setDateBirth(int year,
                               int monthOfYear,
