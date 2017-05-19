@@ -82,18 +82,18 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         public void onClick(View v) {
             final View vv = v;
 
+            final Calendar calendar = Calendar.getInstance();
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                    mYear = year;
-                    mMonth = month;
-                    mDay = dayOfMonth;
-
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.YEAR, mYear);
-                    calendar.set(Calendar.MONTH, mMonth);
-                    calendar.set(Calendar.DAY_OF_MONTH, mDay);
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, month);
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                     if (vv.getId() == R.id.edt_birthday) {
                         setDateBirth(mYear, mMonth, mDay);
