@@ -27,7 +27,11 @@
 
         <activity
             android:name=".ui.people.PeopleActivity"
-            android:label="@string/add_people"></activity>
+            android:label="@string/add_people">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.naijab.nextzytimeline.ui.main.MainActivity" />
+        </activity>
 
     </application>
 
