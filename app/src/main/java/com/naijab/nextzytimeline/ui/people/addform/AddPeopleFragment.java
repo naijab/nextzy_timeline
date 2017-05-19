@@ -42,7 +42,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public void bindView(View view) {
         dateBirth = (EditText) view.findViewById(R.id.edt_birthday);
-        dateJob = (EditText) view.findViewById(R.id.edt_job);
+        dateJob = (EditText) view.findViewById(R.id.edt_startjob);
     }
 
     @Override
@@ -52,75 +52,14 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void setupView() {
-        dateBirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                        datePickerBirth, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
-        dateJob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog2 = new DatePickerDialog(getActivity(),
-                        datePickerJob, mYear, mMonth, mDay);
-                datePickerDialog2.show();
-            }
-        });
+        dateBirth.setOnClickListener(showDatePicker);
+        dateJob.setOnClickListener(showDatePicker);
     }
-
-    Calendar calendar = Calendar.getInstance();
-
-    private DatePickerDialog.OnDateSetListener datePickerBirth = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-            mYear = year;
-            mMonth = month;
-            mDay = dayOfMonth;
-
-            calendar.set(Calendar.YEAR, mYear);
-            calendar.set(Calendar.MONTH, mMonth);
-            calendar.set(Calendar.DAY_OF_MONTH, mDay);
-
-            setDateBirth(year, month, dayOfMonth);
-        }
-    };
-
-    private DatePickerDialog.OnDateSetListener datePickerJob = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-            mYear = year;
-            mMonth = month;
-            mDay = dayOfMonth;
-
-            calendar.set(Calendar.YEAR, mYear);
-            calendar.set(Calendar.MONTH, mMonth);
-            calendar.set(Calendar.DAY_OF_MONTH, mDay);
-
-            setDateJob(year, month, dayOfMonth);
-        }
-    };
 
     @Override
     public void initialize() {
 
     }
-
-    private void setDateBirth(int year,
-                              int monthOfYear,
-                              int dayOfMonth) {
-        dateBirth.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
-    }
-
-    private void setDateJob(int year,
-                            int monthOfYear,
-                            int dayOfMonth) {
-        dateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
-    }
-
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
@@ -136,6 +75,50 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
+
+
+    private View.OnClickListener showDatePicker = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final View vv = v;
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                    mYear = year;
+                    mMonth = month;
+                    mDay = dayOfMonth;
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.YEAR, mYear);
+                    calendar.set(Calendar.MONTH, mMonth);
+                    calendar.set(Calendar.DAY_OF_MONTH, mDay);
+
+                    if (vv.getId() == R.id.edt_birthday) {
+                        setDateBirth(mYear, mMonth, mDay);
+                    }
+                    if (vv.getId() == R.id.edt_startjob) {
+                        setDateJob(mYear, mMonth, mDay);
+                    }
+                }
+            }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+        }
+    };
+
+    private void setDateBirth(int year,
+                              int monthOfYear,
+                              int dayOfMonth) {
+        dateBirth.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+    }
+
+    private void setDateJob(int year,
+                            int monthOfYear,
+                            int dayOfMonth) {
+        dateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+    }
+
 
 }
 
