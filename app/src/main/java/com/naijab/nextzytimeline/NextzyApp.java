@@ -16,6 +16,7 @@ public class NextzyApp extends Application{
     }
 
     private void initRealm() {
+        Realm.init(getApplicationContext());
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .name(Realm.DEFAULT_REALM_NAME)
                 .schemaVersion(0)
