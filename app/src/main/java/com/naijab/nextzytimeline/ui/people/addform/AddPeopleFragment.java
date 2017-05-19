@@ -21,12 +21,16 @@ import android.widget.Toast;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
+import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
+import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import io.realm.Realm;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,6 +41,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private ImageView photo;
     private FloatingActionButton fab;
     private Uri uri;
+    private Realm realm;
 
     private int mYear, mMonth, mDay;
     public static final int REQUEST_CAMERA = 12;
@@ -98,8 +103,9 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.app_bar_done:
+                saveToRealm();
                 Toast.makeText(getActivity(), "Are done", Toast.LENGTH_SHORT).show();
                 return true;
         }
@@ -119,6 +125,34 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+
+    private void saveToRealm() {
+
+        final String nameS = nameAndLastName.getText().toString();
+        final String dateBirthS = dateBirth.getText().toString();
+        final String dateJobS = dateJob.getText().toString();
+        final String jobS = job.getText().toString();
+        final String gameS = game.getText().toString();
+        final String smartphoneS = smartphone.getText().toString();
+        final String photoS = uri.toString();
+
+        PeopleModel people = new PeopleModel();
+        realm.beginTransaction();
+        people.setId(PeopleManager.getInstance().getPeople().size() + 1);
+        people.setName(nameS);
+        people.setBirthday("16-2-25");
+        people.setJobstart("16-2-25");
+        people.setJob("iLike");
+        people.setGame("Need for Speed");
+        people.setSmartphone("iphone");
+        people.setPhoto(photoS);
+        realm.copyToRealmOrUpdate(people);
+        realm.commitTransaction();
+        Log.i("AddToRealm", "Save is Okay");
+
+
     }
 
 
@@ -175,9 +209,9 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri);
                 photo.setImageBitmap(bitmap);
 
-                Log.i("AddPeople", "Image: " +uri.toString());
-            }catch (Exception e){
-                Log.e("AddPeople", "" +e.getMessage());
+                Log.i("AddPeople", "Image: " + uri.toString());
+            } catch (Exception e) {
+                Log.e("AddPeople", "" + e.getMessage());
             }
         }
     }
