@@ -1,17 +1,31 @@
 package com.naijab.nextzytimeline.ui.people.addform;
 
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
@@ -20,7 +34,10 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private EditText dateJob;
     private ImageView photo;
     private FloatingActionButton fab;
+    private Uri uri;
+
     private int mYear, mMonth, mDay;
+    public static final int REQUEST_CAMERA = 12;
 
     public AddPeopleFragment() {
         super();
@@ -117,10 +134,32 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private View.OnClickListener takePhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+            String imagFilename = "IMG_Nextzy_" + timestamp + ".jpg";
+            File file = new File(Environment.getExternalStorageDirectory(),
+                    "DCIM/Camera/" + imagFilename);
+            uri = Uri.fromFile(file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            startActivityForResult(Intent.createChooser(intent, "Take Photo with"), REQUEST_CAMERA);
         }
     };
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
+            getActivity().getContentResolver().notifyChange(uri, null);
+            ContentResolver contentResolver = getActivity().getContentResolver();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri);
+                photo.setImageBitmap(bitmap);
+
+                Log.i("AddPeople", "Image: " +uri.toString());
+            }catch (Exception e){
+                Log.e("AddPeople", "" +e.getMessage());
+            }
+        }
+    }
 
     private void setDateBirth(int year,
                               int monthOfYear,
