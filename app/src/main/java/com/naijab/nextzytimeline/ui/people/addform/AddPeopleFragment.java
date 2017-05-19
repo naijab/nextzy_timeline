@@ -10,6 +10,7 @@ import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
