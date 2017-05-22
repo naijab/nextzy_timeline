@@ -36,13 +36,15 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
                               final String smartphone,
                               final String photos) {
 
-        RealmResults<PeopleModel> resultRealm = realm.where(PeopleModel.class)
-                .findAll();
-        final int id = resultRealm.size() + 1;
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
+
+                RealmResults<PeopleModel> resultRealm = realm.where(PeopleModel.class)
+                        .findAll();
+                int id = resultRealm.size() + 1;
+
                 PeopleModel people = realm.createObject(PeopleModel.class, id);
                 people.setName(name);
                 people.setBirthday(birthday);
