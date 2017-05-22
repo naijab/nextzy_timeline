@@ -104,7 +104,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         switch (item.getItemId()) {
             case R.id.app_bar_done:
                 saveToRealm();
-                Toast.makeText(getActivity(), "Are done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Is make:  ", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return false;
@@ -222,7 +222,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void response(String message) {
-        Log.i("Add", "Is work" + message);
+        Log.i("Add", "Response: " + message);
     }
 }
 
