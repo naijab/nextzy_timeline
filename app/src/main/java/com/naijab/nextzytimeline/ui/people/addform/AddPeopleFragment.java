@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
-import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -130,28 +128,21 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     private void saveToRealm() {
 
-        final String nameS = nameAndLastName.getText().toString();
-        final String dateBirthS = dateBirth.getText().toString();
-        final String dateJobS = dateJob.getText().toString();
-        final String jobS = job.getText().toString();
-        final String gameS = game.getText().toString();
-        final String smartphoneS = smartphone.getText().toString();
-        final String photoS = uri.toString();
+        String nameS = nameAndLastName.getText().toString();
+        String dateBirthS = dateBirth.getText().toString();
+        String dateJobS = dateJob.getText().toString();
+        String jobS = job.getText().toString();
+        String gameS = game.getText().toString();
+        String smartphoneS = smartphone.getText().toString();
+        String photoS = uri.toString();
 
-        PeopleModel people = new PeopleModel();
-        realm.beginTransaction();
-        people.setId(PeopleManager.getInstance().getPeople().size() + 1);
-        people.setName(nameS);
-        people.setBirthday("16-2-25");
-        people.setJobstart("16-2-25");
-        people.setJob("iLike");
-        people.setGame("Need for Speed");
-        people.setSmartphone("iphone");
-        people.setPhoto(photoS);
-        realm.copyToRealmOrUpdate(people);
-        realm.commitTransaction();
-        Log.i("AddToRealm", "Save is Okay");
-
+        getPresenter().saveIntoRealm(nameS,
+                dateBirthS,
+                dateJobS,
+                jobS,
+                gameS,
+                smartphoneS,
+                photoS);
 
     }
 
@@ -229,5 +220,9 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     }
 
 
+    @Override
+    public void response(String message) {
+        Log.i("Add", "Is work" + message);
+    }
 }
 
