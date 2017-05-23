@@ -55,11 +55,13 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
             @Override
             public void onSuccess() {
                 getView().response("onSuccess");
+                getView().saveIsFinish(true);
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
                 getView().response(error.getMessage());
+                getView().saveIsFinish(false);
             }
         });
     }
