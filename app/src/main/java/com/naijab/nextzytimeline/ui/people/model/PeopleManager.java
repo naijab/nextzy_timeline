@@ -33,16 +33,36 @@ public class PeopleManager {
     public PeopleModel getPeople(String id) {
         return realm.where(PeopleModel.class).equalTo("id", id).findFirst();
     }
+
+    public void deleteAll(final Context context, final onDeleteCallBack callBack){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.delete(PeopleModel.class);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                callBack.onDeleteSuccess(StringUtility.getDeleteSuccess(context));
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                callBack.onDeleteError(error.getMessage());
+            }
+        });
+
+    }
+
     public void saveRealm(final PeopleModel peopleModel,
                           final Context context,
-                          final SaveCallback callBack){
+                          final onSaveCallBack callBack){
 
         resultRealm = realm.where(PeopleModel.class)
                 .findAll();
 
         id = resultRealm.size() + 1;
 
-        Realm realm = Realm.getDefaultInstance();
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
@@ -69,9 +89,14 @@ public class PeopleManager {
         });
     }
 
-    public interface SaveCallback {
+    public interface onSaveCallBack {
         void onSaveSuccess(String message);
         void onSaveError(String message);
+    }
+
+    public interface onDeleteCallBack {
+        void onDeleteSuccess(String message);
+        void onDeleteError(String message);
     }
 
 }
