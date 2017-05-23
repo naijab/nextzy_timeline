@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
+import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -128,21 +129,23 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     private void saveToRealm() {
 
-        String nameS = nameAndLastName.getText().toString();
+        String name = nameAndLastName.getText().toString();
         String dateBirthS = dateBirth.getText().toString();
-        String dateJobS = dateJob.getText().toString();
-        String jobS = job.getText().toString();
-        String gameS = game.getText().toString();
-        String smartphoneS = smartphone.getText().toString();
-        String photoS = uri.toString();
+        String dateJob = this.dateJob.getText().toString();
+        String job = this.job.getText().toString();
+        String game = this.game.getText().toString();
+        String smartphone = this.smartphone.getText().toString();
+        String photo = uri.toString();
 
-        getPresenter().saveIntoRealm(nameS,
-                dateBirthS,
-                dateJobS,
-                jobS,
-                gameS,
-                smartphoneS,
-                photoS);
+        PeopleModel people = new PeopleModel();
+        people.setName(name);
+        people.setBirthday(dateBirthS);
+        people.setJobstart(dateJob);
+        people.setJob(job);
+        people.setGame(game);
+        people.setSmartphone(smartphone);
+        people.setPhoto(photo);
+        getPresenter().saveIntoRealm(people);
 
     }
 
