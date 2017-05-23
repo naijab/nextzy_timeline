@@ -21,4 +21,9 @@ public class StringUtility {
     return context.getResources().getString(R.string.tab_contact);
   }
 
+  @NonNull
+  public static String getSaveSuccess(Context context){
+    return context.getResources().getString(R.string.save_success);
+  }
+
 }

@@ -18,6 +18,9 @@
   <string name="question_why_choose_this_job">Why choose this job?</string>
   <string name="question_why_choose_this_phone">What\'s your smartphone?</string>
 
+  <string name="save_success">Save Success</string>
+  <string name="save_error">Save Error</string>
+
   <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
 
 </resources>
