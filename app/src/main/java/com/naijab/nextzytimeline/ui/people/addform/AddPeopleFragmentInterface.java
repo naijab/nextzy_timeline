@@ -9,6 +9,8 @@ public class AddPeopleFragmentInterface {
 
         void response(String message);
 
+        void saveIsFinish(boolean isSuccess);
+
     }
 
     public interface Presenter extends BaseMvpInterface.Presenter<AddPeopleFragmentInterface.View> {
