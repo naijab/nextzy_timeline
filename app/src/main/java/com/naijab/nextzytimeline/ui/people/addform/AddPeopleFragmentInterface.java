@@ -1,6 +1,7 @@
 package com.naijab.nextzytimeline.ui.people.addform;
 
 import com.naijab.nextzytimeline.base.BaseMvpInterface;
+import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 public class AddPeopleFragmentInterface {
 
@@ -12,13 +13,7 @@ public class AddPeopleFragmentInterface {
 
     public interface Presenter extends BaseMvpInterface.Presenter<AddPeopleFragmentInterface.View> {
 
-        void saveIntoRealm(String name,
-                           String birthday,
-                           String startJob,
-                           String job,
-                           String game,
-                           String smartphone,
-                           String photos);
+        void saveIntoRealm(PeopleModel peopleModel);
 
     }
 }
