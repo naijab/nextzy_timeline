@@ -105,7 +105,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         switch (item.getItemId()) {
             case R.id.app_bar_done:
                 saveToRealm();
-                Toast.makeText(getActivity(), "Is make:  ", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return false;
@@ -128,7 +127,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
 
     private void saveToRealm() {
-
         String name = nameAndLastName.getText().toString();
         String dateBirthS = dateBirth.getText().toString();
         String dateJob = this.dateJob.getText().toString();
@@ -146,7 +144,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         people.setSmartphone(smartphone);
         people.setPhoto(photo);
         getPresenter().saveIntoRealm(people);
-
     }
 
 
@@ -204,7 +201,9 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                 photo.setImageBitmap(bitmap);
 
                 Log.i("AddPeople", "Image: " + uri.toString());
+
             } catch (Exception e) {
+
                 Log.e("AddPeople", "" + e.getMessage());
             }
         }
@@ -225,7 +224,18 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void response(String message) {
-        Log.i("Add", "Response: " + message);
+        Log.i("AddFragment", "Response: " + message);
+        Toast.makeText(getActivity(), "Response: "+ message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void saveIsFinish(boolean isSuccess) {
+        if (isSuccess)
+            finishView();
+    }
+
+    private void finishView() {
+        getActivity().finish();
     }
 }
 
