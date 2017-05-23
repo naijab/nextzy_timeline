@@ -10,6 +10,8 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
         implements AddPeopleFragmentInterface.Presenter {
 
     private Realm realm;
+    private RealmResults<PeopleModel> resultRealm;
+    int id = 0;
 
     public static AddPeopleFragmentInterface.Presenter create() {
         return new AddPeopleFragmentPresenter();
@@ -27,32 +29,27 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
         realm.close();
     }
 
+
     @Override
-    public void saveIntoRealm(final String name,
-                              final String birthday,
-                              final String startJob,
-                              final String job,
-                              final String game,
-                              final String smartphone,
-                              final String photos) {
+    public void saveIntoRealm(final PeopleModel peopleModel) {
 
+        resultRealm = realm.where(PeopleModel.class)
+                .findAll();
+        id = resultRealm.size() + 1;
 
+        Realm realm = Realm.getDefaultInstance();
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
 
-                RealmResults<PeopleModel> resultRealm = realm.where(PeopleModel.class)
-                        .findAll();
-                int id = resultRealm.size() + 1;
-
-                PeopleModel people = realm.createObject(PeopleModel.class, id);
-                people.setName(name);
-                people.setBirthday(birthday);
-                people.setJobstart(startJob);
-                people.setJob(job);
-                people.setGame(game);
-                people.setSmartphone(smartphone);
-                people.setPhoto(photos);
+                PeopleModel people = bgRealm.createObject(PeopleModel.class, id);
+                people.setName(peopleModel.getName());
+                people.setBirthday(peopleModel.getBirthday());
+                people.setJobstart(peopleModel.getJobstart());
+                people.setJob(peopleModel.getJob());
+                people.setGame(peopleModel.getGame());
+                people.setSmartphone(peopleModel.getSmartphone());
+                people.setPhoto(peopleModel.getPhoto());
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -65,8 +62,5 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
                 getView().response(error.getMessage());
             }
         });
-
-
-
     }
 }
