@@ -13,17 +13,19 @@ import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import java.util.List;
 
-public class PeopleAdapter extends RecyclerView.Adapter<PeopleViewHolder> {
+public class PeopleAdapter
+        extends RecyclerView.Adapter<PeopleViewHolder> {
 
     private List<PeopleModel> mList;
     private Context context;
+    private OnAdapterListener listener;
 
     public PeopleAdapter(Context context, List<PeopleModel> item) {
         this.context = context;
         this.setResult(item);
     }
 
-    public void setResult(List<PeopleModel> item){
+    public void setResult(List<PeopleModel> item) {
         this.mList = item;
         notifyDataSetChanged();
     }
@@ -32,6 +34,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleViewHolder> {
     public PeopleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.holder_people_home, parent, false);
         PeopleViewHolder viewHolder = new PeopleViewHolder(view);
+        viewHolder.setOnItemClickListener(clickPeople(mList));
         return viewHolder;
     }
 
@@ -43,7 +46,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleViewHolder> {
         setImage(holder, url);
     }
 
-    private void setImage(PeopleViewHolder holder, String url){
+    private void setImage(PeopleViewHolder holder, String url) {
         Glide.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -61,6 +64,23 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setOnClickPeopleItem(OnAdapterListener listener) {
+        this.listener = listener;
+    }
 
+    public interface OnAdapterListener {
+        void onClickAdapter(List<PeopleModel> item, int position);
+    }
+
+    private PeopleViewHolder.OnItemClickListener clickPeople(final List<PeopleModel> item) {
+        return new PeopleViewHolder.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                if (listener != null) {
+                    listener.onClickAdapter(item, position);
+                }
+            }
+        };
+    }
 
 }

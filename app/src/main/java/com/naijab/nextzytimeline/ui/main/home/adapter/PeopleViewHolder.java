@@ -5,16 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 
-public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     TextView tvName, tvJob;
     ImageView ivPhoto;
 
-    private OnItemClickListener clickListener;
+    OnItemClickListener clickListener;
 
     public PeopleViewHolder(View itemView) {
         super(itemView);
@@ -27,11 +25,11 @@ public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View v) {
         int position = getAdapterPosition();
-        clickListener.onItemClick(v, position);
+        clickListener.onClick(v, position);
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onClick(View view, int position);
     }
 
     public void setOnItemClickListener(final OnItemClickListener itemClickListener) {
