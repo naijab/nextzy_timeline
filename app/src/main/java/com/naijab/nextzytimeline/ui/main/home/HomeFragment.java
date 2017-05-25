@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
+
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.main.home.adapter.PeopleAdapter;
@@ -16,8 +18,9 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class HomeFragment extends BaseMvpFragment<HomeFragmentInterface.Presenter>
-        implements HomeFragmentInterface.View{
+public class HomeFragment
+        extends BaseMvpFragment<HomeFragmentInterface.Presenter>
+        implements HomeFragmentInterface.View {
 
     private RecyclerView recyclerView;
     private RealmResults<PeopleModel> realmResults;
@@ -37,61 +40,75 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentInterface.Presente
     }
 
     @Override
-    public HomeFragmentInterface.Presenter createPresenter(){
+    public HomeFragmentInterface.Presenter createPresenter() {
         return HomeFragmentPresenter.create();
     }
 
     @Override
-    public int getLayoutView(){
+    public int getLayoutView() {
         return R.layout.fragment_home;
     }
 
     @Override
-    public void bindView( View view ){
+    public void bindView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_people);
     }
 
     @Override
-    public void setupInstance(){
+    public void setupInstance() {
+        setupRealm();
+    }
+
+    @Override
+    public void setupView() {
+        setupRecyclerView();
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
+    @Override
+    public void restoreView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private void setupRealm() {
         realm = Realm.getDefaultInstance();
         realmResults = PeopleManager.getInstance().getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
+    }
+
+    private void setupRecyclerView() {
         adapter = new PeopleAdapter(getActivity(), peopleItem);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-//        for (int i = 0; i < realmResults.size(); i++) {
-//            PeopleModel items = new PeopleModel();
-//            items.setId(PeopleManager.getInstance().getPeople().get(i).getId());
-//            items.setName(PeopleManager.getInstance().getPeople().get(i).getName());
-//        }
+        onClick();
     }
 
-    @Override
-    public void setupView(){
-
+    private void onClick() {
+        adapter.setOnClickPeopleItem(new PeopleAdapter.OnAdapterListener() {
+            @Override
+            public void onClickAdapter(List<PeopleModel> item, int position) {
+                Toast.makeText(getActivity(), "" + item.get(position).getName() + position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    @Override
-    public void initialize(){
 
-    }
-
-    @Override
-    public void restoreView( Bundle savedInstanceState ){
-
-    }
-
-    @Override
-    public void onSaveInstanceState( Bundle outState ){
-        super.onSaveInstanceState( outState );
-    }
-
-    @Override
-    public void onRestoreInstanceState( Bundle savedInstanceState ){
-        super.onRestoreInstanceState( savedInstanceState );
-    }
 }
 
