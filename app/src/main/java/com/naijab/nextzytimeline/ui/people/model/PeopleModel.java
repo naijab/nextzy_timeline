@@ -78,4 +78,5 @@ public class PeopleModel extends RealmObject {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
 }
