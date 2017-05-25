@@ -21,10 +21,8 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
     public void onViewStart() {
         super.onViewStart();
         realm = Realm.getDefaultInstance();
-        String name = PeopleManager.getInstance().getPeople().get(4).getName();
-        String job = PeopleManager.getInstance().getPeople().get(4).getJob();
-        String photos = PeopleManager.getInstance().getPeople().get(4).getPhoto();
-        getView().response(name + " " + job + " " + photos);
+        int num = PeopleManager.getInstance().getPeople().size();
+        getView().response("Size of data: " + num);
     }
 
     @Override
@@ -40,6 +38,7 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
             @Override
             public void onSaveSuccess(String message) {
                 getView().response(message);
+                getView().saveIsFinish(true);
             }
 
             @Override
