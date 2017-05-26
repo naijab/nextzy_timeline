@@ -8,7 +8,7 @@ import com.naijab.nextzytimeline.base.adapter.BaseViewHolder;
 public class ProgressHolder extends BaseViewHolder {
 
     public ProgressHolder( ViewGroup viewGroup ){
-        super( viewGroup, R.layout.holder_progress );
+        super( viewGroup, 0 );
     }
 
     @Override

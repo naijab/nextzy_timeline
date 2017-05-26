@@ -12,10 +12,10 @@ public class CustomConverter{
 //        return group;
 //    }
 
-//    public static List<CustomItem> createCustomItemsFromResult( List<CustomResult> results){
-//        List<CustomItem> items = new ArrayList<>();
+//    public static List<PeopleModel> createCustomItemsFromResult( List<CustomResult> results){
+//        List<PeopleModel> items = new ArrayList<>();
 //        for( CustomResult result : results ){
-//            CustomItem item = new CustomItem();
+//            PeopleModel item = new PeopleModel();
 //            items.add( item );
 //        }
 //        return items;
