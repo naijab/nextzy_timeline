@@ -1,6 +1,7 @@
 package com.naijab.nextzytimeline.ui.people.addform;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
 import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
@@ -23,6 +24,7 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
         realm = Realm.getDefaultInstance();
         int num = PeopleManager.getInstance().getPeople().size();
         getView().response("Size of data: " + num);
+        Log.i("Yess", "Delete All");
     }
 
     @Override

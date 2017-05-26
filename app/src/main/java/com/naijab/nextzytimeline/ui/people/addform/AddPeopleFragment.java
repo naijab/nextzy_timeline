@@ -29,21 +29,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import io.realm.Realm;
-
 import static android.app.Activity.RESULT_OK;
 
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
-    private EditText nameAndLastName, dateBirth, dateJob, job, game, smartphone;
-    private ImageView photo;
-    private FloatingActionButton fab;
-    private Uri uri;
-    private Realm realm;
+    private EditText nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
+    private ImageView profile, photo;
+    private FloatingActionButton fabPhoto;
+    private Uri uriProfile, uriPhoto;
 
     private int mYear, mMonth, mDay;
-    public static final int REQUEST_CAMERA = 12;
+    public static final int REQUEST_CAMERA_PROFILE = 11;
+    public static final int REQUEST_CAMERA_PHOTO = 12;
 
     public AddPeopleFragment() {
         super();
@@ -69,13 +67,15 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public void bindView(View view) {
         nameAndLastName = (EditText) view.findViewById(R.id.edt_name_and_lastname);
+        job = (EditText) view.findViewById(R.id.edt_job);
         dateBirth = (EditText) view.findViewById(R.id.edt_birthday);
         dateJob = (EditText) view.findViewById(R.id.edt_startjob);
-        job = (EditText) view.findViewById(R.id.edt_job);
+        jobDescription = (EditText) view.findViewById(R.id.edt_job_description);
         game = (EditText) view.findViewById(R.id.edt_game);
-        smartphone = (EditText) view.findViewById(R.id.edt_your_phone);
+        smartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
         photo = (ImageView) view.findViewById(R.id.iv_photo);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        profile = (ImageView) view.findViewById(R.id.iv_profile);
+        fabPhoto = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
@@ -87,7 +87,8 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public void setupView() {
         dateBirth.setOnClickListener(showDatePicker);
         dateJob.setOnClickListener(showDatePicker);
-        fab.setOnClickListener(takePhoto);
+        profile.setOnClickListener(takeProfile);
+        fabPhoto.setOnClickListener(takePhoto);
     }
 
     @Override
@@ -131,17 +132,21 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         String dateBirthS = dateBirth.getText().toString();
         String dateJob = this.dateJob.getText().toString();
         String job = this.job.getText().toString();
+        String jobDescription = this.jobDescription.getText().toString();
         String game = this.game.getText().toString();
-        String smartphone = this.smartphone.getText().toString();
-        String photo = uri.toString();
+        String smartphone = this.smartPhone.getText().toString();
+        String profile = uriProfile.toString();
+        String photo = uriPhoto.toString();
 
         PeopleModel people = new PeopleModel();
         people.setName(name);
-        people.setBirthday(dateBirthS);
-        people.setJobstart(dateJob);
+        people.setProfile(profile);
         people.setJob(job);
+        people.setBirthDay(dateBirthS);
+        people.setJobStart(dateJob);
+        people.setJobDescription(jobDescription);
         people.setGame(game);
-        people.setSmartphone(smartphone);
+        people.setSmartPhone(smartphone);
         people.setPhoto(photo);
         getPresenter().saveIntoRealm(people, getActivity());
     }
@@ -177,36 +182,67 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         }
     };
 
+    private View.OnClickListener takeProfile = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+            String imagFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
+            File file = new File(Environment.getExternalStorageDirectory(),
+                    "DCIM/Camera/" + imagFilename);
+            uriProfile = Uri.fromFile(file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
+            startActivityForResult(Intent.createChooser(intent,
+                    getString(R.string.take_with)), REQUEST_CAMERA_PROFILE);
+        }
+    };
+
     private View.OnClickListener takePhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            String imagFilename = "IMG_Nextzy_" + timestamp + ".jpg";
+            String imagFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
             File file = new File(Environment.getExternalStorageDirectory(),
                     "DCIM/Camera/" + imagFilename);
-            uri = Uri.fromFile(file);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(Intent.createChooser(intent, "Take Photo with"), REQUEST_CAMERA);
+            uriPhoto = Uri.fromFile(file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
+            startActivityForResult(Intent.createChooser(intent,
+                    getString(R.string.take_with)), REQUEST_CAMERA_PHOTO);
         }
     };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            getActivity().getContentResolver().notifyChange(uri, null);
+        if (requestCode == REQUEST_CAMERA_PROFILE && resultCode == RESULT_OK) {
+            getActivity().getContentResolver().notifyChange(uriProfile, null);
             ContentResolver contentResolver = getActivity().getContentResolver();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri);
-                photo.setImageBitmap(bitmap);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriProfile);
+                profile.setImageBitmap(bitmap);
 
-                Log.i("AddPeople", "Image: " + uri.toString());
+                Log.i("AddPeople", "Image: " + uriProfile.toString());
 
             } catch (Exception e) {
 
                 Log.e("AddPeople", "" + e.getMessage());
             }
         }
+        else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
+            getActivity().getContentResolver().notifyChange(uriPhoto, null);
+            ContentResolver contentResolver = getActivity().getContentResolver();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriPhoto);
+                photo.setImageBitmap(bitmap);
+
+                Log.i("AddPeople", "Image: " + uriPhoto.toString());
+
+            } catch (Exception e) {
+
+                Log.e("AddPeople", "" + e.getMessage());
+            }
+        }
+
     }
 
     private void setDateBirth(int year,
