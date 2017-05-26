@@ -15,6 +15,7 @@
 
     <dimen name="form_profile">120dp</dimen>
     <dimen name="form_photo_height">170dp</dimen>
+    <dimen name="form_photo_height_big">200dp</dimen>
     <dimen name="form_photo_height_large">250dp</dimen>
 
     <dimen name="default_padding_of_screen">@dimen/default_padding_margin_large</dimen>
