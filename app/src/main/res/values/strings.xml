@@ -26,4 +26,6 @@
 
     <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
 
+    <string name="take_with">Take Photos With</string>
+
 </resources>
