@@ -1,11 +1,14 @@
 package com.naijab.nextzytimeline.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+
 import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
 
@@ -102,6 +105,14 @@ public abstract class BaseMvpFragment<P extends BaseMvpInterface.Presenter>
   public abstract void initialize();
 
   public void restoreView(Bundle savedInstanceState) {
+  }
+
+  public void hideKeyboard(){
+    View view = this.getActivity().getCurrentFocus();
+    if (view != null) {
+      InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
   }
 
 }
