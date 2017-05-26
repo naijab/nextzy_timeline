@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
@@ -13,6 +14,7 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
         implements DetailPeopleActivityInterface.View {
 
     private Toolbar toolbar;
+    private TextView toolbarTitle;
     private int id;
 
     public DetailPeopleActivity() {
@@ -32,12 +34,14 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
     @Override
     public void bindView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_tv_title);
     }
 
     @Override
     public void setupInstance() {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
+        toolbarTitle.setText(getString(R.string.detail_people));
     }
 
     @Override
@@ -49,7 +53,8 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(false);
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setDisplayShowHomeEnabled(true);
             actionbar.setDisplayShowTitleEnabled(false);
         }
     }

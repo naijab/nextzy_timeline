@@ -99,6 +99,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         smartPhone.setText(people.getSmartPhone());
         setProfile(people.getProfile());
         setPhoto(people.getPhoto());
+
     }
 
     private void setProfile(String urlProfile) {
