@@ -24,6 +24,12 @@ public class HomeFragmentPresenter extends BaseMvpPresenter<HomeFragmentInterfac
     public void onViewStart() {
         super.onViewStart();
         realm = Realm.getDefaultInstance();
+        realm.addChangeListener(new RealmChangeListener<Realm>() {
+            @Override
+            public void onChange(Realm element) {
+                getView().updateRecycler();
+            }
+        });
     }
 
     @Override

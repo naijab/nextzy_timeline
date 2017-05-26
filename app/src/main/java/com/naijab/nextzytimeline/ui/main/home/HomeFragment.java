@@ -17,12 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class HomeFragment
         extends BaseMvpFragment<HomeFragmentInterface.Presenter>
-        implements HomeFragmentInterface.View, RealmChangeListener {
+        implements HomeFragmentInterface.View{
 
     private RecyclerView recyclerView;
     private PeopleAdapter adapter;
@@ -119,8 +118,9 @@ public class HomeFragment
     }
 
     @Override
-    public void onChange(Object element) {
-        adapter.notifyDataSetChanged();
+    public void updateRecycler() {
+        setupRealm();
+        adapter.clear();
         setupRecyclerView();
     }
 }
