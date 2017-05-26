@@ -10,18 +10,18 @@ import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
 import com.naijab.nextzytimeline.ui.people.addform.fragment.AddPeopleFragment;
 
-public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Presenter>
-        implements PeopleActivityInterface.View {
+public class AddPeopleActivity extends BaseMvpActivity<AddPeopleActivityInterface.Presenter>
+        implements AddPeopleActivityInterface.View {
 
     private Toolbar toolbar;
 
-    public PeopleActivity() {
+    public AddPeopleActivity() {
         super();
     }
 
     @Override
-    public PeopleActivityInterface.Presenter createPresenter() {
-        return PeopleActivityPresenter.create();
+    public AddPeopleActivityInterface.Presenter createPresenter() {
+        return AddPeopleActivityPresenter.create();
     }
 
     @Override

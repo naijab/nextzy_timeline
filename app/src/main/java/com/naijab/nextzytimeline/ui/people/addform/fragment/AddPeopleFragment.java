@@ -155,9 +155,10 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private View.OnClickListener showDatePicker = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            hideKeyboard();
             final View vv = v;
-
-            final Calendar calendar = Calendar.getInstance();
+            final Calendar calendar;
+            calendar = Calendar.getInstance();
             mYear = calendar.get(Calendar.YEAR);
             mMonth = calendar.get(Calendar.MONTH);
             mDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -171,10 +172,10 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                     if (vv.getId() == R.id.edt_birthday) {
-                        setDateBirth(mYear, mMonth, mDay);
+                        setDateBirth(year, month+1, dayOfMonth);
                     }
                     if (vv.getId() == R.id.edt_startjob) {
-                        setDateJob(mYear, mMonth, mDay);
+                        setDateJob(year, month+1, dayOfMonth);
                     }
                 }
             }, mYear, mMonth, mDay);

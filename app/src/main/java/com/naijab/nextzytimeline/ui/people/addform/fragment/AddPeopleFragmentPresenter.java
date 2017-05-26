@@ -22,9 +22,9 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
     public void onViewStart() {
         super.onViewStart();
         realm = Realm.getDefaultInstance();
-        int num = PeopleManager.getInstance().getPeople().size();
-        getView().response("Size of data: " + num);
-        Log.i("Yess", "Delete All");
+//        int num = PeopleManager.getInstance().getPeople().size();
+//        getView().response("Size of data: " + num);
+//        Log.i("Yess", "Delete All");
     }
 
     @Override
@@ -36,7 +36,7 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
 
     @Override
     public void saveIntoRealm(PeopleModel peopleModel, Context context) {
-        PeopleManager.getInstance().saveRealm(peopleModel, context, new PeopleManager.onSaveCallBack() {
+        PeopleManager.getInstance(realm).saveRealm(peopleModel, context, new PeopleManager.onSaveCallBack() {
             @Override
             public void onSaveSuccess(String message) {
                 getView().response(message);
@@ -52,7 +52,7 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
 
     @Override
     public void deleteAllRealm(Context context) {
-        PeopleManager.getInstance().deleteAll(context, new PeopleManager.onDeleteCallBack() {
+        PeopleManager.getInstance(realm).deleteAll(context, new PeopleManager.onDeleteCallBack() {
             @Override
             public void onDeleteSuccess(String message) {
                 getView().response(message);
