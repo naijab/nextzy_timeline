@@ -10,7 +10,7 @@ import com.naijab.nextzytimeline.R;
 public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     TextView tvName, tvJob;
-    ImageView ivPhoto;
+    ImageView ivPhoto, ivProfile;
 
     OnItemClickListener clickListener;
 
@@ -19,6 +19,7 @@ public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.On
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvJob = (TextView) itemView.findViewById(R.id.tv_job);
         ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
+        ivProfile = (ImageView) itemView.findViewById(R.id.iv_profile);
         itemView.setOnClickListener(this);
     }
 

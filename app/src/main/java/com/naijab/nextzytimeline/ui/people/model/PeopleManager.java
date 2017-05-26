@@ -30,8 +30,10 @@ public class PeopleManager {
                 .findAll();
     }
 
-    public PeopleModel getPeople(String id) {
-        return realm.where(PeopleModel.class).equalTo("id", id).findFirst();
+    public PeopleModel getPeople(int id) {
+        return realm.where(PeopleModel.class)
+                .equalTo("id", id)
+                .findFirst();
     }
 
     public void deleteAll(final Context context, final onDeleteCallBack callBack){
@@ -69,12 +71,16 @@ public class PeopleManager {
 
                 PeopleModel people = bgRealm.createObject(PeopleModel.class, id);
                 people.setName(peopleModel.getName());
-                people.setBirthday(peopleModel.getBirthday());
-                people.setJobstart(peopleModel.getJobstart());
                 people.setJob(peopleModel.getJob());
+                people.setBirthDay(peopleModel.getBirthDay());
+                people.setJobStart(peopleModel.getJobStart());
+                people.setJobDescription(peopleModel.getJobDescription());
                 people.setGame(peopleModel.getGame());
-                people.setSmartphone(peopleModel.getSmartphone());
+                people.setSmartPhone(peopleModel.getSmartPhone());
                 people.setPhoto(peopleModel.getPhoto());
+                people.setProfile(peopleModel.getProfile());
+
+
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override

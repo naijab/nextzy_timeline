@@ -42,11 +42,21 @@ public class PeopleAdapter
     public void onBindViewHolder(PeopleViewHolder holder, int position) {
         holder.tvName.setText(mList.get(position).getName());
         holder.tvJob.setText(mList.get(position).getJob());
-        String url = mList.get(position).getPhoto();
-        setImage(holder, url);
+        String urlPhoto = mList.get(position).getPhoto();
+        String urlProfile = mList.get(position).getProfile();
+        setImageProfile(holder, urlProfile);
+        setImagePhoto(holder, urlPhoto);
     }
 
-    private void setImage(PeopleViewHolder holder, String url) {
+    private void setImageProfile(PeopleViewHolder holder, String urlProfile) {
+        Glide.with(context)
+                .load(urlProfile)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(holder.ivProfile);
+    }
+
+    private void setImagePhoto(PeopleViewHolder holder, String url) {
         Glide.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
