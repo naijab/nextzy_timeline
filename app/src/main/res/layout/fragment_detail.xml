@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,147 +13,167 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_profile"
-                android:layout_width="@dimen/form_profile"
-                android:layout_height="@dimen/form_profile"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/default_padding_margin_large"
-                android:scaleType="centerCrop"
-                android:src="@color/colorAccent" />
-
-            <LinearLayout
-                android:id="@+id/main_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_profile"
-                android:layout_marginTop="@dimen/default_padding_margin_large"
-                android:orientation="vertical"
-                android:padding="@dimen/default_padding_margin_large">
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    style="@style/NextzyTextView.CardViewTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_name" />
-
-                <TextView
-                    android:id="@+id/tv_job"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_job" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_padding_margin_extra_large" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/NextzyTextView.Header"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/question_birthday"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        style="@style/NextzyTextView.Header"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/question_date_start_job"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_birthday"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/question_birthday"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/tv_startjob"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/question_date_start_job"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-
-                <android.support.v4.widget.Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_padding_margin_extra_large" />
-
-                <TextView
-                    style="@style/NextzyTextView.Header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_why_choose_this_job"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/tv_job_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_why_choose_this_job" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_padding_margin_extra_large" />
-
-                <TextView
-                    style="@style/NextzyTextView.Header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_game_like"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/tv_game"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_game_like" />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_padding_margin_extra_large" />
-
-                <TextView
-                    style="@style/NextzyTextView.Header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_why_choose_this_phone"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/tv_smartphone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/question_why_choose_this_phone" />
-
-            </LinearLayout>
-
             <ImageView
                 android:id="@+id/iv_photo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/form_photo_height_large"
-                android:layout_below="@id/main_layout"
                 android:scaleType="centerCrop" />
 
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="@dimen/form_photo_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding_margin"
+                android:layout_marginEnd="@dimen/default_padding_margin"
+                android:layout_marginBottom="@dimen/default_padding_margin"
+                app:cardCornerRadius="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:padding="@dimen/default_padding_margin_large"
+                        android:id="@+id/top_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_profile"
+                            android:layout_width="@dimen/form_profile"
+                            android:layout_height="@dimen/form_profile"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="centerCrop"
+                            android:src="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/NextzyTextView.CardViewTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_profile"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/question_name" />
+
+                        <TextView
+                            android:id="@+id/tv_job"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_name"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/question_job" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/main_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/top_layout"
+                        android:layout_marginTop="@dimen/default_padding_margin_small"
+                        android:orientation="vertical"
+                        android:padding="@dimen/default_padding_margin_large">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/NextzyTextView.Header"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/question_birthday"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                style="@style/NextzyTextView.Header"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/question_date_start_job"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_birthday"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/question_birthday"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/tv_startjob"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/question_date_start_job"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/default_padding_margin_extra_large" />
+
+                        <TextView
+                            style="@style/NextzyTextView.Header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_why_choose_this_job" />
+
+                        <TextView
+                            android:id="@+id/tv_job_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_why_choose_this_job" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/default_padding_margin_extra_large" />
+
+                        <TextView
+                            style="@style/NextzyTextView.Header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_game_like" />
+
+                        <TextView
+                            android:id="@+id/tv_game"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_game_like" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/default_padding_margin_extra_large" />
+
+                        <TextView
+                            style="@style/NextzyTextView.Header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_why_choose_this_phone" />
+
+                        <TextView
+                            android:id="@+id/tv_smartphone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_why_choose_this_phone" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

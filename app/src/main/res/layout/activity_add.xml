@@ -27,7 +27,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <TextView
                     android:id="@+id/toolbar_tv_title"
                     style="@style/NextzyTextView.Title"
