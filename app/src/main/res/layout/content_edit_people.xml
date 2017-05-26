@@ -147,6 +147,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/photo_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/main_layout"
@@ -169,8 +170,18 @@
                     android:src="@android:drawable/ic_menu_camera" />
             </RelativeLayout>
 
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/photo_layout"
+                android:layout_marginTop="@dimen/default_padding_margin_extra_extra_large"
+                android:background="@color/colorRed"
+                android:textColor="@android:color/white"
+                android:text="@string/delete_people" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>
+

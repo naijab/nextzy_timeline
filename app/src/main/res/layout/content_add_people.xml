@@ -21,8 +21,8 @@
                 android:id="@+id/iv_profile"
                 android:layout_width="@dimen/form_profile"
                 android:layout_height="@dimen/form_profile"
-                android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
                 android:src="@color/colorAccent" />
 
             <LinearLayout
@@ -147,6 +147,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/photo_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/main_layout"
@@ -168,7 +169,6 @@
                     android:layout_margin="@dimen/fab_margin"
                     android:src="@android:drawable/ic_menu_camera" />
             </RelativeLayout>
-
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
