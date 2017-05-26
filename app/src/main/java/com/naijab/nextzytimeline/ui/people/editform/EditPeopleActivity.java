@@ -1,5 +1,6 @@
 package com.naijab.nextzytimeline.ui.people.editform;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -8,12 +9,13 @@ import android.view.MenuInflater;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
-import com.naijab.nextzytimeline.ui.people.addform.AddPeopleFragment;
+import com.naijab.nextzytimeline.ui.people.editform.fragment.EditPeopleFragment;
 
 public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterface.Presenter>
         implements EditPeopleActivityInterface.View {
 
     private Toolbar toolbar;
+    private int id;
 
     public EditPeopleActivity() {
         super();
@@ -26,7 +28,7 @@ public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterf
 
     @Override
     public int getLayoutView() {
-        return R.layout.activity_add;
+        return R.layout.activity_edit;
     }
 
     @Override
@@ -36,7 +38,8 @@ public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterf
 
     @Override
     public void setupInstance() {
-
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
     }
 
     @Override
@@ -61,7 +64,7 @@ public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterf
 
     private void setupFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, AddPeopleFragment.newInstance())
+                .replace(R.id.container, EditPeopleFragment.newInstance(id))
                 .commit();
     }
 
