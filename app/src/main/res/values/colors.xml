@@ -6,4 +6,5 @@
   <color name="colorAccentDark">#FFA000</color>
   <color name="colorGreyDark">#212121</color>
   <color name="colorGreyDarker">#181818</color>
+  <color name="colorRed">#d50000</color>
 </resources>
