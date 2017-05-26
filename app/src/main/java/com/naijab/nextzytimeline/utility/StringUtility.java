@@ -29,7 +29,7 @@ public class StringUtility {
 
     @NonNull
     public static String getDeleteSuccess(Context context){
-        return context.getResources().getString(R.string.save_success);
+        return context.getResources().getString(R.string.delete_success);
     }
 
 }
