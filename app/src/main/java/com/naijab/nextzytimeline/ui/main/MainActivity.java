@@ -7,13 +7,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
 import com.naijab.nextzytimeline.ui.main.adapter.NextzyPagerStateAdapter;
-import com.naijab.nextzytimeline.ui.people.PeopleActivity;
+import com.naijab.nextzytimeline.ui.people.addform.AddPeopleActivity;
 
 public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presenter>
         implements MainActivityInterface.View {
@@ -71,7 +70,7 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     };
 
     private void goToAddPeople(){
-        Intent intent = new Intent(MainActivity.this, PeopleActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddPeopleActivity.class);
         startActivity(intent);
         overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
     }
