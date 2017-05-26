@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.main.home.adapter.PeopleAdapter;
 import com.naijab.nextzytimeline.ui.people.detail.DetailPeopleActivity;
+import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
 import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
 import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class HomeFragment
@@ -58,21 +61,29 @@ public class HomeFragment
 
     @Override
     public void setupInstance() {
-        setupRealm();
+        realm = Realm.getDefaultInstance();
+        realm.addChangeListener(new RealmChangeListener<Realm>() {
+            @Override
+            public void onChange(Realm element) {
+                setupRealm();
+                adapter.clear();
+                setupRecyclerView();
+            }
+        });
     }
 
     @Override
     public void setupView() {
-        setupRecyclerView();
     }
 
     @Override
     public void initialize() {
+        setupRealm();
+        setupRecyclerView();
     }
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -94,7 +105,7 @@ public class HomeFragment
     private void setupRecyclerView() {
         adapter = new PeopleAdapter(getActivity(), peopleItem);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         onClick();
@@ -104,24 +115,27 @@ public class HomeFragment
         adapter.setOnClickPeopleItem(new PeopleAdapter.OnAdapterListener() {
             @Override
             public void onClickAdapter(List<PeopleModel> item, int position) {
-                getPresenter().peopleItem(item, position);
+                goToDetailActivity(item, position);
+            }
+
+            @Override
+            public void onClickEditAdapter(List<PeopleModel> item, int position) {
+                goToEditActivity(item, position);
             }
         });
     }
 
-
-    @Override
-    public void goToDetailActivity(List<PeopleModel> item, int position) {
-        Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
+    private void goToEditActivity(List<PeopleModel> item, int position) {
+        Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
         intent.putExtra(ID, item.get(position).getId());
         startActivity(intent);
     }
 
-    @Override
-    public void updateRecycler() {
-        setupRealm();
-        adapter.clear();
-        setupRecyclerView();
+
+    public void goToDetailActivity(List<PeopleModel> item, int position) {
+        Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
+        intent.putExtra(ID, item.get(position).getId());
+        startActivity(intent);
     }
 }
 

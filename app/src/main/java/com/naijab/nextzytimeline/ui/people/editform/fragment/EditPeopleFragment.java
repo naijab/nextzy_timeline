@@ -1,13 +1,16 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -92,9 +95,6 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void setupInstance() {
-        setHasOptionsMenu(true);
-        id = getArguments().getInt("id", 0);
-        getPresenter().getPeople(id);
     }
 
     @Override
@@ -108,7 +108,9 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void initialize() {
-
+        setHasOptionsMenu(true);
+        id = getArguments().getInt("id", 0);
+        getPresenter().getPeople(id);
     }
 
     @Override
@@ -121,6 +123,9 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         switch (item.getItemId()) {
             case R.id.app_bar_done:
                 saveToRealm();
+                return true;
+            case R.id.home:
+                finishView();
                 return true;
         }
         return false;

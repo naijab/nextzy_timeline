@@ -2,6 +2,7 @@ package com.naijab.nextzytimeline.ui.main.home.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.On
 
     TextView tvName, tvJob;
     ImageView ivPhoto, ivProfile;
+    Button btnEdit;
 
     OnItemClickListener clickListener;
 
@@ -20,7 +22,9 @@ public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.On
         tvJob = (TextView) itemView.findViewById(R.id.tv_job);
         ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
         ivProfile = (ImageView) itemView.findViewById(R.id.iv_profile);
+        btnEdit = (Button) itemView.findViewById(R.id.btn_edit);
         itemView.setOnClickListener(this);
+        btnEdit.setOnClickListener(btnEditListener);
     }
 
     @Override
@@ -29,11 +33,24 @@ public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.On
         clickListener.onClick(v, position);
     }
 
+    private View.OnClickListener btnEditListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            clickListener.onClickEdit(v, position);
+        }
+    };
+
     public interface OnItemClickListener {
         void onClick(View view, int position);
+        void onClickEdit(View view, int position);
     }
 
     public void setOnItemClickListener(final OnItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    public void setOnItemClickEditListener(final OnItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
 }

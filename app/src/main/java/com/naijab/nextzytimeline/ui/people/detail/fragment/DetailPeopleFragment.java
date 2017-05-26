@@ -2,7 +2,9 @@ package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,15 +18,20 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
+import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
 import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
 
 public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentInterface.Presenter>
         implements DetailPeopleFragmentInterface.View {
 
-    private int id;
+    private int id, idSave;
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
     private ImageView profile, photo;
     private static final String ID = "id";
+    private Realm realm;
 
     public DetailPeopleFragment() {
         super();
@@ -63,19 +70,17 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void setupInstance() {
-        id = getArguments().getInt("id");
-        getPresenter().getPeopleDetail(id);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void setupView() {
-
     }
 
     @Override
     public void initialize() {
-
+        id = getArguments().getInt("id");
+        getRealm(id);
     }
 
     @Override
@@ -96,7 +101,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-
+        getRealm(id);
     }
 
     @Override
@@ -109,7 +114,11 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    @Override
+    private void getRealm(int id) {
+        PeopleModel people = PeopleManager.getInstance(realm).getPeople(id);
+        getPeopleByID(people);
+    }
+
     public void getPeopleByID(PeopleModel people) {
         nameAndLastName.setText(people.getName());
         job.setText(people.getJob());
@@ -120,6 +129,11 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         smartPhone.setText(people.getSmartPhone());
         setProfile(people.getProfile());
         setPhoto(people.getPhoto());
+    }
+
+    @Override
+    public void updateRecycler() {
+        getRealm(id);
     }
 
     private void setProfile(String urlProfile) {

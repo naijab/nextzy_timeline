@@ -5,13 +5,14 @@ import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
 import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 
 public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeopleFragmentInterface.View>
-        implements DetailPeopleFragmentInterface.Presenter{
+        implements DetailPeopleFragmentInterface.Presenter {
 
     Realm realm;
 
-    public static DetailPeopleFragmentInterface.Presenter create(){
+    public static DetailPeopleFragmentInterface.Presenter create() {
         return new DetailPeopleFragmentPresenter();
     }
 
@@ -27,9 +28,9 @@ public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeople
         realm.close();
     }
 
-    @Override
-    public void getPeopleDetail(int id) {
-        PeopleModel item = PeopleManager.getInstance(realm).getPeople(id);
-        getView().getPeopleByID(item);
-    }
+//    @Override
+//    public void getPeopleDetail(int id) {
+//        PeopleModel item = PeopleManager.getInstance(realm).getPeople(id);
+//        getView().getPeopleByID(item);
+//    }
 }
