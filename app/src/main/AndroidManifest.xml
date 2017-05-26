@@ -27,7 +27,7 @@
             android:label="@string/app_name"></activity>
 
         <activity
-            android:name=".ui.people.addform.PeopleActivity"
+            android:name=".ui.people.addform.AddPeopleActivity"
             android:label="@string/add_people">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
