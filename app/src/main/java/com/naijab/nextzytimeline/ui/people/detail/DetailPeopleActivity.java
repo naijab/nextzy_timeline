@@ -1,18 +1,19 @@
 package com.naijab.nextzytimeline.ui.people.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
-import com.naijab.nextzytimeline.ui.people.addform.AddPeopleFragment;
 import com.naijab.nextzytimeline.ui.people.detail.fragment.DetailPeopleFragment;
 
 public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityInterface.Presenter>
         implements DetailPeopleActivityInterface.View {
 
     private Toolbar toolbar;
+    private int id;
 
     public DetailPeopleActivity() {
         super();
@@ -35,7 +36,8 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
 
     @Override
     public void setupInstance() {
-
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
 
     private void setupFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, DetailPeopleFragment.newInstance())
+                .replace(R.id.container, DetailPeopleFragment.newInstance(id))
                 .commit();
     }
 
