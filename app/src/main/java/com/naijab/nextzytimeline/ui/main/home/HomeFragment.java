@@ -16,6 +16,7 @@ import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -25,6 +26,7 @@ public class HomeFragment
 
     private RecyclerView recyclerView;
     private PeopleAdapter adapter;
+    private Realm realm;
     private RealmResults<PeopleModel> realmResults;
     private List<PeopleModel> peopleItem;
     private final static String ID = "id";
@@ -85,7 +87,7 @@ public class HomeFragment
     }
 
     private void setupRealm() {
-        realmResults = PeopleManager.getInstance().getPeople();
+        realmResults = PeopleManager.getInstance(realm).getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
     }
