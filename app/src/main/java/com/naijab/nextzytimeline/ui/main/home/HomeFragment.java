@@ -1,32 +1,33 @@
 package com.naijab.nextzytimeline.ui.main.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.main.home.adapter.PeopleAdapter;
+import com.naijab.nextzytimeline.ui.people.detail.DetailPeopleActivity;
 import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
 import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class HomeFragment
         extends BaseMvpFragment<HomeFragmentInterface.Presenter>
-        implements HomeFragmentInterface.View {
+        implements HomeFragmentInterface.View, RealmChangeListener {
 
     private RecyclerView recyclerView;
-    private RealmResults<PeopleModel> realmResults;
-    private Realm realm;
-    private List<PeopleModel> peopleItem;
     private PeopleAdapter adapter;
+    private RealmResults<PeopleModel> realmResults;
+    private List<PeopleModel> peopleItem;
+    private final static String ID = "id";
 
     public HomeFragment() {
         super();
@@ -66,7 +67,6 @@ public class HomeFragment
 
     @Override
     public void initialize() {
-
     }
 
     @Override
@@ -85,7 +85,6 @@ public class HomeFragment
     }
 
     private void setupRealm() {
-        realm = Realm.getDefaultInstance();
         realmResults = PeopleManager.getInstance().getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
@@ -104,11 +103,23 @@ public class HomeFragment
         adapter.setOnClickPeopleItem(new PeopleAdapter.OnAdapterListener() {
             @Override
             public void onClickAdapter(List<PeopleModel> item, int position) {
-                Toast.makeText(getActivity(), "" + item.get(position).getName() + position, Toast.LENGTH_SHORT).show();
+                getPresenter().peopleItem(item, position);
             }
         });
     }
 
 
+    @Override
+    public void goToDetailActivity(List<PeopleModel> item, int position) {
+        Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
+        intent.putExtra(ID, item.get(position).getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onChange(Object element) {
+        adapter.notifyDataSetChanged();
+        setupRecyclerView();
+    }
 }
 
