@@ -1,9 +1,13 @@
 package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,9 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
+import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
 import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
-
-import java.util.List;
 
 public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentInterface.Presenter>
         implements DetailPeopleFragmentInterface.View {
@@ -21,6 +24,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     private int id;
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
     private ImageView profile, photo;
+    private static final String ID = "id";
 
     public DetailPeopleFragment() {
         super();
@@ -61,6 +65,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     public void setupInstance() {
         id = getArguments().getInt("id");
         getPresenter().getPeopleDetail(id);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -71,6 +76,22 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public void initialize() {
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.app_bar_edit:
+                Log.i("Detail", "onOptionsItemSelected: app edit");
+                goToEditActivity();
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -99,7 +120,6 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         smartPhone.setText(people.getSmartPhone());
         setProfile(people.getProfile());
         setPhoto(people.getPhoto());
-
     }
 
     private void setProfile(String urlProfile) {
@@ -117,5 +137,14 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
                 .crossFade()
                 .into(photo);
     }
+
+
+    private void goToEditActivity() {
+        Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
+        intent.putExtra(ID, id);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
 }
 

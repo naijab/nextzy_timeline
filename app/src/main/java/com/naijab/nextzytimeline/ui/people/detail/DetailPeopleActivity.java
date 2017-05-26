@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 
 import com.naijab.nextzytimeline.R;
@@ -28,7 +30,7 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
 
     @Override
     public int getLayoutView() {
-        return R.layout.activity_add;
+        return R.layout.activity_detail;
     }
 
     @Override
@@ -68,6 +70,13 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, DetailPeopleFragment.newInstance(id))
                 .commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_edit_people, menu);
+        return true;
     }
 
     @Override

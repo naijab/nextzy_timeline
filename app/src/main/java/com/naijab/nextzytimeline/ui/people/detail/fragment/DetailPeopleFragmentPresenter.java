@@ -29,7 +29,7 @@ public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeople
 
     @Override
     public void getPeopleDetail(int id) {
-        PeopleModel item = PeopleManager.getInstance().getPeople(id);
+        PeopleModel item = PeopleManager.getInstance(realm).getPeople(id);
         getView().getPeopleByID(item);
     }
 }
