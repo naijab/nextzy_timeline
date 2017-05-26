@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people;
+package com.naijab.nextzytimeline.ui.people.addform;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
-import com.naijab.nextzytimeline.ui.people.addform.AddPeopleFragment;
+import com.naijab.nextzytimeline.ui.people.addform.fragment.AddPeopleFragment;
 
 public class PeopleActivity extends BaseMvpActivity<PeopleActivityInterface.Presenter>
         implements PeopleActivityInterface.View {

@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people.addform;
+package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;

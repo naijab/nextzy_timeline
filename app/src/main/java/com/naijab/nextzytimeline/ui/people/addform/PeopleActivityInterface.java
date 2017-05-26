@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people;
+package com.naijab.nextzytimeline.ui.people.addform;
 
 import com.naijab.nextzytimeline.base.BaseMvpInterface;
 
