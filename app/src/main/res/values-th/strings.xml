@@ -22,5 +22,6 @@
 
     <string name="delete_success">ลบสำเร็จ</string>
     <string name="delete_error">ลบผิดพลาด</string>
+    <string name="detail_people">รายระเอียด</string>
 
 </resources>
