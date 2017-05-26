@@ -25,8 +25,11 @@
     <string name="delete_success">Delete Success</string>
     <string name="delete_error">Delete Error</string>
 
-    <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
+    <string name="ok">OK</string>
+    <string name="cancle">Cancle</string>
 
+    <string name="you_are_want_to_delete">Sure, for Delete?</string>
+    <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
     <string name="take_with">Take Photos With</string>
 
 </resources>

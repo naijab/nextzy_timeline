@@ -4,7 +4,7 @@
     <string name="take_photos">ถ่ายรูป</string>
     <string name="add_people">เพิ่มบุคลากร</string>
     <string name="delete_people">ลบบุคลากร</string>
-    <string name="edit_people">แก้ไขข้อมูลบุคลากร</string>
+    <string name="edit_people">แก้ไขข้อมูล</string>
 
     <string name="question_job">ตำแหน่งงาน</string>
     <string name="question_birthday">วันเกิด</string>
@@ -23,5 +23,9 @@
     <string name="delete_success">ลบสำเร็จ</string>
     <string name="delete_error">ลบผิดพลาด</string>
     <string name="detail_people">รายระเอียด</string>
+    <string name="take_with">ถ่ายด้วย</string>
+    <string name="you_are_want_to_delete">แน่ใจว่าต้องการลบ</string>
+    <string name="ok">ตกลง</string>
+    <string name="cancle">ยกเลิก</string>
 
 </resources>
