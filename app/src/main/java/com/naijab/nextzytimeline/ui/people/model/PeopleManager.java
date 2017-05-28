@@ -56,7 +56,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onDeleteError(error.getMessage());
+                callBack.onDeleteError(StringUtility.getDeleteError(context) + ": " +error.getMessage());
             }
         });
 
@@ -81,7 +81,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onDeleteError(error.getMessage());
+                callBack.onDeleteError(StringUtility.getDeleteError(context) + ": " + error.getMessage());
             }
         });
 
@@ -121,7 +121,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(error.getMessage());
+                callBack.onSaveError(StringUtility.getSaveError(context) + ": " +error.getMessage());
             }
         });
     }
@@ -164,7 +164,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(error.getMessage());
+                callBack.onSaveError(StringUtility.getSaveError(context) + ": " +error.getMessage());
             }
         });
     }
