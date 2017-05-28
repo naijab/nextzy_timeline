@@ -1,16 +1,13 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -23,7 +20,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -197,7 +193,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     @Override
     public void response(String message) {
         Log.i("EditFragment", "Response: " + message);
-        Toast.makeText(getActivity(), "Response: " + message, Toast.LENGTH_SHORT).show();
+        showToast(message);
     }
 
     @Override
