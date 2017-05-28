@@ -38,6 +38,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private ImageView profile, photo;
     private FloatingActionButton fabPhoto;
     private Uri uriProfile, uriPhoto;
+    private String nameS, dateBirthS, dateJobS, jobS, jobDescriptionS, gameS, smartPhoneS, photoS, profileS;
 
     private int mYear, mMonth, mDay;
     public static final int REQUEST_CAMERA_PROFILE = 11;
@@ -105,7 +106,12 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.app_bar_done:
-                saveToRealm();
+                if (checkIsEmpty()){
+                    saveToRealm();
+                }else {
+                    showToast(getString(R.string.error_form));
+                }
+
                 return true;
         }
         return false;
@@ -113,7 +119,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -126,28 +131,42 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    private boolean checkIsEmpty() {
+        if (nameAndLastName != null &&
+                dateBirth != null &&
+                dateJob != null &&
+                job != null &&
+                jobDescription != null &&
+                game != null &&
+                smartPhone != null &&
+                profileS != null &&
+                photoS != null) {
+            return true;
+        }
+        return false;
+    }
 
     private void saveToRealm() {
-        String name = nameAndLastName.getText().toString();
-        String dateBirthS = dateBirth.getText().toString();
-        String dateJob = this.dateJob.getText().toString();
-        String job = this.job.getText().toString();
-        String jobDescription = this.jobDescription.getText().toString();
-        String game = this.game.getText().toString();
-        String smartphone = this.smartPhone.getText().toString();
-        String profile = uriProfile.toString();
-        String photo = uriPhoto.toString();
+        nameS = nameAndLastName.getText().toString();
+        dateBirthS = dateBirth.getText().toString();
+        dateJobS = dateJob.getText().toString();
+        jobS = job.getText().toString();
+        jobDescriptionS = jobDescription.getText().toString();
+        gameS = game.getText().toString();
+        smartPhoneS = smartPhone.getText().toString();
+        profileS = uriProfile.toString();
+        photoS = uriPhoto.toString();
 
         PeopleModel people = new PeopleModel();
-        people.setName(name);
-        people.setProfile(profile);
-        people.setJob(job);
+        people.setName(nameS);
+        people.setJob(jobS);
         people.setBirthDay(dateBirthS);
-        people.setJobStart(dateJob);
-        people.setJobDescription(jobDescription);
-        people.setGame(game);
-        people.setSmartPhone(smartphone);
-        people.setPhoto(photo);
+        people.setJobStart(dateJobS);
+        people.setJobDescription(jobDescriptionS);
+        people.setGame(gameS);
+        people.setSmartPhone(smartPhoneS);
+        people.setProfile(profileS);
+        people.setPhoto(photoS);
         getPresenter().saveIntoRealm(people, getActivity());
     }
 
@@ -172,10 +191,10 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                     if (vv.getId() == R.id.edt_birthday) {
-                        setDateBirth(year, month+1, dayOfMonth);
+                        setDateBirth(year, month + 1, dayOfMonth);
                     }
                     if (vv.getId() == R.id.edt_startjob) {
-                        setDateJob(year, month+1, dayOfMonth);
+                        setDateJob(year, month + 1, dayOfMonth);
                     }
                 }
             }, mYear, mMonth, mDay);
@@ -228,8 +247,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
                 Log.e("AddPeople", "" + e.getMessage());
             }
-        }
-        else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
             getActivity().getContentResolver().notifyChange(uriPhoto, null);
             ContentResolver contentResolver = getActivity().getContentResolver();
             try {
@@ -258,11 +276,10 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         dateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
     }
 
-
     @Override
     public void response(String message) {
         Log.i("AddFragment", "Response: " + message);
-        Toast.makeText(getActivity(), "Response: "+ message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), " " + message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
