@@ -27,5 +27,6 @@
     <string name="you_are_want_to_delete">แน่ใจว่าต้องการลบ</string>
     <string name="ok">ตกลง</string>
     <string name="cancle">ยกเลิก</string>
+    <string name="error_form">กรุณากรอกให้ครบ</string>
 
 </resources>

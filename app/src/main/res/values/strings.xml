@@ -25,6 +25,7 @@
     <string name="delete_success">Delete Success</string>
     <string name="delete_error">Delete Error</string>
 
+    <string name="error_form">Please fill all</string>
     <string name="ok">OK</string>
     <string name="cancle">Cancle</string>
 
