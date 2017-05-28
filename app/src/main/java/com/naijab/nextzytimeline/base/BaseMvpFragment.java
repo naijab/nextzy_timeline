@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
@@ -113,6 +114,10 @@ public abstract class BaseMvpFragment<P extends BaseMvpInterface.Presenter>
       InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
       imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+  }
+
+  public void showToast(String message){
+      Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
   }
 
 }
