@@ -6,5 +6,6 @@
   <color name="colorAccentDark">#FFA000</color>
   <color name="colorGreyDark">#212121</color>
   <color name="colorGreyDarker">#181818</color>
-  <color name="colorRed">#d50000</color>
+  <color name="colorRed">#F44336</color>
+  <color name="colorRedDark">#E53935</color>
 </resources>
