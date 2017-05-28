@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/short_by_name"
+        android:title="@string/short_by_name"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/short_by_birthday"
+        android:title="@string/short_by_birthday"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/short_by_job_start"
+        android:title="@string/short_by_day_job"
+        app:showAsAction="never" />
+
+</menu>
