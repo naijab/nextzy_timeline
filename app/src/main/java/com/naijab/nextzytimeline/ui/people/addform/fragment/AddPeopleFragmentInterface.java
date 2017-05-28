@@ -19,7 +19,5 @@ public class AddPeopleFragmentInterface {
 
         void saveIntoRealm(PeopleModel peopleModel, Context context);
 
-        void deleteAllRealm(Context context);
-
     }
 }

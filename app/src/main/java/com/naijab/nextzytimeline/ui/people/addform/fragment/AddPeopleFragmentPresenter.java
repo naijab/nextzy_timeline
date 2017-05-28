@@ -46,19 +46,4 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
             }
         });
     }
-
-    @Override
-    public void deleteAllRealm(Context context) {
-        PeopleManager.getInstance(realm).deleteAll(context, new PeopleManager.onDeleteCallBack() {
-            @Override
-            public void onDeleteSuccess(String message) {
-                getView().response(message);
-            }
-
-            @Override
-            public void onDeleteError(String message) {
-                getView().response(message);
-            }
-        });
-    }
 }
