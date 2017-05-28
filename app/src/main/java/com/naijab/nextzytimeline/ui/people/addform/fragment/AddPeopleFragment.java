@@ -139,8 +139,8 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                 jobDescription != null &&
                 game != null &&
                 smartPhone != null &&
-                profileS != null &&
-                photoS != null) {
+                uriProfile != null &&
+                uriPhoto != null) {
             return true;
         }
         return false;
