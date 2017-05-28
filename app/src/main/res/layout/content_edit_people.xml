@@ -21,8 +21,8 @@
                 android:id="@+id/iv_profile"
                 android:layout_width="@dimen/form_profile"
                 android:layout_height="@dimen/form_profile"
-                android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
                 android:src="@color/colorAccent" />
 
             <LinearLayout
@@ -175,10 +175,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/photo_layout"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/default_padding_margin_extra_extra_large"
-                android:background="@color/colorRed"
-                android:textColor="@android:color/white"
-                android:text="@string/delete_people" />
+                android:background="@drawable/btn_active_selector"
+                android:drawablePadding="@dimen/default_padding_margin"
+                android:drawableStart="@drawable/ic_action_cancel"
+                android:padding="@dimen/default_padding_margin"
+                android:text="@string/delete_people"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
