@@ -27,7 +27,7 @@ import io.realm.RealmChangeListener;
 public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentInterface.Presenter>
         implements DetailPeopleFragmentInterface.View {
 
-    private int id, idSave;
+    private int id;
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
     private ImageView profile, photo;
     private static final String ID = "id";
@@ -101,12 +101,15 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-        getRealm(id);
+        int idSave = savedInstanceState.getInt("saveID", 0);
+        id = idSave;
+        getRealm(idSave);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("saveID", id);
     }
 
     @Override
