@@ -105,7 +105,7 @@ public class HomeFragment
     private void setupRecyclerView() {
         adapter = new PeopleAdapter(getActivity(), peopleItem);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         onClick();
