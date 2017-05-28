@@ -22,9 +22,6 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
     public void onViewStart() {
         super.onViewStart();
         realm = Realm.getDefaultInstance();
-//        int num = PeopleManager.getInstance().getPeople().size();
-//        getView().response("Size of data: " + num);
-//        Log.i("Yess", "Delete All");
     }
 
     @Override
