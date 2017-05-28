@@ -6,6 +6,7 @@ import com.naijab.nextzytimeline.utility.StringUtility;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class PeopleManager {
 
@@ -34,6 +35,24 @@ public class PeopleManager {
         realm = Realm.getDefaultInstance();
         return realm.where(PeopleModel.class)
                 .findAll();
+    }
+
+    public RealmResults<PeopleModel> getPeopleByName() {
+        realm = Realm.getDefaultInstance();
+        return realm.where(PeopleModel.class)
+                .findAllSorted("name", Sort.ASCENDING);
+    }
+
+    public RealmResults<PeopleModel> getPeopleByBirthday() {
+        realm = Realm.getDefaultInstance();
+        return realm.where(PeopleModel.class)
+                .findAllSorted("birthDay", Sort.ASCENDING);
+    }
+
+    public RealmResults<PeopleModel> getPeopleByJobStart() {
+        realm = Realm.getDefaultInstance();
+        return realm.where(PeopleModel.class)
+                .findAllSorted("jobStart", Sort.ASCENDING);
     }
 
     public PeopleModel getPeople(int id) {
