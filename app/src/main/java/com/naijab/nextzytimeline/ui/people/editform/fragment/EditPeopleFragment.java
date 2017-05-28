@@ -300,12 +300,12 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle(getString(R.string.you_are_want_to_delete))
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancle), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialoginterface, int i) {
                         dialoginterface.cancel();
                     }
                 })
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialoginterface, int i) {
                         getPresenter().deleteByID(id, getActivity());
                     }
