@@ -129,12 +129,15 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-
+        int idSave = savedInstanceState.getInt("saveID", 0);
+        id = idSave;
+        getPresenter().getPeople(idSave);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("saveID", id);
     }
 
     @Override
