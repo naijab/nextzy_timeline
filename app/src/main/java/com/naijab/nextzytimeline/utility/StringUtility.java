@@ -8,28 +8,23 @@ import com.naijab.nextzytimeline.R;
 public class StringUtility {
 
     @NonNull
-    public static String getHomeString(Context context) {
-        return context.getResources().getString(R.string.tab_home);
-    }
-
-    @NonNull
-    public static String getAboutString(Context context) {
-        return context.getResources().getString(R.string.tab_about);
-    }
-
-    @NonNull
-    public static String getContactString(Context context) {
-        return context.getResources().getString(R.string.tab_contact);
-    }
-
-    @NonNull
     public static String getSaveSuccess(Context context) {
         return context.getResources().getString(R.string.save_success);
     }
 
     @NonNull
+    public static String getSaveError(Context context) {
+        return context.getResources().getString(R.string.save_error);
+    }
+
+    @NonNull
     public static String getDeleteSuccess(Context context){
         return context.getResources().getString(R.string.delete_success);
+    }
+
+    @NonNull
+    public static String getDeleteError(Context context){
+        return context.getResources().getString(R.string.delete_error);
     }
 
 }
