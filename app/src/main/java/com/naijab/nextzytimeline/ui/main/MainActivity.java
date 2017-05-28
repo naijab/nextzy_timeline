@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
 import com.naijab.nextzytimeline.ui.main.home.HomeFragment;
 import com.naijab.nextzytimeline.ui.people.addform.AddPeopleActivity;
-import com.naijab.nextzytimeline.ui.people.addform.fragment.AddPeopleFragment;
 
 public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presenter>
         implements MainActivityInterface.View {
@@ -83,6 +84,13 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
 
     @Override
     public void initialize() {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home_people, menu);
+        return true;
     }
 
     @Override
