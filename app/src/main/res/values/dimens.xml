@@ -8,6 +8,7 @@
 
     <dimen name="default_padding_margin_extra_small">2dp</dimen>
     <dimen name="default_padding_margin_small">4dp</dimen>
+    <dimen name="default_padding_margin_normal">6dp</dimen>
     <dimen name="default_padding_margin">8dp</dimen>
     <dimen name="default_padding_margin_large">16dp</dimen>
     <dimen name="default_padding_margin_extra_large">24dp</dimen>
@@ -17,6 +18,9 @@
     <dimen name="form_photo_height">170dp</dimen>
     <dimen name="form_photo_height_big">200dp</dimen>
     <dimen name="form_photo_height_large">250dp</dimen>
+
+    <dimen name="icon_edit_size">34dp</dimen>
+    <dimen name="profile_size">50dp</dimen>
 
     <dimen name="default_padding_of_screen">@dimen/default_padding_margin_large</dimen>
     <dimen name="default_corner">@dimen/default_padding_margin_small</dimen>
