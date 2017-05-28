@@ -121,7 +121,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getSaveError(context) + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getDeleteError(context) + ": " +error.getMessage());
             }
         });
     }
