@@ -17,7 +17,7 @@ public class AddPeopleFragmentInterface {
 
     public interface Presenter extends BaseMvpInterface.Presenter<AddPeopleFragmentInterface.View> {
 
-        void saveIntoRealm(PeopleModel peopleModel, Context context);
+        void saveIntoRealm(PeopleModel peopleModel);
 
     }
 }

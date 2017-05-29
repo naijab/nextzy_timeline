@@ -1,8 +1,5 @@
 package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
 import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
 import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
@@ -32,8 +29,8 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
 
 
     @Override
-    public void saveIntoRealm(PeopleModel peopleModel, Context context) {
-        PeopleManager.getInstance(realm).saveRealm(peopleModel, context, new PeopleManager.onSaveCallBack() {
+    public void saveIntoRealm(PeopleModel peopleModel) {
+        PeopleManager.getInstance(realm).saveRealm(peopleModel, new PeopleManager.onSaveCallBack() {
             @Override
             public void onSaveSuccess(String message) {
                 getView().response(message);

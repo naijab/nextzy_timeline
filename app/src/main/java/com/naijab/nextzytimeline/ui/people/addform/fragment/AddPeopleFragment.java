@@ -34,11 +34,12 @@ import static android.app.Activity.RESULT_OK;
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
-    private EditText nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
-    private ImageView profile, photo;
+    private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
+    private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
     private Uri uriProfile, uriPhoto;
-    private String nameS, dateBirthS, dateJobS, jobS, jobDescriptionS, gameS, smartPhoneS, photoS, profileS;
+    private String stringName, stringBirth, stringDateJob, stringJob,
+            stringJobDescription, stringGame, stringSmartPhone, stringPhoto, stringProfile;
 
     private int mYear, mMonth, mDay;
     public static final int REQUEST_CAMERA_PROFILE = 11;
@@ -67,15 +68,15 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void bindView(View view) {
-        nameAndLastName = (EditText) view.findViewById(R.id.edt_name_and_lastname);
-        job = (EditText) view.findViewById(R.id.edt_job);
-        dateBirth = (EditText) view.findViewById(R.id.edt_birthday);
-        dateJob = (EditText) view.findViewById(R.id.edt_startjob);
-        jobDescription = (EditText) view.findViewById(R.id.edt_job_description);
-        game = (EditText) view.findViewById(R.id.edt_game);
-        smartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
-        photo = (ImageView) view.findViewById(R.id.iv_photo);
-        profile = (ImageView) view.findViewById(R.id.iv_profile);
+        edtName = (EditText) view.findViewById(R.id.edt_name_and_lastname);
+        edtJob = (EditText) view.findViewById(R.id.edt_job);
+        edtDateBirth = (EditText) view.findViewById(R.id.edt_birthday);
+        edtDateJob = (EditText) view.findViewById(R.id.edt_startjob);
+        edtJobDescription = (EditText) view.findViewById(R.id.edt_job_description);
+        edtGame = (EditText) view.findViewById(R.id.edt_game);
+        edtSmartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
+        ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
+        ivProfile = (ImageView) view.findViewById(R.id.iv_profile);
         fabPhoto = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
@@ -86,9 +87,9 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void setupView() {
-        dateBirth.setOnClickListener(showDatePicker);
-        dateJob.setOnClickListener(showDatePicker);
-        profile.setOnClickListener(takeProfile);
+        edtDateBirth.setOnClickListener(showDatePicker);
+        edtDateJob.setOnClickListener(showDatePicker);
+        ivProfile.setOnClickListener(takeProfile);
         fabPhoto.setOnClickListener(takePhoto);
     }
 
@@ -132,13 +133,13 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     }
 
     private boolean checkIsEmpty() {
-        if (nameAndLastName != null &&
-                dateBirth != null &&
-                dateJob != null &&
-                job != null &&
-                jobDescription != null &&
-                game != null &&
-                smartPhone != null &&
+        if (edtName != null &&
+                edtDateBirth != null &&
+                edtDateJob != null &&
+                edtJob != null &&
+                edtJobDescription != null &&
+                edtGame != null &&
+                edtSmartPhone != null &&
                 uriProfile != null &&
                 uriPhoto != null) {
             return true;
@@ -147,27 +148,27 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     }
 
     private void saveToRealm() {
-        nameS = nameAndLastName.getText().toString();
-        dateBirthS = dateBirth.getText().toString();
-        dateJobS = dateJob.getText().toString();
-        jobS = job.getText().toString();
-        jobDescriptionS = jobDescription.getText().toString();
-        gameS = game.getText().toString();
-        smartPhoneS = smartPhone.getText().toString();
-        profileS = uriProfile.toString();
-        photoS = uriPhoto.toString();
+        stringName = edtName.getText().toString();
+        stringBirth = edtDateBirth.getText().toString();
+        stringDateJob = edtDateJob.getText().toString();
+        stringJob = edtJob.getText().toString();
+        stringJobDescription = edtJobDescription.getText().toString();
+        stringGame = edtGame.getText().toString();
+        stringSmartPhone = edtSmartPhone.getText().toString();
+        stringProfile = uriProfile.toString();
+        stringPhoto = uriPhoto.toString();
 
         PeopleModel people = new PeopleModel();
-        people.setName(nameS);
-        people.setJob(jobS);
-        people.setBirthDay(dateBirthS);
-        people.setJobStart(dateJobS);
-        people.setJobDescription(jobDescriptionS);
-        people.setGame(gameS);
-        people.setSmartPhone(smartPhoneS);
-        people.setProfile(profileS);
-        people.setPhoto(photoS);
-        getPresenter().saveIntoRealm(people, getActivity());
+        people.setName(stringName);
+        people.setJob(stringJob);
+        people.setBirthDay(stringBirth);
+        people.setJobStart(stringDateJob);
+        people.setJobDescription(stringJobDescription);
+        people.setGame(stringGame);
+        people.setSmartPhone(stringSmartPhone);
+        people.setProfile(stringProfile);
+        people.setPhoto(stringPhoto);
+        getPresenter().saveIntoRealm(people);
     }
 
 
@@ -239,7 +240,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
             ContentResolver contentResolver = getActivity().getContentResolver();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriProfile);
-                profile.setImageBitmap(bitmap);
+                ivProfile.setImageBitmap(bitmap);
 
                 Log.i("AddPeople", "Image: " + uriProfile.toString());
 
@@ -252,7 +253,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
             ContentResolver contentResolver = getActivity().getContentResolver();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriPhoto);
-                photo.setImageBitmap(bitmap);
+                ivPhoto.setImageBitmap(bitmap);
 
                 Log.i("AddPeople", "Image: " + uriPhoto.toString());
 
@@ -267,13 +268,13 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private void setDateBirth(int year,
                               int monthOfYear,
                               int dayOfMonth) {
-        dateBirth.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        edtDateBirth.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
     }
 
     private void setDateJob(int year,
                             int monthOfYear,
                             int dayOfMonth) {
-        dateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        edtDateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
     }
 
     @Override

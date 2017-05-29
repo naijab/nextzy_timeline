@@ -70,19 +70,18 @@ public class PeopleManager {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                callBack.onDeleteSuccess(StringUtility.getDeleteSuccess(context));
+                callBack.onDeleteSuccess(StringUtility.getDeleteSuccess());
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onDeleteError(StringUtility.getDeleteError(context) + ": " +error.getMessage());
+                callBack.onDeleteError(StringUtility.getDeleteError() + ": " +error.getMessage());
             }
         });
 
     }
 
     public void deleteByID(final int id,
-                           final Context context,
                            final onDeleteCallBack callBack) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -95,19 +94,18 @@ public class PeopleManager {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                callBack.onDeleteSuccess(StringUtility.getDeleteSuccess(context));
+                callBack.onDeleteSuccess(StringUtility.getDeleteSuccess());
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onDeleteError(StringUtility.getDeleteError(context) + ": " + error.getMessage());
+                callBack.onDeleteError(StringUtility.getDeleteError() + ": " + error.getMessage());
             }
         });
 
     }
 
     public void saveRealm(final PeopleModel peopleModel,
-                          final Context context,
                           final onSaveCallBack callBack) {
 
         resultRealm = realm.where(PeopleModel.class)
@@ -135,19 +133,18 @@ public class PeopleManager {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                callBack.onSaveSuccess(StringUtility.getSaveSuccess(context));
+                callBack.onSaveSuccess(StringUtility.getSaveSuccess());
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getDeleteError(context) + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getDeleteError() + ": " +error.getMessage());
             }
         });
     }
 
 
     public void editRealm(final PeopleModel peopleModel,
-                          final Context context,
                           final onEditCallBack callBack) {
 
 
@@ -177,16 +174,18 @@ public class PeopleManager {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                callBack.onSaveSuccess(StringUtility.getSaveSuccess(context));
+                callBack.onSaveSuccess(StringUtility.getSaveSuccess());
                 realm.close();
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getSaveError(context) + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getSaveError() + ": " +error.getMessage());
             }
         });
     }
+
+
 
 
     public interface onSaveCallBack {
