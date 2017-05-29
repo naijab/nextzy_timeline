@@ -1,7 +1,8 @@
 *.iml
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
+#ideafile
+/.idea
+# build
 /build
 .externalNativeBuild
 # Generated files
@@ -28,3 +29,5 @@ proguard/
 /gitpushcustom*.sh
 /gitpullpushcustom*.sh
 /fastlane/report.xml
+
+
