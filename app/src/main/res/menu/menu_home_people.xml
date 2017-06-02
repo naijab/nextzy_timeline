@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/short_by_latest"
+        android:title="@string/short_by_latest"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/short_by_name"
         android:title="@string/short_by_name"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/short_by_birthday"
-        android:title="@string/short_by_birthday"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/short_by_job_start"
-        android:title="@string/short_by_day_job"
+        android:id="@+id/short_by_position"
+        android:title="@string/short_by_position"
         app:showAsAction="never" />
 
 </menu>

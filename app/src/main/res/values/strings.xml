@@ -33,9 +33,9 @@
     <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
     <string name="take_with">Take Photos With</string>
 
+    <string name="short_by_latest">short by latest</string>
     <string name="short_by_name">short by name</string>
-    <string name="short_by_birthday">short by birthday</string>
-    <string name="short_by_day_job">short by job start</string>
+    <string name="short_by_position">short by position</string>
 
 
 
