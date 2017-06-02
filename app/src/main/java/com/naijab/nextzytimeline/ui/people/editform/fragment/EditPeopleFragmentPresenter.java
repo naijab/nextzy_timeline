@@ -36,9 +36,8 @@ public class EditPeopleFragmentPresenter extends BaseMvpPresenter<EditPeopleFrag
     }
 
     @Override
-    public void updateRealm(final PeopleModel people,
-                            final Context context) {
-       PeopleManager.getInstance(realm).editRealm(people, context, new PeopleManager.onEditCallBack() {
+    public void updateRealm(final PeopleModel people) {
+       PeopleManager.getInstance(realm).editRealm(people, new PeopleManager.onEditCallBack() {
            @Override
            public void onSaveSuccess(String message) {
                getView().response(message);
@@ -54,8 +53,8 @@ public class EditPeopleFragmentPresenter extends BaseMvpPresenter<EditPeopleFrag
     }
 
     @Override
-    public void deleteByID(int id, Context context) {
-        PeopleManager.getInstance(realm).deleteByID(id, context, new PeopleManager.onDeleteCallBack() {
+    public void deleteByID(int id) {
+        PeopleManager.getInstance(realm).deleteByID(id, new PeopleManager.onDeleteCallBack() {
             @Override
             public void onDeleteSuccess(String message) {
                 getView().response(message);

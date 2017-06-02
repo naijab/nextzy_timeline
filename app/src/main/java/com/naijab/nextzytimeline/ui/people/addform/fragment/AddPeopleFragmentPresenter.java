@@ -32,7 +32,7 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
 
     @Override
     public void saveIntoRealm(PeopleModel peopleModel, Context context) {
-        PeopleManager.getInstance(realm).saveRealm(peopleModel, context, new PeopleManager.onSaveCallBack() {
+        PeopleManager.getInstance(realm).saveRealm(peopleModel, new PeopleManager.onSaveCallBack() {
             @Override
             public void onSaveSuccess(String message) {
                 getView().response(message);

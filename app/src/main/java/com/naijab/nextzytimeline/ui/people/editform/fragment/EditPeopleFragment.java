@@ -275,7 +275,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             people.setPhoto(stringPhoto);
             people.setProfile(stringProfile);
 
-            getPresenter().updateRealm(people, getActivity());
+            getPresenter().updateRealm(people);
 
         } else {
             PeopleModel people = new PeopleModel();
@@ -290,7 +290,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             people.setPhoto(stringPhoto);
             people.setProfile(stringProfile);
 
-            getPresenter().updateRealm(people, getActivity());
+            getPresenter().updateRealm(people);
         }
 
     }
@@ -306,7 +306,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
                 })
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialoginterface, int i) {
-                        getPresenter().deleteByID(id, getActivity());
+                        getPresenter().deleteByID(id);
                     }
                 }).show();
     }

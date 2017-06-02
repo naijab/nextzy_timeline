@@ -18,8 +18,8 @@ public class EditPeopleFragmentInterface {
     public interface Presenter extends BaseMvpInterface.Presenter<EditPeopleFragmentInterface.View> {
         void getPeople(int id);
 
-        void updateRealm(PeopleModel people,  Context context);
+        void updateRealm(PeopleModel people);
 
-        void deleteByID(int id, Context context);
+        void deleteByID(int id);
     }
 }
