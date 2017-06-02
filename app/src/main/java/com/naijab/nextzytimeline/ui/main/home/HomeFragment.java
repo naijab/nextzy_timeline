@@ -93,7 +93,6 @@ public class HomeFragment
         switch (item.getItemId()) {
             case R.id.short_by_latest:
                 setupRealmByLatest();
-
                 return true;
             case R.id.short_by_name:
                 setupRealmByName();
