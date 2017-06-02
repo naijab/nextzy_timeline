@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

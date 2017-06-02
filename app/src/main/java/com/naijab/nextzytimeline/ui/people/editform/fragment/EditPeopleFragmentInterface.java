@@ -3,7 +3,7 @@ package com.naijab.nextzytimeline.ui.people.editform.fragment;
 import android.content.Context;
 
 import com.naijab.nextzytimeline.base.BaseMvpInterface;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 public class EditPeopleFragmentInterface {
 

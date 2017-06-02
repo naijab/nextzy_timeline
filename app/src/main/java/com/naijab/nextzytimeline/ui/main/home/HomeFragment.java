@@ -14,8 +14,8 @@ import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.main.home.adapter.PeopleAdapter;
 import com.naijab.nextzytimeline.ui.people.detail.DetailPeopleActivity;
 import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
-import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 import java.util.ArrayList;
 import java.util.List;

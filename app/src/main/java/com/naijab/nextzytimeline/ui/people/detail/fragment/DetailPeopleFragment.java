@@ -2,9 +2,7 @@ package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,11 +16,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
-import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 
 public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentInterface.Presenter>
         implements DetailPeopleFragmentInterface.View {

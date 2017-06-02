@@ -1,12 +1,8 @@
 package com.naijab.nextzytimeline.ui.main.home;
 
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
-
-import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 
 public class HomeFragmentPresenter extends BaseMvpPresenter<HomeFragmentInterface.View>
         implements HomeFragmentInterface.Presenter {
