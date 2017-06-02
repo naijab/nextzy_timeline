@@ -28,8 +28,8 @@
     <string name="ok">ตกลง</string>
     <string name="cancle">ยกเลิก</string>
     <string name="error_form">กรุณากรอกให้ครบ</string>
-    <string name="short_by_birthday">เรียงตามวันเกิด</string>
-    <string name="short_by_day_job">เรียงตามวันเริ่มทำงาน</string>
     <string name="short_by_name">เรียงตามชื่อ</string>
+    <string name="short_by_latest">เรียงตามล่าสุด</string>
+    <string name="short_by_position">เรียงตามตำแหน่ง</string>
 
 </resources>

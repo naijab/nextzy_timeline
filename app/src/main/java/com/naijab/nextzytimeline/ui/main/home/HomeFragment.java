@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -70,8 +68,7 @@ public class HomeFragment
         realm.addChangeListener(new RealmChangeListener<Realm>() {
             @Override
             public void onChange(Realm element) {
-                setupRealm();
-                setupRecyclerView();
+                setupRealmByLatest();
             }
         });
     }
@@ -83,8 +80,7 @@ public class HomeFragment
 
     @Override
     public void initialize() {
-        setupRealm();
-        setupRecyclerView();
+        setupRealmByLatest();
     }
 
     @Override
@@ -95,14 +91,15 @@ public class HomeFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.short_by_latest:
+                setupRealmByLatest();
+
+                return true;
             case R.id.short_by_name:
                 setupRealmByName();
                 return true;
-            case R.id.short_by_birthday:
-                setupRealmByBirthday();
-                return true;
-            case R.id.short_by_job_start:
-                setupRealmByJobStart();
+            case R.id.short_by_position:
+                setupRealmByPosition();
                 return true;
         }
         return false;
@@ -129,24 +126,19 @@ public class HomeFragment
         setupRecyclerView();
     }
 
-    private void setupRealmByJobStart() {
-        realmResults = PeopleManager.getInstance(realm).getPeopleByJobStart();
+    private void setupRealmByPosition() {
+        realmResults = PeopleManager.getInstance(realm).getPeopleByPosition();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerView();
     }
 
-    private void setupRealmByBirthday() {
-        realmResults = PeopleManager.getInstance(realm).getPeopleByBirthday();
-        peopleItem = new ArrayList<>();
-        peopleItem.addAll(realmResults.subList(0, realmResults.size()));
-        setupRecyclerView();
-    }
 
-    private void setupRealm() {
+    private void setupRealmByLatest() {
         realmResults = PeopleManager.getInstance(realm).getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
+        setupRecyclerView();
     }
 
     private void setupRecyclerView() {
