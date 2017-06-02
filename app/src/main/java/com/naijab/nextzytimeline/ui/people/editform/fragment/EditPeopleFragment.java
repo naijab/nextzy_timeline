@@ -38,8 +38,8 @@ import static android.app.Activity.RESULT_OK;
 public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterface.Presenter>
         implements EditPeopleFragmentInterface.View {
 
-    private EditText nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
-    private ImageView profile, photo;
+    private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
+    private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
     private Button btnDelete;
     private Uri uriProfile, uriPhoto;
@@ -76,15 +76,15 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void bindView(View view) {
-        nameAndLastName = (EditText) view.findViewById(R.id.edt_name_and_lastname);
-        job = (EditText) view.findViewById(R.id.edt_job);
-        dateBirth = (EditText) view.findViewById(R.id.edt_birthday);
-        dateJob = (EditText) view.findViewById(R.id.edt_startjob);
-        jobDescription = (EditText) view.findViewById(R.id.edt_job_description);
-        game = (EditText) view.findViewById(R.id.edt_game);
-        smartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
-        photo = (ImageView) view.findViewById(R.id.iv_photo);
-        profile = (ImageView) view.findViewById(R.id.iv_profile);
+        edtName = (EditText) view.findViewById(R.id.edt_name_and_lastname);
+        edtJob = (EditText) view.findViewById(R.id.edt_job);
+        edtDateBirth = (EditText) view.findViewById(R.id.edt_birthday);
+        edtDateJob = (EditText) view.findViewById(R.id.edt_startjob);
+        edtJobDescription = (EditText) view.findViewById(R.id.edt_job_description);
+        edtGame = (EditText) view.findViewById(R.id.edt_game);
+        edtSmartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
+        ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
+        ivProfile = (ImageView) view.findViewById(R.id.iv_profile);
         fabPhoto = (FloatingActionButton) view.findViewById(R.id.fab);
         btnDelete = (Button) view.findViewById(R.id.btn_delete);
     }
@@ -95,9 +95,9 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void setupView() {
-        dateBirth.setOnClickListener(showDatePicker);
-        dateJob.setOnClickListener(showDatePicker);
-        profile.setOnClickListener(takeProfile);
+        edtDateBirth.setOnClickListener(showDatePicker);
+        edtDateJob.setOnClickListener(showDatePicker);
+        ivProfile.setOnClickListener(takeProfile);
         fabPhoto.setOnClickListener(takePhoto);
         btnDelete.setOnClickListener(deletePeopleListener);
     }
@@ -152,7 +152,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             ContentResolver contentResolver = getActivity().getContentResolver();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriProfile);
-                profile.setImageBitmap(bitmap);
+                ivProfile.setImageBitmap(bitmap);
 
                 Log.i("EditPeople", "Image: " + uriProfile.toString());
 
@@ -165,7 +165,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             ContentResolver contentResolver = getActivity().getContentResolver();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriPhoto);
-                photo.setImageBitmap(bitmap);
+                ivPhoto.setImageBitmap(bitmap);
 
                 Log.i("EditPeople", "Image: " + uriPhoto.toString());
 
@@ -180,13 +180,13 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     private void setDateBirth(int year,
                               int monthOfYear,
                               int dayOfMonth) {
-        dateBirth.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        edtDateBirth.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
     }
 
     private void setDateJob(int year,
                             int monthOfYear,
                             int dayOfMonth) {
-        dateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        edtDateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
     }
 
     private void finishView() {
@@ -201,13 +201,13 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void getPeopleEdit(PeopleModel people) {
-        nameAndLastName.setText(people.getName());
-        job.setText(people.getJob());
-        dateBirth.setText(people.getBirthDay());
-        dateJob.setText(people.getJobStart());
-        jobDescription.setText(people.getJobDescription());
-        game.setText(people.getGame());
-        smartPhone.setText(people.getSmartPhone());
+        edtName.setText(people.getName());
+        edtJob.setText(people.getJob());
+        edtDateBirth.setText(people.getBirthDay());
+        edtDateJob.setText(people.getJobStart());
+        edtJobDescription.setText(people.getJobDescription());
+        edtGame.setText(people.getGame());
+        edtSmartPhone.setText(people.getSmartPhone());
 
         realmID = people.getId();
         stringName = people.getName();
@@ -220,8 +220,8 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
         stringProfile = people.getProfile();
         stringPhoto = people.getPhoto();
-        setProfile(stringProfile);
-        setPhoto(stringPhoto);
+        setIvProfile(stringProfile);
+        setIvPhoto(stringPhoto);
     }
 
     @Override
@@ -230,42 +230,42 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             finishView();
     }
 
-    private void setProfile(String urlProfile) {
+    private void setIvProfile(String urlProfile) {
         Glide.with(getActivity())
                 .load(urlProfile)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
-                .into(profile);
+                .into(ivProfile);
     }
 
-    private void setPhoto(String urlPhoto) {
+    private void setIvPhoto(String urlPhoto) {
         Glide.with(getActivity())
                 .load(urlPhoto)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
-                .into(photo);
+                .into(ivPhoto);
     }
 
     private void saveToRealm() {
 
-        if (nameAndLastName != null &&
-                dateBirth != null &&
-                dateJob != null &&
-                job != null &&
-                jobDescription != null &&
-                game != null &&
-                smartPhone != null) {
-            String name = nameAndLastName.getText().toString();
-            String dateBirthS = dateBirth.getText().toString();
-            String dateJobS = dateJob.getText().toString();
-            String jobS = job.getText().toString();
-            String jobDescriptionS = jobDescription.getText().toString();
-            String gameS = game.getText().toString();
-            String smartPhoneS = smartPhone.getText().toString();
+        if (edtName != null &&
+                edtDateBirth != null &&
+                edtDateJob != null &&
+                edtJob != null &&
+                edtJobDescription != null &&
+                edtGame != null &&
+                edtSmartPhone != null) {
+            String nameS = edtName.getText().toString();
+            String dateBirthS = edtDateBirth.getText().toString();
+            String dateJobS = edtDateJob.getText().toString();
+            String jobS = edtJob.getText().toString();
+            String jobDescriptionS = edtJobDescription.getText().toString();
+            String gameS = edtGame.getText().toString();
+            String smartPhoneS = edtSmartPhone.getText().toString();
 
             PeopleModel people = new PeopleModel();
             people.setId(realmID);
-            people.setName(name);
+            people.setName(nameS);
             people.setJob(jobS);
             people.setBirthDay(dateBirthS);
             people.setJobStart(dateJobS);
