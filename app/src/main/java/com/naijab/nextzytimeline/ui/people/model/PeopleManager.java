@@ -34,7 +34,7 @@ public class PeopleManager {
     public RealmResults<PeopleModel> getPeople() {
         realm = Realm.getDefaultInstance();
         return realm.where(PeopleModel.class)
-                .findAll();
+                .findAllSorted("id", Sort.DESCENDING);
     }
 
     public RealmResults<PeopleModel> getPeopleByName() {
@@ -43,16 +43,10 @@ public class PeopleManager {
                 .findAllSorted("name", Sort.ASCENDING);
     }
 
-    public RealmResults<PeopleModel> getPeopleByBirthday() {
+    public RealmResults<PeopleModel> getPeopleByPosition() {
         realm = Realm.getDefaultInstance();
         return realm.where(PeopleModel.class)
-                .findAllSorted("birthDay", Sort.ASCENDING);
-    }
-
-    public RealmResults<PeopleModel> getPeopleByJobStart() {
-        realm = Realm.getDefaultInstance();
-        return realm.where(PeopleModel.class)
-                .findAllSorted("jobStart", Sort.ASCENDING);
+                .findAllSorted("job", Sort.ASCENDING);
     }
 
     public PeopleModel getPeople(int id) {
