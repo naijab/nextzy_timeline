@@ -31,5 +31,7 @@
     <string name="short_by_name">เรียงตามชื่อ</string>
     <string name="short_by_latest">เรียงตามล่าสุด</string>
     <string name="short_by_position">เรียงตามตำแหน่ง</string>
+    <string name="show_in_grid">เรียงแบบกริด</string>
+    <string name="show_in_list">เรียงแบบรายการ</string>
 
 </resources>
