@@ -2,10 +2,6 @@
 
     <string name="app_name" translatable="false">NextzyTime</string>
 
-    <string name="tab_home">HOME</string>
-    <string name="tab_about">ABOUT</string>
-    <string name="tab_contact">CONTACT</string>
-
     <string name="take_photos">Take Photo</string>
     <string name="edit_people">Edit People</string>
     <string name="delete_people">Delete People</string>
@@ -37,6 +33,7 @@
     <string name="short_by_name">short by name</string>
     <string name="short_by_position">short by position</string>
 
+    <string name="show_in">show in</string>
     <string name="show_in_list">show in list</string>
     <string name="show_in_grid">show in grid</string>
 </resources>
