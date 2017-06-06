@@ -13,6 +13,7 @@
     <string name="question_why_choose_this_job">ทำไมถึงเลือกทำตำแหน่งนี้</string>
     <string name="question_why_choose_this_phone">ยี่ห้อของมือถือที่ใช้</string>
     <string name="save_success">บันทึกสำเร้จ</string>
+    <!-- TODO บันทึกผิดพลาด -->
     <string name="save_error">บันทุกผิดพลาด</string>
     <string name="delete_success">ลบสำเร็จ</string>
     <string name="delete_error">ลบผิดพลาด</string>

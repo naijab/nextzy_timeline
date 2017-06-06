@@ -7,6 +7,7 @@ import io.realm.Realm;
 public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeopleFragmentInterface.View>
         implements DetailPeopleFragmentInterface.Presenter {
 
+    // TODO Duplicated instance in DetailPeopleFragment
     private Realm realm;
 
     public static DetailPeopleFragmentInterface.Presenter create() {

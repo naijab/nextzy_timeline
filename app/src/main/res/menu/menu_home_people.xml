@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title=""
         android:id="@+id/setting"
         android:icon="@drawable/ic_setting"
+        android:title=""
         app:showAsAction="always">
         <menu>
+
+            <!-- TODO Recommended "@+id/menu_english" -->
             <item
                 android:id="@+id/change_to_english"
                 android:title="@string/change_to_english"
                 app:showAsAction="never" />
+
+            <!-- TODO Recommended "@+id/menu_thai" -->
             <item
                 android:id="@+id/change_to_thai"
                 android:title="@string/change_to_thai"
@@ -19,16 +23,19 @@
         </menu>
     </item>
 
+    <!-- TODO Recommended "@+id/sort_by_latest" -->
     <item
         android:id="@+id/short_by_latest"
         android:title="@string/short_by_latest"
         app:showAsAction="never" />
 
+    <!-- TODO Recommended "@+id/sort_by_name" -->
     <item
         android:id="@+id/short_by_name"
         android:title="@string/short_by_name"
         app:showAsAction="never" />
 
+    <!-- TODO Recommended "@+id/sort_by_position" -->
     <item
         android:id="@+id/short_by_position"
         android:title="@string/short_by_position"

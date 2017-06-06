@@ -50,12 +50,15 @@ public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityIn
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    // TODO rannable ==> rannable
     private void delayHandler(Runnable rannable) {
         Handler handler = new Handler();
         handler.postDelayed(rannable, DELAY_TIME);
     }
 
     private void goToMainActivity() {
+        // TODO When user has minimize the application before this code was called.
+        // TODO It will force the device to open MainActivity. That's annoyed to user
         delayHandler(new Runnable() {
             @Override
             public void run() {

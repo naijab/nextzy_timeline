@@ -11,6 +11,7 @@ import io.realm.Realm;
 public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragmentInterface.View>
         implements AddPeopleFragmentInterface.Presenter {
 
+    // TODO Realm doesn't pure java code. This class should be in view, not presenter
     private Realm realm;
 
     public static AddPeopleFragmentInterface.Presenter create() {

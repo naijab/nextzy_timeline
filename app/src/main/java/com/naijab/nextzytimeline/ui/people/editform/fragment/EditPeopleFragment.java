@@ -46,8 +46,10 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     private int id;
     private int realmID;
 
-    private String stringProfile, stringPhoto;
+    // TODO prefix "string" to all String variable? What's about String variable in AddPeopleFragment.java?
     private String stringName, stringJob, stringBirth, stringStartJob, stringJobDescription, stringGame, stringSmartPhone;
+    private String stringProfile, stringPhoto;
+    // TODO Useless variable
     private int mYear, mMonth, mDay;
     public static final int REQUEST_CAMERA_PROFILE = 11;
     public static final int REQUEST_CAMERA_PHOTO = 12;
@@ -59,6 +61,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     public static EditPeopleFragment newInstance(int id) {
         EditPeopleFragment fragment = new EditPeopleFragment();
         Bundle args = new Bundle();
+        // TODO Don't hardcode the String key
         args.putInt("id", id);
         fragment.setArguments(args);
         return fragment;
@@ -105,6 +108,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     @Override
     public void initialize() {
         setHasOptionsMenu(true);
+        // TODO Don't hardcode the String key
         id = getArguments().getInt("id", 0);
         getPresenter().getPeople(id);
     }
@@ -129,6 +133,13 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
+        // TODO Should be called in onRestoreInstanceState(Bundle savedInstanceState)
+        /* TODO It would be better if you do like this
+         * id = savedInstanceState.getInt("saveID", 0);
+         * getRealm(id);
+         *
+         * TODO Say goodbye to useless "idSave" variable
+         */
         int idSave = savedInstanceState.getInt("saveID", 0);
         id = idSave;
         getPresenter().getPeople(idSave);
@@ -137,6 +148,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        // TODO Don't hardcode the String key
         outState.putInt("saveID", id);
     }
 
@@ -145,6 +157,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    // TODO Duplicated code (See AddPeopleFragment.java)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA_PROFILE && resultCode == RESULT_OK) {
@@ -209,6 +222,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         edtGame.setText(people.getGame());
         edtSmartPhone.setText(people.getSmartPhone());
 
+        // TODO Why don't store PeopleModel in global variable?
         realmID = people.getId();
         stringName = people.getName();
         stringJob = people.getJob();
@@ -217,9 +231,9 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         stringJobDescription = people.getJobDescription();
         stringGame = people.getGame();
         stringSmartPhone = people.getSmartPhone();
-
         stringProfile = people.getProfile();
         stringPhoto = people.getPhoto();
+
         setIvProfile(stringProfile);
         setIvPhoto(stringPhoto);
     }
@@ -247,7 +261,8 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     }
 
     private void saveToRealm() {
-
+        // TODO Null checking with View is useless
+        // TODO because you're already bound these view in bindView()
         if (edtName != null &&
                 edtDateBirth != null &&
                 edtDateJob != null &&
@@ -278,6 +293,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             getPresenter().updateRealm(people);
 
         } else {
+            // TODO These can be called? As above comment, EditText always not null
             PeopleModel people = new PeopleModel();
             people.setId(realmID);
             people.setName(stringName);
@@ -328,17 +344,23 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             mMonth = calendar.get(Calendar.MONTH);
             mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
+            // TODO Should be as a method
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+// TODO This code are useless. DatePickerDialog didn't updated to selected date when recall it.
                     calendar.set(Calendar.YEAR, year);
                     calendar.set(Calendar.MONTH, month);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+                    // TODO You can directly check the object type like this
+//                    if(vv == edtDateBirth) {
                     if (vv.getId() == R.id.edt_birthday) {
                         setDateBirth(year, month + 1, dayOfMonth);
                     }
+
+                    // TODO You can directly check the object type like this
+//                    if(vv == edtDateJob) {
                     if (vv.getId() == R.id.edt_startjob) {
                         setDateJob(year, month + 1, dayOfMonth);
                     }
@@ -348,6 +370,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         }
     };
 
+    // TODO Duplicated code (See AddPeopleFragment.java)
     private View.OnClickListener takeProfile = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -366,6 +389,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         }
     };
 
+    // TODO Duplicated code (See AddPeopleFragment.java)
     private View.OnClickListener takePhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

@@ -42,7 +42,10 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
     @Override
     public void setupInstance() {
         Intent intent = getIntent();
+        // TODO Don't hardcode the String like this. Use constant (private static final ...)
         id = intent.getIntExtra("id", 0);
+
+        // TODO This code don't related to this method. Shall we move to setupView()?
         toolbarTitle.setText(getString(R.string.detail_people));
     }
 
@@ -82,11 +85,13 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        // TODO Save "id" variable
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        // TODO Restore "id" variable
     }
 
 }

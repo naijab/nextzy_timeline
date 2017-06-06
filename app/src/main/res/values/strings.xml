@@ -12,7 +12,9 @@
     <string name="question_job">Job Position</string>
     <string name="question_birthday">Birthday</string>
     <string name="question_date_start_job">Date to start job</string>
+    <!-- TODO Which game do you like? -->
     <string name="question_game_like">What is game you like?</string>
+    <!-- TODO Why do you decide to work as this job? -->
     <string name="question_why_choose_this_job">Why choose this job?</string>
     <string name="question_why_choose_this_phone">What\'s your smartphone?</string>
 
@@ -23,12 +25,16 @@
 
     <string name="error_form">Please fill all</string>
     <string name="ok">OK</string>
+
+    <!-- TODO Cancel -->
     <string name="cancle">Cancle</string>
 
+    <!-- TODO Do you want to delete? -->
     <string name="you_are_want_to_delete">Sure, for Delete?</string>
     <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
     <string name="take_with">Take Photos With</string>
 
+    <!-- TODO Sort by .... -->
     <string name="short_by_latest">short by latest</string>
     <string name="short_by_name">short by name</string>
     <string name="short_by_position">short by position</string>

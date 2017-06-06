@@ -7,6 +7,7 @@ import io.realm.Realm;
 public class HomeFragmentPresenter extends BaseMvpPresenter<HomeFragmentInterface.View>
         implements HomeFragmentInterface.Presenter {
 
+    // TODO Realm doesn't pure java code. This class should be in view, not presenter
     private Realm realm;
 
     public static HomeFragmentInterface.Presenter create() {

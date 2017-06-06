@@ -28,6 +28,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
     private ImageView profile, photo;
     private static final String ID = "id";
+    // TODO Duplicated instance in DetailPeopleFragmentPresenter
     private Realm realm;
 
     public DetailPeopleFragment() {
@@ -37,6 +38,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     public static DetailPeopleFragment newInstance(int id) {
         DetailPeopleFragment fragment = new DetailPeopleFragment();
         Bundle args = new Bundle();
+        // TODO Why hardcode the String, what's about ID constant?
         args.putInt("id", id);
         fragment.setArguments(args);
         return fragment;
@@ -98,6 +100,13 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
+        // TODO Should be called in onRestoreInstanceState(Bundle savedInstanceState)
+        /* TODO It would be better if you do like this
+         * id = savedInstanceState.getInt("saveID", 0);
+         * getRealm(id);
+         *
+         * TODO Say goodbye to useless "idSave" variable
+         */
         int idSave = savedInstanceState.getInt("saveID", 0);
         id = idSave;
         getRealm(idSave);
@@ -106,6 +115,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        // TODO Don't hardcode the String key
         outState.putInt("saveID", id);
     }
 
@@ -114,6 +124,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    // TODO Method name should be better
     private void getRealm(int id) {
         PeopleModel people = PeopleManager.getInstance(realm).getPeople(id);
         getPeopleByID(people);

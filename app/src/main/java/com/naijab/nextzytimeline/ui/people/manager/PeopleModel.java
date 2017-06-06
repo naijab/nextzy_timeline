@@ -6,7 +6,8 @@ import android.os.Parcelable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class PeopleModel extends RealmObject implements Parcelable{
+// TODO This class should be in "ui" package?
+public class PeopleModel extends RealmObject implements Parcelable {
 
     @PrimaryKey
     private int id;

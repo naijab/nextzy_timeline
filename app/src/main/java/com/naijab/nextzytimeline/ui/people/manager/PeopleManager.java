@@ -1,13 +1,12 @@
 package com.naijab.nextzytimeline.ui.people.manager;
 
-import android.content.Context;
-
 import com.naijab.nextzytimeline.utility.StringUtility;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
+// TODO This class should be in "ui" package?
 public class PeopleManager {
 
     private static PeopleManager peopleManager;
@@ -69,7 +68,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onDeleteError(StringUtility.getDeleteError() + ": " +error.getMessage());
+                callBack.onDeleteError(StringUtility.getDeleteError() + ": " + error.getMessage());
             }
         });
 
@@ -132,7 +131,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getDeleteError() + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getDeleteError() + ": " + error.getMessage());
             }
         });
     }
@@ -174,12 +173,10 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getSaveError() + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getSaveError() + ": " + error.getMessage());
             }
         });
     }
-
-
 
 
     public interface onSaveCallBack {

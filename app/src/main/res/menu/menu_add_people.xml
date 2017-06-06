@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- TODO Recommended "@+id/menu_add_person" (People for many person) -->
     <item
         android:id="@+id/app_bar_done"
         android:icon="@drawable/ic_done"
