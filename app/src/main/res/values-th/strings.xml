@@ -25,5 +25,7 @@
     <string name="short_by_name">เรียงตามชื่อ</string>
     <string name="short_by_latest">เรียงตามล่าสุด</string>
     <string name="short_by_position">เรียงตามตำแหน่ง</string>
+    <string name="change_to_english">ภาษาอังกฤษ</string>
+    <string name="change_to_thai">ภาษาไทย</string>
 
 </resources>
