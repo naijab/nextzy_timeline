@@ -5,7 +5,6 @@
     <string name="add_people">เพิ่มบุคลากร</string>
     <string name="delete_people">ลบบุคลากร</string>
     <string name="edit_people">แก้ไขข้อมูล</string>
-
     <string name="question_job">ตำแหน่งงาน</string>
     <string name="question_birthday">วันเกิด</string>
     <string name="question_date_start_job">วันที่เริ่มเข้าทำงาน</string>
@@ -13,16 +12,11 @@
     <string name="question_name">ชื่อ และ นามสกุล</string>
     <string name="question_why_choose_this_job">ทำไมถึงเลือกทำตำแหน่งนี้</string>
     <string name="question_why_choose_this_phone">ยี่ห้อของมือถือที่ใช้</string>
-
-    <string name="tab_about">เกี่ยวกับเรา</string>
-    <string name="tab_contact">ติดต่อเรา</string>
-    <string name="tab_home">หน้าแรก</string>
     <string name="save_success">บันทึกสำเร้จ</string>
     <string name="save_error">บันทุกผิดพลาด</string>
-
     <string name="delete_success">ลบสำเร็จ</string>
     <string name="delete_error">ลบผิดพลาด</string>
-    <string name="detail_people">รายระเอียด</string>
+    <string name="detail_people">รายละเอียด</string>
     <string name="take_with">ถ่ายด้วย</string>
     <string name="you_are_want_to_delete">แน่ใจว่าต้องการลบ</string>
     <string name="ok">ตกลง</string>
@@ -31,5 +25,7 @@
     <string name="short_by_name">เรียงตามชื่อ</string>
     <string name="short_by_latest">เรียงตามล่าสุด</string>
     <string name="short_by_position">เรียงตามตำแหน่ง</string>
+    <string name="change_to_english">ภาษาอังกฤษ</string>
+    <string name="change_to_thai">ภาษาไทย</string>
 
 </resources>

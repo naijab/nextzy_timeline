@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.naijab.nextzytimeline.R;
@@ -90,6 +91,19 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home_people, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.change_to_english:
+                setLanguage("en");
+                return true;
+            case R.id.change_to_thai:
+                setLanguage("th");
+                return true;
+        }
         return true;
     }
 
