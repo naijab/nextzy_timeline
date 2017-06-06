@@ -23,7 +23,7 @@
                 android:layout_height="@dimen/form_profile"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@color/colorAccent" />
+                android:src="@drawable/ic_profile_circle" />
 
             <LinearLayout
                 android:id="@+id/main_layout"
@@ -147,6 +147,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:background="@color/colorGreyDark"
                 android:id="@+id/photo_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,8 +158,8 @@
                     android:id="@+id/iv_photo"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/form_photo_height"
-                    android:scaleType="centerCrop"
-                    android:src="@color/colorGreyDark" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_selfie" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab"
