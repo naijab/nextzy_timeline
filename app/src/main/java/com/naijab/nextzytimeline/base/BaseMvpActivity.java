@@ -2,19 +2,20 @@ package com.naijab.nextzytimeline.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.akexorcist.localizationactivity.LocalizationActivity;
 import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
 
 public abstract class BaseMvpActivity<P extends BaseMvpInterface.Presenter>
-    extends AppCompatActivity
+    extends LocalizationActivity
     implements BaseMvpInterface.View {
 
   private P presenter;
 
   @SuppressWarnings("unchecked")
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
+  public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     presenter = createPresenter();
     presenter.attachView( this );

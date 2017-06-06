@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -38,8 +38,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
     private Uri uriProfile, uriPhoto;
-    private String stringName, stringBirth, stringDateJob, stringJob,
-            stringJobDescription, stringGame, stringSmartPhone, stringPhoto, stringProfile;
+    private String nameS, dateBirthS, dateJobS, jobS, jobDescriptionS, gameS, smartPhoneS, photoS, profileS;
 
     private int mYear, mMonth, mDay;
     public static final int REQUEST_CAMERA_PROFILE = 11;
@@ -148,26 +147,26 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     }
 
     private void saveToRealm() {
-        stringName = edtName.getText().toString();
-        stringBirth = edtDateBirth.getText().toString();
-        stringDateJob = edtDateJob.getText().toString();
-        stringJob = edtJob.getText().toString();
-        stringJobDescription = edtJobDescription.getText().toString();
-        stringGame = edtGame.getText().toString();
-        stringSmartPhone = edtSmartPhone.getText().toString();
-        stringProfile = uriProfile.toString();
-        stringPhoto = uriPhoto.toString();
+        nameS = edtName.getText().toString();
+        dateBirthS = edtDateBirth.getText().toString();
+        dateJobS = edtDateJob.getText().toString();
+        jobS = edtJob.getText().toString();
+        jobDescriptionS = edtJobDescription.getText().toString();
+        gameS = edtGame.getText().toString();
+        smartPhoneS = edtSmartPhone.getText().toString();
+        profileS = uriProfile.toString();
+        photoS = uriPhoto.toString();
 
         PeopleModel people = new PeopleModel();
-        people.setName(stringName);
-        people.setJob(stringJob);
-        people.setBirthDay(stringBirth);
-        people.setJobStart(stringDateJob);
-        people.setJobDescription(stringJobDescription);
-        people.setGame(stringGame);
-        people.setSmartPhone(stringSmartPhone);
-        people.setProfile(stringProfile);
-        people.setPhoto(stringPhoto);
+        people.setName(nameS);
+        people.setJob(jobS);
+        people.setBirthDay(dateBirthS);
+        people.setJobStart(dateJobS);
+        people.setJobDescription(jobDescriptionS);
+        people.setGame(gameS);
+        people.setSmartPhone(smartPhoneS);
+        people.setProfile(profileS);
+        people.setPhoto(photoS);
         getPresenter().saveIntoRealm(people);
     }
 

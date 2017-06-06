@@ -2,20 +2,24 @@ package com.naijab.nextzytimeline;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class NextzyApp extends Application {
+public class NextzyApp extends Application{
 
     private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initRealm();
         mContext = this;
+        initRealm();
+
+    }
+
+    public static Context getContext(){
+        return mContext;
     }
 
     private void initRealm() {
@@ -27,12 +31,4 @@ public class NextzyApp extends Application {
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
     }
-
-    public static Context getContext(){
-        return mContext;
-    }
-
-
-
-
 }

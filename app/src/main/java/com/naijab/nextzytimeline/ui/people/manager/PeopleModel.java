@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people.model;
+package com.naijab.nextzytimeline.ui.people.manager;
 
 import android.os.Parcel;
 import android.os.Parcelable;

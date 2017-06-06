@@ -3,9 +3,8 @@ package com.naijab.nextzytimeline.ui.people.editform.fragment;
 import android.content.Context;
 
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
-import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
-import com.naijab.nextzytimeline.utility.StringUtility;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 import io.realm.Realm;
 

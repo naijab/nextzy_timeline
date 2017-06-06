@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people.model;
+package com.naijab.nextzytimeline.ui.people.manager;
 
 import android.content.Context;
 
@@ -55,7 +55,7 @@ public class PeopleManager {
                 .findFirst();
     }
 
-    public void deleteAll(final Context context, final onDeleteCallBack callBack) {
+    public void deleteAll(final onDeleteCallBack callBack) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

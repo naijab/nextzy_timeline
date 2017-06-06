@@ -1,11 +1,8 @@
 package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
-import com.naijab.nextzytimeline.ui.people.model.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 
 public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeopleFragmentInterface.View>
         implements DetailPeopleFragmentInterface.Presenter {

@@ -18,12 +18,12 @@ public class StringUtility {
     }
 
     @NonNull
-    public static String getDeleteSuccess() {
+    public static String getDeleteSuccess(){
         return NextzyApp.getContext().getResources().getString(R.string.delete_success);
     }
 
     @NonNull
-    public static String getDeleteError() {
+    public static String getDeleteError(){
         return NextzyApp.getContext().getResources().getString(R.string.delete_error);
     }
 
