@@ -104,7 +104,7 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
                 setLanguage("th");
                 return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
