@@ -167,7 +167,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         people.setSmartPhone(smartPhoneS);
         people.setProfile(profileS);
         people.setPhoto(photoS);
-        getPresenter().saveIntoRealm(people);
+        getPresenter().saveIntoRealm(people, getActivity());
     }
 
 
