@@ -16,7 +16,7 @@
     <string name="save_error">บันทุกผิดพลาด</string>
     <string name="delete_success">ลบสำเร็จ</string>
     <string name="delete_error">ลบผิดพลาด</string>
-    <string name="detail_people">รายระเอียด</string>
+    <string name="detail_people">รายละเอียด</string>
     <string name="take_with">ถ่ายด้วย</string>
     <string name="you_are_want_to_delete">แน่ใจว่าต้องการลบ</string>
     <string name="ok">ตกลง</string>
