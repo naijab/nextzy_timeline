@@ -80,7 +80,6 @@ public class PeopleAdapter
 
     public interface OnAdapterListener {
         void onClickAdapter(List<PeopleModel> item, int position);
-        void onClickEditAdapter(List<PeopleModel> item, int position);
     }
 
     private PeopleViewHolder.OnItemClickListener clickPeople(final List<PeopleModel> item) {
@@ -89,13 +88,6 @@ public class PeopleAdapter
             public void onClick(View view, int position) {
                 if (listener != null) {
                     listener.onClickAdapter(item, position);
-                }
-            }
-
-            @Override
-            public void onClickEdit(View view, int position) {
-                if (listener != null) {
-                    listener.onClickEditAdapter(item, position);
                 }
             }
         };

@@ -162,20 +162,8 @@ public class HomeFragment
             public void onClickAdapter(List<PeopleModel> item, int position) {
                 goToDetailActivity(item, position);
             }
-
-            @Override
-            public void onClickEditAdapter(List<PeopleModel> item, int position) {
-                goToEditActivity(item, position);
-            }
         });
     }
-
-    private void goToEditActivity(List<PeopleModel> item, int position) {
-        Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
-        intent.putExtra(ID, item.get(position).getId());
-        startActivity(intent);
-    }
-
 
     public void goToDetailActivity(List<PeopleModel> item, int position) {
         Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
