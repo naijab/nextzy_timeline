@@ -32,8 +32,4 @@
     <string name="short_by_latest">short by latest</string>
     <string name="short_by_name">short by name</string>
     <string name="short_by_position">short by position</string>
-
-    <string name="show_in">show in</string>
-    <string name="show_in_list">show in list</string>
-    <string name="show_in_grid">show in grid</string>
 </resources>

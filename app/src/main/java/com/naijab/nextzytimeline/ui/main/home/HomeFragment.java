@@ -2,6 +2,8 @@ package com.naijab.nextzytimeline.ui.main.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -122,14 +124,14 @@ public class HomeFragment
         realmResults = PeopleManager.getInstance(realm).getPeopleByName();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
-        setupRecyclerView();
+        setupRecyclerViewToList();
     }
 
     private void setupRealmByPosition() {
         realmResults = PeopleManager.getInstance(realm).getPeopleByPosition();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
-        setupRecyclerView();
+        setupRecyclerViewToList();
     }
 
 
@@ -137,16 +139,21 @@ public class HomeFragment
         realmResults = PeopleManager.getInstance(realm).getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
-        setupRecyclerView();
+        setupRecyclerViewToList();
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerViewToList() {
         adapter = new PeopleAdapter(getActivity(), peopleItem);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(getLinearLayoutManager());
         recyclerView.setAdapter(adapter);
         onClick();
+    }
+
+    @NonNull
+    private LinearLayoutManager getLinearLayoutManager() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        return layoutManager;
     }
 
     private void onClick() {
