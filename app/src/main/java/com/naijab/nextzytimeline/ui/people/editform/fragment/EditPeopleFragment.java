@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
-import com.naijab.nextzytimeline.ui.people.model.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -220,8 +220,8 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
         stringProfile = people.getProfile();
         stringPhoto = people.getPhoto();
-        setProfile(stringProfile);
-        setPhoto(stringPhoto);
+        setIvProfile(stringProfile);
+        setIvPhoto(stringPhoto);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             finishView();
     }
 
-    private void setProfile(String urlProfile) {
+    private void setIvProfile(String urlProfile) {
         Glide.with(getActivity())
                 .load(urlProfile)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -238,7 +238,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
                 .into(ivProfile);
     }
 
-    private void setPhoto(String urlPhoto) {
+    private void setIvPhoto(String urlPhoto) {
         Glide.with(getActivity())
                 .load(urlPhoto)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -246,25 +246,16 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
                 .into(ivPhoto);
     }
 
-    private boolean editTextIsNull() {
+    private void saveToRealm() {
+
         if (edtName != null &&
                 edtDateBirth != null &&
                 edtDateJob != null &&
                 edtJob != null &&
                 edtJobDescription != null &&
                 edtGame != null &&
-                edtSmartPhone != null &&
-                uriProfile != null &&
-                uriPhoto != null){
-            return true;
-        }
-            return false;
-    }
-
-    private void saveToRealm() {
-
-        if (editTextIsNull()) {
-            String name = edtName.getText().toString();
+                edtSmartPhone != null) {
+            String nameS = edtName.getText().toString();
             String dateBirthS = edtDateBirth.getText().toString();
             String dateJobS = edtDateJob.getText().toString();
             String jobS = edtJob.getText().toString();
@@ -274,7 +265,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
 
             PeopleModel people = new PeopleModel();
             people.setId(realmID);
-            people.setName(name);
+            people.setName(nameS);
             people.setJob(jobS);
             people.setBirthDay(dateBirthS);
             people.setJobStart(dateJobS);
@@ -362,9 +353,9 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         public void onClick(View v) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            String imageFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
+            String imagFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
             File file = new File(Environment.getExternalStorageDirectory(),
-                    "DCIM/Camera/" + imageFilename);
+                    "DCIM/Camera/" + imagFilename);
             uriProfile = Uri.fromFile(file);
             if (uriProfile != null) {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
@@ -380,9 +371,9 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         public void onClick(View v) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            String imageFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
+            String imagFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
             File file = new File(Environment.getExternalStorageDirectory(),
-                    "DCIM/Camera/" + imageFilename);
+                    "DCIM/Camera/" + imagFilename);
             uriPhoto = Uri.fromFile(file);
             if (uriPhoto != null) {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
