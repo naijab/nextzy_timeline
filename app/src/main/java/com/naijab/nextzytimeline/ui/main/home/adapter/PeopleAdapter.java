@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import java.util.List;
 

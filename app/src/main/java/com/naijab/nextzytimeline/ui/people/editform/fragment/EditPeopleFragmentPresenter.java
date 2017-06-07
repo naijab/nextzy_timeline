@@ -1,8 +1,8 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
+import com.naijab.nextzytimeline.manager.PeopleManager;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import io.realm.Realm;
 

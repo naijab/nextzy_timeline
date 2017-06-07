@@ -1,7 +1,7 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
 import com.naijab.nextzytimeline.base.BaseMvpInterface;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 public class EditPeopleFragmentInterface {
 

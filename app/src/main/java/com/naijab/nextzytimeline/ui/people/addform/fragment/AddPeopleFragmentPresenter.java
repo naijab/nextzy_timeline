@@ -1,12 +1,8 @@
 package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
-import android.content.Context;
-
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
-
-import io.realm.Realm;
+import com.naijab.nextzytimeline.manager.PeopleManager;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragmentInterface.View>
         implements AddPeopleFragmentInterface.Presenter {
