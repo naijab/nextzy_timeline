@@ -1,6 +1,5 @@
 package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -133,8 +132,13 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     }
 
     @Override
-    public void updateRecycler() {
-        getPeopleFromRealm(id);
+    public void startRealm() {
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void stopRealm() {
+        realm.close();
     }
 
     private void setProfile(String urlProfile) {
@@ -152,7 +156,6 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
                 .crossFade()
                 .into(photo);
     }
-
 
     private void goToEditActivity() {
         Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
