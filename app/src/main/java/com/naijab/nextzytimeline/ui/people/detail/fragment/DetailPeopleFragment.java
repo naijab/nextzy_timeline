@@ -90,7 +90,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.app_bar_edit:
+            case R.id.menu_edit_person:
                 Log.i("Detail", "onOptionsItemSelected: app edit");
                 goToEditActivity();
                 return true;

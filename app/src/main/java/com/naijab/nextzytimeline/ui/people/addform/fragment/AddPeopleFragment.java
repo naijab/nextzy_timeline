@@ -112,7 +112,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.app_bar_done:
+            case R.id.menu_add_person:
                 // TODO You have to check each form then alert invalid form by form
                 // TODO User doesn't know which form that invalid.
                 // TODO e.g. I don't know that I have to add my profile photo in this form

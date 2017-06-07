@@ -2,9 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO Recommended "@+id/menu_edit_person" (People for many person) -->
     <item
-        android:id="@+id/app_bar_edit"
+        android:id="@+id/menu_edit_person"
         android:icon="@drawable/ic_action_edit"
         android:title=""
         app:showAsAction="always" />

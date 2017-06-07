@@ -121,7 +121,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.app_bar_done:
+            case R.id.menu_add_person:
                 saveToRealm();
                 return true;
             case R.id.home:
