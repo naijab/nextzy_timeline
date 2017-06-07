@@ -26,19 +26,19 @@
     <!-- TODO Recommended "@+id/sort_by_latest" -->
     <item
         android:id="@+id/short_by_latest"
-        android:title="@string/short_by_latest"
+        android:title="@string/sort_by_latest"
         app:showAsAction="never" />
 
     <!-- TODO Recommended "@+id/sort_by_name" -->
     <item
         android:id="@+id/short_by_name"
-        android:title="@string/short_by_name"
+        android:title="@string/sort_by_name"
         app:showAsAction="never" />
 
     <!-- TODO Recommended "@+id/sort_by_position" -->
     <item
         android:id="@+id/short_by_position"
-        android:title="@string/short_by_position"
+        android:title="@string/sort_by_position"
         app:showAsAction="never" />
 
 </menu>
