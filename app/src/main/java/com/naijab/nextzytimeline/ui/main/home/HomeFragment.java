@@ -168,5 +168,15 @@ public class HomeFragment
         intent.putExtra(ID, item.get(position).getId());
         startActivity(intent);
     }
+
+    @Override
+    public void startRealm() {
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void stopRealm() {
+        realm.close();
+    }
 }
 
