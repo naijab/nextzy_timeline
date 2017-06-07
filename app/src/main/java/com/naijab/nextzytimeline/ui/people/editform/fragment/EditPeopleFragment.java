@@ -1,14 +1,14 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -33,8 +33,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.RuntimePermissions;
+
 import static android.app.Activity.RESULT_OK;
 
+@RuntimePermissions
 public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterface.Presenter>
         implements EditPeopleFragmentInterface.View {
 
@@ -42,15 +47,14 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
     private Button btnDelete;
-    private Uri uriProfile, uriPhoto;
     private int id;
-    private int realmID;
+    private String nameS, dateBirthS, dateJobS, jobS, jobDescriptionS, gameS, smartPhoneS;
+    private String profileS, photoS;
 
-    // TODO prefix "string" to all String variable? What's about String variable in AddPeopleFragment.java?
-    private String stringName, stringJob, stringBirth, stringStartJob, stringJobDescription, stringGame, stringSmartPhone;
-    private String stringProfile, stringPhoto;
-    // TODO Useless variable
-    private int mYear, mMonth, mDay;
+    private static final String ID_PEOPLE = "id";
+    private static final String SAVE_ID = "saveID";
+    private static final String SAVE_PROFILE = "saveProfile";
+    private static final String SAVE_PHOTO = "savePhoto";
     public static final int REQUEST_CAMERA_PROFILE = 11;
     public static final int REQUEST_CAMERA_PHOTO = 12;
 
@@ -61,8 +65,7 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     public static EditPeopleFragment newInstance(int id) {
         EditPeopleFragment fragment = new EditPeopleFragment();
         Bundle args = new Bundle();
-        // TODO Don't hardcode the String key
-        args.putInt("id", id);
+        args.putInt(ID_PEOPLE, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -100,18 +103,37 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     public void setupView() {
         edtDateBirth.setOnClickListener(showDatePicker);
         edtDateJob.setOnClickListener(showDatePicker);
-        ivProfile.setOnClickListener(takeProfile);
-        fabPhoto.setOnClickListener(takePhoto);
         btnDelete.setOnClickListener(deletePeopleListener);
+        setupTakeCameraListener();
+    }
+
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void setupTakeCameraListener() {
+
+        ivProfile.setImageResource(R.drawable.ic_profile_circle);
+        ivPhoto.setImageResource(R.drawable.ic_selfie);
+
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeProfileFromCamera();
+            }
+        });
+        fabPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhotoFromCamera();
+            }
+        });
+    }
+
+    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void checkCamera() {
+        EditPeopleFragmentPermissionsDispatcher.setupTakeCameraListenerWithCheck(this);
     }
 
     @Override
-    public void initialize() {
-        setHasOptionsMenu(true);
-        // TODO Don't hardcode the String key
-        id = getArguments().getInt("id", 0);
-        getPresenter().getPeople(id);
-    }
+    public void initialize() {}
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -122,7 +144,11 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_person:
-                saveToRealm();
+                if (checkIsEmpty()) {
+                    saveToRealm();
+                } else {
+                    showToast(getString(R.string.error_form));
+                }
                 return true;
             case R.id.home:
                 finishView();
@@ -131,64 +157,53 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         return false;
     }
 
+    private boolean checkIsEmpty() {
+        if (edtName != null &&
+                edtDateBirth != null &&
+                edtDateJob != null &&
+                edtJob != null &&
+                edtJobDescription != null &&
+                edtGame != null &&
+                edtSmartPhone != null &&
+                profileS != null &&
+                photoS != null) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void restoreView(Bundle savedInstanceState) {
-        // TODO Should be called in onRestoreInstanceState(Bundle savedInstanceState)
-        /* TODO It would be better if you do like this
-         * id = savedInstanceState.getInt("saveID", 0);
-         * getRealm(id);
-         *
-         * TODO Say goodbye to useless "idSave" variable
-         */
-        int idSave = savedInstanceState.getInt("saveID", 0);
-        id = idSave;
-        getPresenter().getPeople(idSave);
+        getPresenter().getPeople(id);
+        if (profileS == null) {
+            ivPhoto.setImageResource(R.drawable.ic_profile_circle);
+        } else {
+            setIvProfile(profileS);
+        }
+
+        if (photoS == null) {
+            ivPhoto.setImageResource(R.drawable.ic_selfie);
+        } else {
+            setIvPhoto(photoS);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // TODO Don't hardcode the String key
-        outState.putInt("saveID", id);
+        outState.putInt(SAVE_ID, id);
+        outState.putString(SAVE_PROFILE, profileS);
+        outState.putString(SAVE_PHOTO, photoS);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        id = savedInstanceState.getInt(SAVE_ID, 0);
+        profileS = savedInstanceState.getString(SAVE_PROFILE);
+        photoS = savedInstanceState.getString(SAVE_PHOTO);
     }
 
-    // TODO Duplicated code (See AddPeopleFragment.java)
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CAMERA_PROFILE && resultCode == RESULT_OK) {
-            getActivity().getContentResolver().notifyChange(uriProfile, null);
-            ContentResolver contentResolver = getActivity().getContentResolver();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriProfile);
-                ivProfile.setImageBitmap(bitmap);
-
-                Log.i("EditPeople", "Image: " + uriProfile.toString());
-
-            } catch (Exception e) {
-
-                Log.e("EditPeople", "" + e.getMessage());
-            }
-        } else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
-            getActivity().getContentResolver().notifyChange(uriPhoto, null);
-            ContentResolver contentResolver = getActivity().getContentResolver();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriPhoto);
-                ivPhoto.setImageBitmap(bitmap);
-
-                Log.i("EditPeople", "Image: " + uriPhoto.toString());
-
-            } catch (Exception e) {
-
-                Log.e("EditPeople", "" + e.getMessage());
-            }
-        }
-
-    }
 
     private void setDateBirth(int year,
                               int monthOfYear,
@@ -213,7 +228,11 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     }
 
     @Override
-    public void getPeopleEdit(PeopleModel people) {
+    public void getPeopleEdit(PeopleModel peopleItem) {
+        setupFormPeople(peopleItem);
+    }
+
+    private void setupFormPeople(PeopleModel people) {
         edtName.setText(people.getName());
         edtJob.setText(people.getJob());
         edtDateBirth.setText(people.getBirthDay());
@@ -221,21 +240,10 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
         edtJobDescription.setText(people.getJobDescription());
         edtGame.setText(people.getGame());
         edtSmartPhone.setText(people.getSmartPhone());
-
-        // TODO Why don't store PeopleModel in global variable?
-        realmID = people.getId();
-        stringName = people.getName();
-        stringJob = people.getJob();
-        stringBirth = people.getBirthDay();
-        stringStartJob = people.getJobStart();
-        stringJobDescription = people.getJobDescription();
-        stringGame = people.getGame();
-        stringSmartPhone = people.getSmartPhone();
-        stringProfile = people.getProfile();
-        stringPhoto = people.getPhoto();
-
-        setIvProfile(stringProfile);
-        setIvPhoto(stringPhoto);
+        profileS = people.getProfile();
+        photoS = people.getPhoto();
+        setIvProfile(people.getProfile());
+        setIvPhoto(people.getPhoto());
     }
 
     @Override
@@ -261,25 +269,16 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
     }
 
     private void saveToRealm() {
-        // TODO Null checking with View is useless
-        // TODO because you're already bound these view in bindView()
-        if (edtName != null &&
-                edtDateBirth != null &&
-                edtDateJob != null &&
-                edtJob != null &&
-                edtJobDescription != null &&
-                edtGame != null &&
-                edtSmartPhone != null) {
-            String nameS = edtName.getText().toString();
-            String dateBirthS = edtDateBirth.getText().toString();
-            String dateJobS = edtDateJob.getText().toString();
-            String jobS = edtJob.getText().toString();
-            String jobDescriptionS = edtJobDescription.getText().toString();
-            String gameS = edtGame.getText().toString();
-            String smartPhoneS = edtSmartPhone.getText().toString();
+            nameS = edtName.getText().toString();
+            dateBirthS = edtDateBirth.getText().toString();
+            dateJobS = edtDateJob.getText().toString();
+            jobS = edtJob.getText().toString();
+            jobDescriptionS = edtJobDescription.getText().toString();
+            gameS = edtGame.getText().toString();
+            smartPhoneS = edtSmartPhone.getText().toString();
 
             PeopleModel people = new PeopleModel();
-            people.setId(realmID);
+            people.setId(id);
             people.setName(nameS);
             people.setJob(jobS);
             people.setBirthDay(dateBirthS);
@@ -287,32 +286,12 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             people.setJobDescription(jobDescriptionS);
             people.setGame(gameS);
             people.setSmartPhone(smartPhoneS);
-            people.setPhoto(stringPhoto);
-            people.setProfile(stringProfile);
-
+            people.setPhoto(photoS);
+            people.setProfile(profileS);
             getPresenter().updateRealm(people);
-
-        } else {
-            // TODO These can be called? As above comment, EditText always not null
-            PeopleModel people = new PeopleModel();
-            people.setId(realmID);
-            people.setName(stringName);
-            people.setJob(stringJob);
-            people.setBirthDay(stringBirth);
-            people.setJobStart(stringStartJob);
-            people.setJobDescription(stringJobDescription);
-            people.setGame(stringGame);
-            people.setSmartPhone(stringSmartPhone);
-            people.setPhoto(stringPhoto);
-            people.setProfile(stringProfile);
-
-            getPresenter().updateRealm(people);
-        }
-
     }
 
     private void showDeleteDialog() {
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle(getString(R.string.you_are_want_to_delete))
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -325,6 +304,52 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
                         getPresenter().deleteByID(id);
                     }
                 }).show();
+    }
+
+    private void takeProfileFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
+        File file = new File(Environment.getExternalStorageDirectory(),
+                "DCIM/Camera/" + imageFilename);
+        Uri uriProfile = Uri.fromFile(file);
+        if (uriProfile != null) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
+            startActivityForResult(Intent.createChooser(intent,
+                    getString(R.string.take_with)), REQUEST_CAMERA_PROFILE);
+            profileS = uriProfile.toString();
+        }
+    }
+
+    private void takePhotoFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
+        File file = new File(Environment.getExternalStorageDirectory(),
+                "DCIM/Camera/" + imageFilename);
+        Uri uriPhoto = Uri.fromFile(file);
+        if (uriPhoto != null) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
+            startActivityForResult(Intent.createChooser(intent,
+                    getString(R.string.take_with)), REQUEST_CAMERA_PHOTO);
+            photoS = uriPhoto.toString();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CAMERA_PROFILE && resultCode == RESULT_OK) {
+            setIvProfile(profileS);
+        } else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
+            setIvPhoto(photoS);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EditPeopleFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     private View.OnClickListener deletePeopleListener = new View.OnClickListener() {
@@ -340,73 +365,32 @@ public class EditPeopleFragment extends BaseMvpFragment<EditPeopleFragmentInterf
             hideKeyboard();
             final View vv = v;
             final Calendar calendar = Calendar.getInstance();
-            mYear = calendar.get(Calendar.YEAR);
-            mMonth = calendar.get(Calendar.MONTH);
-            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            final int mYear = calendar.get(Calendar.YEAR);
+            final int mMonth = calendar.get(Calendar.MONTH);
+            final int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-            // TODO Should be as a method
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-// TODO This code are useless. DatePickerDialog didn't updated to selected date when recall it.
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, month);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            getDatePicker(vv, mYear, mMonth, mDay);
+        }
+    };
 
-                    // TODO You can directly check the object type like this
-//                    if(vv == edtDateBirth) {
-                    if (vv.getId() == R.id.edt_birthday) {
-                        setDateBirth(year, month + 1, dayOfMonth);
-                    }
+    private void getDatePicker(final View vv, int mYear, int mMonth, int mDay) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                    // TODO You can directly check the object type like this
-//                    if(vv == edtDateJob) {
-                    if (vv.getId() == R.id.edt_startjob) {
-                        setDateJob(year, month + 1, dayOfMonth);
-                    }
+                if (vv.getId() == R.id.edt_birthday) {
+                    setDateBirth(year, month + 1, dayOfMonth);
                 }
-            }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        }
-    };
 
-    // TODO Duplicated code (See AddPeopleFragment.java)
-    private View.OnClickListener takeProfile = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            String imagFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
-            File file = new File(Environment.getExternalStorageDirectory(),
-                    "DCIM/Camera/" + imagFilename);
-            uriProfile = Uri.fromFile(file);
-            if (uriProfile != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
-                startActivityForResult(Intent.createChooser(intent,
-                        getString(R.string.take_with)), REQUEST_CAMERA_PROFILE);
-                stringProfile = uriProfile.toString();
+                if (vv.getId() == R.id.edt_startjob) {
+                    setDateJob(year, month + 1, dayOfMonth);
+                }
             }
-        }
-    };
+        }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
 
-    // TODO Duplicated code (See AddPeopleFragment.java)
-    private View.OnClickListener takePhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            String imagFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
-            File file = new File(Environment.getExternalStorageDirectory(),
-                    "DCIM/Camera/" + imagFilename);
-            uriPhoto = Uri.fromFile(file);
-            if (uriPhoto != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
-                startActivityForResult(Intent.createChooser(intent,
-                        getString(R.string.take_with)), REQUEST_CAMERA_PHOTO);
-                stringPhoto = uriPhoto.toString();
-            }
-        }
-    };
+
 
 }
 
