@@ -1,7 +1,5 @@
 package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
-import android.content.Context;
-
 import com.naijab.nextzytimeline.base.BaseMvpInterface;
 import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
 
