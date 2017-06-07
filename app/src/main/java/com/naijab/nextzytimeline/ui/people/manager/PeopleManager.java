@@ -15,13 +15,9 @@ public class PeopleManager {
     private Realm realm = Realm.getDefaultInstance();
     private int id = 0;
 
-    public PeopleManager(Realm realm) {
-        this.realm = realm;
-    }
-
-    public static PeopleManager getInstance(Realm realm) {
+    public static PeopleManager getInstance() {
         if (peopleManager == null) {
-            peopleManager = new PeopleManager(realm);
+            peopleManager = new PeopleManager();
         }
         return peopleManager;
     }

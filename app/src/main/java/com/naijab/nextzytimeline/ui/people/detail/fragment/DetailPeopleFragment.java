@@ -79,7 +79,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public void initialize() {
         id = getArguments().getInt("id");
-        getRealm(id);
+        getPeopleFromRealm(id);
     }
 
     @Override
@@ -103,13 +103,13 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         // TODO Should be called in onRestoreInstanceState(Bundle savedInstanceState)
         /* TODO It would be better if you do like this
          * id = savedInstanceState.getInt("saveID", 0);
-         * getRealm(id);
+         * getPeopleFromRealm(id);
          *
          * TODO Say goodbye to useless "idSave" variable
          */
         int idSave = savedInstanceState.getInt("saveID", 0);
         id = idSave;
-        getRealm(idSave);
+        getPeopleFromRealm(idSave);
     }
 
     @Override
@@ -124,9 +124,8 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    // TODO Method name should be better
-    private void getRealm(int id) {
-        PeopleModel people = PeopleManager.getInstance(realm).getPeople(id);
+    private void getPeopleFromRealm(int id) {
+        PeopleModel people = PeopleManager.getInstance().getPeople(id);
         getPeopleByID(people);
     }
 
@@ -144,7 +143,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void updateRecycler() {
-        getRealm(id);
+        getPeopleFromRealm(id);
     }
 
     private void setProfile(String urlProfile) {

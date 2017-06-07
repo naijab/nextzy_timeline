@@ -119,14 +119,14 @@ public class HomeFragment
     }
 
     private void setupRealmByName() {
-        realmResults = PeopleManager.getInstance(realm).getPeopleByName();
+        realmResults = PeopleManager.getInstance().getPeopleByName();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerViewToList();
     }
 
     private void setupRealmByPosition() {
-        realmResults = PeopleManager.getInstance(realm).getPeopleByPosition();
+        realmResults = PeopleManager.getInstance().getPeopleByPosition();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerViewToList();
@@ -134,7 +134,7 @@ public class HomeFragment
 
 
     private void setupRealmByLatest() {
-        realmResults = PeopleManager.getInstance(realm).getPeople();
+        realmResults = PeopleManager.getInstance().getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerViewToList();

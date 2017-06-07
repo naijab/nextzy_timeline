@@ -1,7 +1,5 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
-import android.content.Context;
-
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
 import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
 import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
@@ -31,13 +29,13 @@ public class EditPeopleFragmentPresenter extends BaseMvpPresenter<EditPeopleFrag
 
     @Override
     public void getPeople(int id) {
-        PeopleModel people = PeopleManager.getInstance(realm).getPeople(id);
+        PeopleModel people = PeopleManager.getInstance().getPeople(id);
         getView().getPeopleEdit(people);
     }
 
     @Override
     public void updateRealm(final PeopleModel people) {
-       PeopleManager.getInstance(realm).editRealm(people, new PeopleManager.onEditCallBack() {
+       PeopleManager.getInstance().editRealm(people, new PeopleManager.onEditCallBack() {
            @Override
            public void onSaveSuccess(String message) {
                getView().response(message);
@@ -54,7 +52,7 @@ public class EditPeopleFragmentPresenter extends BaseMvpPresenter<EditPeopleFrag
 
     @Override
     public void deleteByID(int id) {
-        PeopleManager.getInstance(realm).deleteByID(id, new PeopleManager.onDeleteCallBack() {
+        PeopleManager.getInstance().deleteByID(id, new PeopleManager.onDeleteCallBack() {
             @Override
             public void onDeleteSuccess(String message) {
                 getView().response(message);

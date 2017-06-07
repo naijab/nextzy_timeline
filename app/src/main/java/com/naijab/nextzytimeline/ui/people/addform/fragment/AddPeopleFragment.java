@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import io.realm.Realm;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
@@ -41,6 +42,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
+    private Realm realm;
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
@@ -212,7 +214,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         people.setSmartPhone(smartPhoneS);
         people.setProfile(profileS);
         people.setPhoto(photoS);
-        getPresenter().saveIntoRealm(people, getActivity());
+        getPresenter().saveIntoRealm(people);
     }
 
 
@@ -303,6 +305,16 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public void saveIsFinish(boolean isSuccess) {
         if (isSuccess)
             finishView();
+    }
+
+    @Override
+    public void startRealm() {
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void stopRealm() {
+        realm.close();
     }
 
     private void finishView() {
