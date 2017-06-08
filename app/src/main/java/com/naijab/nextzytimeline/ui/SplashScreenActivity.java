@@ -11,7 +11,10 @@ import com.naijab.nextzytimeline.ui.main.MainActivity;
 public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityInterface.Presenter>
         implements SplashScreenActivityInterface.View {
 
-    private static final long DELAY_TIME = 1000;
+    private Handler handler;
+    private Runnable runnable;
+    private long delayTime;
+    private long time = 1000L;
 
     @Override
     public SplashScreenActivityInterface.Presenter createPresenter() {
@@ -50,24 +53,31 @@ public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityIn
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    // TODO rannable ==> rannable
-    private void delayHandler(Runnable rannable) {
-        Handler handler = new Handler();
-        handler.postDelayed(rannable, DELAY_TIME);
-    }
 
     private void goToMainActivity() {
-        // TODO When user has minimize the application before this code was called.
-        // TODO It will force the device to open MainActivity. That's annoyed to user
-        delayHandler(new Runnable() {
-            @Override
+        handler = new Handler();
+        runnable = new Runnable() {
             public void run() {
                 Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
-        });
+        };
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        delayTime = time;
+        handler.postDelayed(runnable, delayTime);
+        time = System.currentTimeMillis();
+    }
+
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+        time = delayTime - (System.currentTimeMillis() - time);
     }
 }
 
