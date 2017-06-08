@@ -3,7 +3,6 @@ package com.naijab.nextzytimeline.ui.main.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -15,9 +14,8 @@ import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.main.home.adapter.PeopleAdapter;
 import com.naijab.nextzytimeline.ui.people.detail.DetailPeopleActivity;
-import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
+import com.naijab.nextzytimeline.manager.PeopleManager;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,13 +91,13 @@ public class HomeFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.short_by_latest:
+            case R.id.sort_by_latest:
                 setupRealmByLatest();
                 return true;
-            case R.id.short_by_name:
+            case R.id.sort_by_name:
                 setupRealmByName();
                 return true;
-            case R.id.short_by_position:
+            case R.id.sort_by_position:
                 setupRealmByPosition();
                 return true;
         }
@@ -121,14 +119,14 @@ public class HomeFragment
     }
 
     private void setupRealmByName() {
-        realmResults = PeopleManager.getInstance(realm).getPeopleByName();
+        realmResults = PeopleManager.getInstance().getPeopleByName();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerViewToList();
     }
 
     private void setupRealmByPosition() {
-        realmResults = PeopleManager.getInstance(realm).getPeopleByPosition();
+        realmResults = PeopleManager.getInstance().getPeopleByPosition();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerViewToList();
@@ -136,7 +134,7 @@ public class HomeFragment
 
 
     private void setupRealmByLatest() {
-        realmResults = PeopleManager.getInstance(realm).getPeople();
+        realmResults = PeopleManager.getInstance().getPeople();
         peopleItem = new ArrayList<>();
         peopleItem.addAll(realmResults.subList(0, realmResults.size()));
         setupRecyclerViewToList();
@@ -169,6 +167,16 @@ public class HomeFragment
         Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
         intent.putExtra(ID, item.get(position).getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void startRealm() {
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void stopRealm() {
+        realm.close();
     }
 }
 

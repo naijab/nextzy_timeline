@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people.manager;
+package com.naijab.nextzytimeline.manager;
 
 import com.naijab.nextzytimeline.utility.StringUtility;
 
@@ -6,7 +6,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-// TODO This class should be in "ui" package?
 public class PeopleManager {
 
     private static PeopleManager peopleManager;
@@ -15,13 +14,9 @@ public class PeopleManager {
     private Realm realm = Realm.getDefaultInstance();
     private int id = 0;
 
-    public PeopleManager(Realm realm) {
-        this.realm = realm;
-    }
-
-    public static PeopleManager getInstance(Realm realm) {
+    public static PeopleManager getInstance() {
         if (peopleManager == null) {
-            peopleManager = new PeopleManager(realm);
+            peopleManager = new PeopleManager();
         }
         return peopleManager;
     }

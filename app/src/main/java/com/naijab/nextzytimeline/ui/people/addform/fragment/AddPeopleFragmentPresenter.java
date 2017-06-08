@@ -1,18 +1,11 @@
 package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
-import android.content.Context;
-
 import com.naijab.nextzytimeline.base.BaseMvpPresenter;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
-
-import io.realm.Realm;
+import com.naijab.nextzytimeline.manager.PeopleManager;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragmentInterface.View>
         implements AddPeopleFragmentInterface.Presenter {
-
-    // TODO Realm doesn't pure java code. This class should be in view, not presenter
-    private Realm realm;
 
     public static AddPeopleFragmentInterface.Presenter create() {
         return new AddPeopleFragmentPresenter();
@@ -21,19 +14,19 @@ public class AddPeopleFragmentPresenter extends BaseMvpPresenter<AddPeopleFragme
     @Override
     public void onViewStart() {
         super.onViewStart();
-        realm = Realm.getDefaultInstance();
+        getView().startRealm();
     }
 
     @Override
     public void onViewStop() {
         super.onViewStop();
-        realm.close();
+        getView().stopRealm();
     }
 
 
     @Override
-    public void saveIntoRealm(PeopleModel peopleModel, Context context) {
-        PeopleManager.getInstance(realm).saveRealm(peopleModel, new PeopleManager.onSaveCallBack() {
+    public void saveIntoRealm(PeopleModel peopleModel) {
+        PeopleManager.getInstance().saveRealm(peopleModel, new PeopleManager.onSaveCallBack() {
             @Override
             public void onSaveSuccess(String message) {
                 getView().response(message);

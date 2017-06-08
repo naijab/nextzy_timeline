@@ -1,13 +1,13 @@
 package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.Menu;
@@ -19,9 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -29,25 +31,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import io.realm.Realm;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.RuntimePermissions;
+
 import static android.app.Activity.RESULT_OK;
 
+@RuntimePermissions
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
+    private Realm realm;
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
+    private String profileS, photoS;
 
-    // TODO Use String instead of Uri
-    private Uri uriProfile, uriPhoto;
-
-    // TODO These variable don't need to declare as global variable
-    // TODO Use "name", So you don't need to add "S" as postfix for String
-    // TODO "names" means array of name (Plural). So "nameS" can be confuse about variable type
-    private String nameS, dateBirthS, dateJobS, jobS, jobDescriptionS, gameS, smartPhoneS, photoS, profileS;
-    // TODO Why nameS, dateBirthS don't have "m" as prefix like this? e.g. mNameS, mDateBirthS, ...blah blah...
-    private int mYear, mMonth, mDay;
-
+    public static final String PROFILE_URI = "profile_uri";
+    public static final String PHOTO_URI = "photo_uri";
     public static final int REQUEST_CAMERA_PROFILE = 11;
     public static final int REQUEST_CAMERA_PHOTO = 12;
 
@@ -89,14 +91,39 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public void setupInstance() {
         setHasOptionsMenu(true);
+        AddPeopleFragmentPermissionsDispatcher.setupTakeCameraListenerWithCheck(this);
     }
 
     @Override
     public void setupView() {
         edtDateBirth.setOnClickListener(showDatePicker);
         edtDateJob.setOnClickListener(showDatePicker);
-        ivProfile.setOnClickListener(takeProfile);
-        fabPhoto.setOnClickListener(takePhoto);
+        setupTakeCameraListener();
+    }
+
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void setupTakeCameraListener() {
+
+        ivProfile.setImageResource(R.drawable.ic_profile_circle);
+        ivPhoto.setImageResource(R.drawable.ic_selfie);
+
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeProfileFromCamera();
+            }
+        });
+        fabPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhotoFromCamera();
+            }
+        });
+    }
+
+    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void checkCamera() {
+        AddPeopleFragmentPermissionsDispatcher.setupTakeCameraListenerWithCheck(this);
     }
 
     @Override
@@ -112,10 +139,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.app_bar_done:
-                // TODO You have to check each form then alert invalid form by form
-                // TODO User doesn't know which form that invalid.
-                // TODO e.g. I don't know that I have to add my profile photo in this form
+            case R.id.menu_add_person:
                 if (checkIsEmpty()) {
                     saveToRealm();
                 } else {
@@ -129,18 +153,31 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
+        if (profileS == null) {
+            ivPhoto.setImageResource(R.drawable.ic_profile_circle);
+        } else {
+            setProfile(profileS);
+        }
+
+        if (photoS == null) {
+            ivPhoto.setImageResource(R.drawable.ic_selfie);
+        } else {
+            setProfile(photoS);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // TODO What's about save the "uriProfile" and "uriPhoto" into outState?
+        outState.putString(PROFILE_URI, profileS);
+        outState.putString(PHOTO_URI, photoS);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        // TODO What's about restore the "uriProfile" and "uriPhoto" from savedInstanceState?
+        profileS = savedInstanceState.getString(PROFILE_URI);
+        photoS = savedInstanceState.getString(PROFILE_URI);
     }
 
     private boolean checkIsEmpty() {
@@ -151,27 +188,21 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                 edtJobDescription != null &&
                 edtGame != null &&
                 edtSmartPhone != null &&
-                uriProfile != null &&
-                uriPhoto != null) {
+                profileS != null &&
+                photoS != null) {
             return true;
         }
         return false;
     }
 
     private void saveToRealm() {
-        // Use local variable, not global
-        nameS = edtName.getText().toString();
-        dateBirthS = edtDateBirth.getText().toString();
-        dateJobS = edtDateJob.getText().toString();
-        jobS = edtJob.getText().toString();
-        jobDescriptionS = edtJobDescription.getText().toString();
-        gameS = edtGame.getText().toString();
-        smartPhoneS = edtSmartPhone.getText().toString();
-
-        // TODO Convert to String immediately when retrieve uri data from camera
-        // TODO So you don't need to store uri instance as global variable, use String (Handy to save instance state)
-        profileS = uriProfile.toString();
-        photoS = uriPhoto.toString();
+        String nameS = edtName.getText().toString();
+        String dateBirthS = edtDateBirth.getText().toString();
+        String dateJobS = edtDateJob.getText().toString();
+        String jobS = edtJob.getText().toString();
+        String jobDescriptionS = edtJobDescription.getText().toString();
+        String gameS = edtGame.getText().toString();
+        String smartPhoneS = edtSmartPhone.getText().toString();
 
         PeopleModel people = new PeopleModel();
         people.setName(nameS);
@@ -183,7 +214,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         people.setSmartPhone(smartPhoneS);
         people.setProfile(profileS);
         people.setPhoto(photoS);
-        getPresenter().saveIntoRealm(people, getActivity());
+        getPresenter().saveIntoRealm(people);
     }
 
 
@@ -194,100 +225,60 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
             final View vv = v;
             final Calendar calendar;
             calendar = Calendar.getInstance();
-            mYear = calendar.get(Calendar.YEAR);
-            mMonth = calendar.get(Calendar.MONTH);
-            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            final int mYear = calendar.get(Calendar.YEAR);
+            final int mMonth = calendar.get(Calendar.MONTH);
+            final int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            getDatePicker(vv, mYear, mMonth, mDay);
+        }
+    };
 
-            // TODO Should be as a method
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    // TODO This code are useless. DatePickerDialog didn't updated to selected date when recall it.
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, month);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    // TODO You can directly check the object type like this
-//                    if(vv == edtDateBirth) {
-                    if (vv.getId() == R.id.edt_birthday) {
-                        setDateBirth(year, month + 1, dayOfMonth);
-                    }
-
-                    // TODO You can directly check the object type like this
-//                    if(vv == edtDateJob) {
-                    if (vv.getId() == R.id.edt_startjob) {
-                        setDateJob(year, month + 1, dayOfMonth);
-                    }
+    private void getDatePicker(final View vv, int mYear, int mMonth, int mDay) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                if (vv.getId() == R.id.edt_birthday) {
+                    setDateBirth(year, month + 1, dayOfMonth);
                 }
-            }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        }
-    };
+                if (vv.getId() == R.id.edt_startjob) {
+                    setDateJob(year, month + 1, dayOfMonth);
+                }
+            }
+        }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
 
-    private View.OnClickListener takeProfile = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            // TODO imagFilename ==> imageFilename
-            String imagFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
-            File file = new File(Environment.getExternalStorageDirectory(),
-                    "DCIM/Camera/" + imagFilename);
-            uriProfile = Uri.fromFile(file);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
-            startActivityForResult(Intent.createChooser(intent,
-                    getString(R.string.take_with)), REQUEST_CAMERA_PROFILE);
-        }
-    };
+    private void takeProfileFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
+        File file = new File(Environment.getExternalStorageDirectory(),
+                "DCIM/Camera/" + imageFilename);
+        Uri uriProfile = Uri.fromFile(file);
+        profileS = uriProfile.toString();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
+        startActivityForResult(Intent.createChooser(intent,
+                getString(R.string.take_with)), REQUEST_CAMERA_PROFILE);
+    }
 
-    private View.OnClickListener takePhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-            // TODO Duplicated code
-            String imagFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
-            File file = new File(Environment.getExternalStorageDirectory(),
-                    "DCIM/Camera/" + imagFilename);
-            uriPhoto = Uri.fromFile(file);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
-            startActivityForResult(Intent.createChooser(intent,
-                    getString(R.string.take_with)), REQUEST_CAMERA_PHOTO);
-        }
-    };
+    private void takePhotoFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
+        File file = new File(Environment.getExternalStorageDirectory(),
+                "DCIM/Camera/" + imageFilename);
+        Uri uriPhoto = Uri.fromFile(file);
+        photoS = uriPhoto.toString();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
+        startActivityForResult(Intent.createChooser(intent,
+                getString(R.string.take_with)), REQUEST_CAMERA_PHOTO);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA_PROFILE && resultCode == RESULT_OK) {
-            getActivity().getContentResolver().notifyChange(uriProfile, null);
-            ContentResolver contentResolver = getActivity().getContentResolver();
-            try {
-                // TODO Do this operation in background tread if it possible (Big photo size, take more time)
-                // TODO Try Glide library
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriProfile);
-                ivProfile.setImageBitmap(bitmap);
-
-                Log.i("AddPeople", "Image: " + uriProfile.toString());
-
-            } catch (Exception e) {
-                // TODO User don't known what error going on. So you have to feedback to user also
-                Log.e("AddPeople", "" + e.getMessage());
-            }
+            setProfile(profileS);
         } else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
-            getActivity().getContentResolver().notifyChange(uriPhoto, null);
-            ContentResolver contentResolver = getActivity().getContentResolver();
-            try {
-                // TODO Do this operation in background tread if it possible (Big photo size, take more time)
-                // TODO Try Glide library
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriPhoto);
-                ivPhoto.setImageBitmap(bitmap);
-
-                Log.i("AddPeople", "Image: " + uriPhoto.toString());
-
-            } catch (Exception e) {
-                // TODO User don't known what error going on. So you have to feedback to user also
-                Log.e("AddPeople", "" + e.getMessage());
-            }
+            setPhoto(photoS);
         }
 
     }
@@ -316,8 +307,41 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
             finishView();
     }
 
+    @Override
+    public void startRealm() {
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void stopRealm() {
+        realm.close();
+    }
+
     private void finishView() {
         getActivity().finish();
     }
+
+    private void setProfile(String urlProfile) {
+        Glide.with(getActivity())
+                .load(urlProfile)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(ivProfile);
+    }
+
+    private void setPhoto(String urlPhoto) {
+        Glide.with(getActivity())
+                .load(urlPhoto)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(ivPhoto);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AddPeopleFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
 }
 
