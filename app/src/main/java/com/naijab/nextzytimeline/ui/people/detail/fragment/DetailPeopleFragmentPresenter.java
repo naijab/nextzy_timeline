@@ -7,8 +7,6 @@ import io.realm.Realm;
 public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeopleFragmentInterface.View>
         implements DetailPeopleFragmentInterface.Presenter {
 
-    Realm realm;
-
     public static DetailPeopleFragmentInterface.Presenter create() {
         return new DetailPeopleFragmentPresenter();
     }
@@ -16,18 +14,12 @@ public class DetailPeopleFragmentPresenter extends BaseMvpPresenter<DetailPeople
     @Override
     public void onViewStart() {
         super.onViewStart();
-        realm = Realm.getDefaultInstance();
+        getView().startRealm();
     }
 
     @Override
     public void onViewStop() {
         super.onViewStop();
-        realm.close();
+        getView().stopRealm();
     }
-
-//    @Override
-//    public void getPeopleDetail(int id) {
-//        PeopleModel item = PeopleManager.getInstance(realm).getPeople(id);
-//        getView().getPeopleByID(item);
-//    }
 }

@@ -1,6 +1,4 @@
-package com.naijab.nextzytimeline.ui.people.manager;
-
-import android.content.Context;
+package com.naijab.nextzytimeline.manager;
 
 import com.naijab.nextzytimeline.utility.StringUtility;
 
@@ -16,13 +14,9 @@ public class PeopleManager {
     private Realm realm = Realm.getDefaultInstance();
     private int id = 0;
 
-    public PeopleManager(Realm realm) {
-        this.realm = realm;
-    }
-
-    public static PeopleManager getInstance(Realm realm) {
+    public static PeopleManager getInstance() {
         if (peopleManager == null) {
-            peopleManager = new PeopleManager(realm);
+            peopleManager = new PeopleManager();
         }
         return peopleManager;
     }
@@ -69,7 +63,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onDeleteError(StringUtility.getDeleteError() + ": " +error.getMessage());
+                callBack.onDeleteError(StringUtility.getDeleteError() + ": " + error.getMessage());
             }
         });
 
@@ -132,7 +126,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getDeleteError() + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getDeleteError() + ": " + error.getMessage());
             }
         });
     }
@@ -174,7 +168,7 @@ public class PeopleManager {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                callBack.onSaveError(StringUtility.getSaveError() + ": " +error.getMessage());
+                callBack.onSaveError(StringUtility.getSaveError() + ": " + error.getMessage());
             }
         });
     }

@@ -97,10 +97,10 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.change_to_english:
+            case R.id.menu_english:
                 setLanguage("en");
                 return true;
-            case R.id.change_to_thai:
+            case R.id.menu_thai:
                 setLanguage("th");
                 return true;
         }

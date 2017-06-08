@@ -3,35 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title=""
         android:id="@+id/setting"
         android:icon="@drawable/ic_setting"
+        android:title=""
         app:showAsAction="always">
         <menu>
+
             <item
-                android:id="@+id/change_to_english"
+                android:id="@+id/menu_english"
                 android:title="@string/change_to_english"
                 app:showAsAction="never" />
+
             <item
-                android:id="@+id/change_to_thai"
+                android:id="@+id/menu_thai"
                 android:title="@string/change_to_thai"
                 app:showAsAction="never" />
         </menu>
     </item>
 
     <item
-        android:id="@+id/short_by_latest"
-        android:title="@string/short_by_latest"
+        android:id="@+id/sort_by_latest"
+        android:title="@string/sort_by_latest"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/short_by_name"
-        android:title="@string/short_by_name"
+        android:id="@+id/sort_by_name"
+        android:title="@string/sort_by_name"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/short_by_position"
-        android:title="@string/short_by_position"
+        android:id="@+id/sort_by_position"
+        android:title="@string/sort_by_position"
         app:showAsAction="never" />
 
 </menu>

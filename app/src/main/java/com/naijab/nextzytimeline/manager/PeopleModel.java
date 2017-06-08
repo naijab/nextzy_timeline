@@ -1,4 +1,4 @@
-package com.naijab.nextzytimeline.ui.people.manager;
+package com.naijab.nextzytimeline.manager;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class PeopleModel extends RealmObject implements Parcelable{
+public class PeopleModel extends RealmObject implements Parcelable {
 
     @PrimaryKey
     private int id;

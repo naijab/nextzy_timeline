@@ -12,8 +12,8 @@
     <string name="question_job">Job Position</string>
     <string name="question_birthday">Birthday</string>
     <string name="question_date_start_job">Date to start job</string>
-    <string name="question_game_like">What is game you like?</string>
-    <string name="question_why_choose_this_job">Why choose this job?</string>
+    <string name="question_game_like">Which game do you like?</string>
+    <string name="question_why_choose_this_job">Why do you decide to work as this job?</string>
     <string name="question_why_choose_this_phone">What\'s your smartphone?</string>
 
     <string name="save_success">Save Success</string>
@@ -23,15 +23,15 @@
 
     <string name="error_form">Please fill all</string>
     <string name="ok">OK</string>
-    <string name="cancle">Cancle</string>
+    <string name="cancel">Cancel</string>
 
-    <string name="you_are_want_to_delete">Sure, for Delete?</string>
+    <string name="you_are_want_to_delete">Do you want to delete?</string>
     <string name="credit_the_khaeng" translatable="false">The Khaeng</string>
     <string name="take_with">Take Photos With</string>
 
-    <string name="short_by_latest">short by latest</string>
-    <string name="short_by_name">short by name</string>
-    <string name="short_by_position">short by position</string>
+    <string name="sort_by_latest">Sort by latest</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_position">Sort by position</string>
 
     <string name="change_to_english">English</string>
     <string name="change_to_thai">Thai</string>

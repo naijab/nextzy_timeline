@@ -1,6 +1,5 @@
 package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +15,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleManager;
-import com.naijab.nextzytimeline.ui.people.manager.PeopleModel;
+import com.naijab.nextzytimeline.manager.PeopleManager;
+import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import io.realm.Realm;
 
@@ -27,8 +26,9 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     private int id;
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
     private ImageView profile, photo;
-    private static final String ID = "id";
     private Realm realm;
+    private static final String ID_PEOPLE = "id";
+    private static final String SAVE_ID = "saveID";
 
     public DetailPeopleFragment() {
         super();
@@ -37,7 +37,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     public static DetailPeopleFragment newInstance(int id) {
         DetailPeopleFragment fragment = new DetailPeopleFragment();
         Bundle args = new Bundle();
-        args.putInt("id", id);
+        args.putInt(ID_PEOPLE, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,8 +76,8 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void initialize() {
-        id = getArguments().getInt("id");
-        getRealm(id);
+        id = getArguments().getInt(ID_PEOPLE);
+        getPeopleFromRealm(id);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.app_bar_edit:
+            case R.id.menu_edit_person:
                 Log.i("Detail", "onOptionsItemSelected: app edit");
                 goToEditActivity();
                 return true;
@@ -98,24 +98,24 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-        int idSave = savedInstanceState.getInt("saveID", 0);
-        id = idSave;
-        getRealm(idSave);
+        getPeopleFromRealm(id);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("saveID", id);
+        outState.putInt(SAVE_ID, id);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        int idSave = savedInstanceState.getInt(SAVE_ID, 0);
+        id = idSave;
     }
 
-    private void getRealm(int id) {
-        PeopleModel people = PeopleManager.getInstance(realm).getPeople(id);
+    private void getPeopleFromRealm(int id) {
+        PeopleModel people = PeopleManager.getInstance().getPeople(id);
         getPeopleByID(people);
     }
 
@@ -132,8 +132,13 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     }
 
     @Override
-    public void updateRecycler() {
-        getRealm(id);
+    public void startRealm() {
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void stopRealm() {
+        realm.close();
     }
 
     private void setProfile(String urlProfile) {
@@ -152,10 +157,9 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
                 .into(photo);
     }
 
-
     private void goToEditActivity() {
         Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
-        intent.putExtra(ID, id);
+        intent.putExtra(ID_PEOPLE, id);
         startActivity(intent);
         getActivity().finish();
     }
