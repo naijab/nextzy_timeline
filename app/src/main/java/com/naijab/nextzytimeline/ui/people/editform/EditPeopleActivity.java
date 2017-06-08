@@ -16,6 +16,7 @@ public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterf
 
     private Toolbar toolbar;
     private int id;
+    private static final String ID_PEOPLE = "id";
 
     public EditPeopleActivity() {
         super();
@@ -39,7 +40,7 @@ public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterf
     @Override
     public void setupInstance() {
         Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
+        id = intent.getIntExtra(ID_PEOPLE, 0);
     }
 
     @Override
@@ -78,11 +79,13 @@ public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterf
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(ID_PEOPLE, id);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        id = savedInstanceState.getInt(ID_PEOPLE);
     }
 
 }
