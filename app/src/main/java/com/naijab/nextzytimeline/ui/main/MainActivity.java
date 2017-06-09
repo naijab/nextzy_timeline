@@ -11,23 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpActivity;
+import com.naijab.nextzytimeline.base.BaseActivity;
 import com.naijab.nextzytimeline.ui.main.home.HomeFragment;
 import com.naijab.nextzytimeline.ui.people.addform.AddPeopleActivity;
 
-public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presenter>
-        implements MainActivityInterface.View {
+public class MainActivity extends BaseActivity {
+
+    private static final String ENGLISH = "en";
+    private static final String THAI = "th";
+
     private Toolbar toolbar;
     private FloatingActionButton fab;
-
-    public MainActivity() {
-        super();
-    }
-
-    @Override
-    public MainActivityInterface.Presenter createPresenter() {
-        return MainActivityPresenter.create();
-    }
 
     @Override
     public int getLayoutView() {
@@ -49,6 +43,10 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
         setupToolbar();
         setupFragment();
         setupFab();
+    }
+
+    @Override
+    public void initialize() {
     }
 
     private void setupFragment() {
@@ -84,10 +82,6 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     }
 
     @Override
-    public void initialize() {
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home_people, menu);
@@ -98,10 +92,10 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_english:
-                setLanguage("en");
+                setLanguage(ENGLISH);
                 return true;
             case R.id.menu_thai:
-                setLanguage("th");
+                setLanguage(THAI);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,7 +110,6 @@ public class MainActivity extends BaseMvpActivity<MainActivityInterface.Presente
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
-
 
 }
 
