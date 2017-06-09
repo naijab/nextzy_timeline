@@ -9,25 +9,16 @@ import android.view.MenuInflater;
 import android.widget.TextView;
 
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpActivity;
+import com.naijab.nextzytimeline.base.BaseActivity;
 import com.naijab.nextzytimeline.ui.people.detail.fragment.DetailPeopleFragment;
 
-public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityInterface.Presenter>
-        implements DetailPeopleActivityInterface.View {
+public class DetailPeopleActivity extends BaseActivity {
+
+    private static final String ID_PEOPLE = "id";
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
     private int id;
-    private static final String ID_PEOPLE = "id";
-
-    public DetailPeopleActivity() {
-        super();
-    }
-
-    @Override
-    public DetailPeopleActivityInterface.Presenter createPresenter() {
-        return DetailPeopleActivityPresenter.create();
-    }
 
     @Override
     public int getLayoutView() {
