@@ -32,13 +32,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.realm.Realm;
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnPermissionDenied;
-import permissions.dispatcher.RuntimePermissions;
-
 import static android.app.Activity.RESULT_OK;
 
-@RuntimePermissions
 public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
         implements AddPeopleFragmentInterface.View {
 
@@ -52,6 +47,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public static final String PHOTO_URI = "photo_uri";
     public static final int REQUEST_CAMERA_PROFILE = 11;
     public static final int REQUEST_CAMERA_PHOTO = 12;
+    private int year, day, month;
 
     public AddPeopleFragment() {
         super();
@@ -101,7 +97,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         setupTakeCameraListener();
     }
 
-    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     void setupTakeCameraListener() {
 
         ivProfile.setImageResource(R.drawable.ic_profile_circle);
@@ -121,7 +116,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         });
     }
 
-    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
     void checkCamera() {
         AddPeopleFragmentPermissionsDispatcher.setupTakeCameraListenerWithCheck(this);
     }
@@ -225,22 +219,26 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
             final View vv = v;
             final Calendar calendar;
             calendar = Calendar.getInstance();
-            final int mYear = calendar.get(Calendar.YEAR);
-            final int mMonth = calendar.get(Calendar.MONTH);
-            final int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-            getDatePicker(vv, mYear, mMonth, mDay);
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+            getDatePicker(vv, year, month, day);
         }
     };
 
-    private void getDatePicker(final View vv, int mYear, int mMonth, int mDay) {
+    private void getDatePicker(final View vv,
+                               int mYear,
+                               int mMonth,
+                               int mDay) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            public void onDateSet(DatePicker view, int yearPick, int monthPick, int dayOfMonthPick) {
+
                 if (vv.getId() == R.id.edt_birthday) {
-                    setDateBirth(year, month + 1, dayOfMonth);
+                    setDateBirth(year, month + 1, dayOfMonthPick);
                 }
                 if (vv.getId() == R.id.edt_startjob) {
-                    setDateJob(year, month + 1, dayOfMonth);
+                    setDateJob(year, month + 1, dayOfMonthPick);
                 }
             }
         }, mYear, mMonth, mDay);
