@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 
 public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -24,14 +26,30 @@ public class PeopleViewHolder extends RecyclerView.ViewHolder implements View.On
         itemView.setOnClickListener(this);
     }
 
+    public void setImageProfile(String urlProfile) {
+        Glide.with(itemView.getContext())
+                .load(urlProfile)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(ivProfile);
+    }
+
+    public void setImagePhoto(String url) {
+        Glide.with(itemView.getContext())
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(ivPhoto);
+    }
+
     @Override
     public void onClick(View v) {
-        int position = getAdapterPosition();
-        clickListener.onClick(v, position);
+//        int position = getAdapterPosition();
+        clickListener.onClick(v);
     }
 
     public interface OnItemClickListener {
-        void onClick(View view, int position);
+        void onClick(View view);
     }
 
     public void setOnItemClickListener(final OnItemClickListener itemClickListener) {
