@@ -136,7 +136,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setupRecyclerViewToList() {
-        adapter = new PeopleAdapter(getActivity(), peopleItem);
+        adapter = new PeopleAdapter(peopleItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         onRecyclerItemClick();
@@ -145,15 +145,15 @@ public class HomeFragment extends BaseFragment {
     private void onRecyclerItemClick() {
         adapter.setOnClickPeopleItem(new PeopleAdapter.OnAdapterListener() {
             @Override
-            public void onClickAdapter(List<PeopleModel> item, int position) {
-                goToDetailActivity(item, position);
+            public void onClickAdapter(PeopleModel item) {
+                goToDetailActivity(item);
             }
         });
     }
 
-    public void goToDetailActivity(List<PeopleModel> item, int position) {
+    public void goToDetailActivity(PeopleModel item) {
         Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
-        intent.putExtra(ID, item.get(position).getId());
+        intent.putExtra(ID, item.getId());
         startActivity(intent);
     }
 
