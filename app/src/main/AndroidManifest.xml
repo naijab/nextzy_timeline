@@ -47,7 +47,7 @@
             android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.naijab.nextzytimeline.ui.main.MainActivity" />
+                android:value="com.naijab.nextzytimeline.ui.people.detail.DetailPeopleActivity" />
         </activity>
 
     </application>
