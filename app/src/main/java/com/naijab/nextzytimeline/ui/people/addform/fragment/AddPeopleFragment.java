@@ -29,13 +29,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import io.realm.Realm;
-
 import static android.app.Activity.RESULT_OK;
 
 public class AddPeopleFragment extends BaseFragment {
 
-    private Realm realm;
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
