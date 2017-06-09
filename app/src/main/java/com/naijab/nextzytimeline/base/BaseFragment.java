@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.naijab.nextzytimeline.base.exception.NotSetLayoutException;
+
 public abstract class BaseFragment extends Fragment{
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,9 @@ public abstract class BaseFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         int layoutResId = getLayoutView();
+        if (getLayoutView() == 0) {
+            throw new NotSetLayoutException();
+        }
         return inflater.inflate(layoutResId, container, false);
     }
 
