@@ -21,11 +21,19 @@
     <string name="you_are_want_to_delete">แน่ใจว่าต้องการลบ</string>
     <string name="ok">ตกลง</string>
     <string name="cancel">ยกเลิก</string>
-    <string name="error_form">กรุณากรอกให้ครบ</string>
     <string name="sort_by_name">เรียงตามชื่อ</string>
     <string name="sort_by_latest">เรียงตามล่าสุด</string>
     <string name="sort_by_position">เรียงตามตำแหน่ง</string>
     <string name="change_to_english">ภาษาอังกฤษ</string>
     <string name="change_to_thai">ภาษาไทย</string>
+    <string name="error_form_date_birth">กรุณากรอกวันเกิด</string>
+    <string name="error_form_date_job">กรุณากรอกวันเริ่มทำงานวันแรก</string>
+    <string name="error_form_game">กรุณากรอกเกมส์ที่ชอบ</string>
+    <string name="error_form_job">กรุณากรอกตำแหน่ง</string>
+    <string name="error_form_job_description">กรุณากรอกทำไมถึงเลือกทำตำแหน่งนี้</string>
+    <string name="error_form_name">กรุณากรอกชื่อและนามสกุล</string>
+    <string name="error_form_photo">กรุณาถ่ายรูป</string>
+    <string name="error_form_profile">กรุณาถ่ายรูปประจำตัว</string>
+    <string name="error_form_smartphone">กรุณากรอกยี่ห้อมือถือที่ใช้</string>
 
 </resources>

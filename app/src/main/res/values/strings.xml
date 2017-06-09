@@ -21,7 +21,16 @@
     <string name="delete_success">Delete Success</string>
     <string name="delete_error">Delete Error</string>
 
-    <string name="error_form">Please fill all</string>
+    <string name="error_form_name">Please fill name and lastname</string>
+    <string name="error_form_date_birth">Please fill birth date</string>
+    <string name="error_form_date_job">Please fill start job date</string>
+    <string name="error_form_job">Please fill job</string>
+    <string name="error_form_job_description">Please fill job description</string>
+    <string name="error_form_game">Please fill game</string>
+    <string name="error_form_smartphone">Please fill smartphone</string>
+    <string name="error_form_profile">Please take profile</string>
+    <string name="error_form_photo">Please take photo</string>
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
