@@ -23,6 +23,19 @@ public abstract class BaseActivity extends LocalizationActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        restoreView(savedInstanceState);
+    }
+
+    public void restoreView(Bundle savedInstanceState) {}
+
     public abstract int getLayoutView();
 
     public abstract void bindView();
