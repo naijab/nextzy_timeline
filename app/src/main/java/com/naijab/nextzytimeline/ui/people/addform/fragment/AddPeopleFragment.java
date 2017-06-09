@@ -33,15 +33,15 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddPeopleFragment extends BaseFragment {
 
-    private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
-    private ImageView ivProfile, ivPhoto;
-    private FloatingActionButton fabPhoto;
-    private String profile, photo;
-
     public static final String PROFILE_URI = "profile_uri";
     public static final String PHOTO_URI = "photo_uri";
     public static final int REQUEST_CAMERA_PROFILE = 11;
     public static final int REQUEST_CAMERA_PHOTO = 12;
+
+    private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
+    private ImageView ivProfile, ivPhoto;
+    private FloatingActionButton fabPhoto;
+    private String profile, photo;
 
     public AddPeopleFragment() {
         super();
