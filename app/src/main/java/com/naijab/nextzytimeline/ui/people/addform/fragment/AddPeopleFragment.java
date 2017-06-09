@@ -1,15 +1,13 @@
 package com.naijab.nextzytimeline.ui.people.addform.fragment;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,12 +15,12 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpFragment;
+import com.naijab.nextzytimeline.base.BaseFragment;
+import com.naijab.nextzytimeline.manager.PeopleManager;
 import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import java.io.File;
@@ -32,22 +30,21 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.realm.Realm;
+
 import static android.app.Activity.RESULT_OK;
 
-public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterface.Presenter>
-        implements AddPeopleFragmentInterface.View {
+public class AddPeopleFragment extends BaseFragment {
 
     private Realm realm;
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
     private FloatingActionButton fabPhoto;
-    private String profileS, photoS;
+    private String profile, photo;
 
     public static final String PROFILE_URI = "profile_uri";
     public static final String PHOTO_URI = "photo_uri";
     public static final int REQUEST_CAMERA_PROFILE = 11;
     public static final int REQUEST_CAMERA_PHOTO = 12;
-    private int year, day, month;
 
     public AddPeopleFragment() {
         super();
@@ -58,11 +55,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public AddPeopleFragmentInterface.Presenter createPresenter() {
-        return AddPeopleFragmentPresenter.create();
     }
 
     @Override
@@ -87,7 +79,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     @Override
     public void setupInstance() {
         setHasOptionsMenu(true);
-        AddPeopleFragmentPermissionsDispatcher.setupTakeCameraListenerWithCheck(this);
     }
 
     @Override
@@ -97,32 +88,25 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
         setupTakeCameraListener();
     }
 
-    void setupTakeCameraListener() {
-
+    private void setupTakeCameraListener() {
         ivProfile.setImageResource(R.drawable.ic_profile_circle);
         ivPhoto.setImageResource(R.drawable.ic_selfie);
-
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takeProfileFromCamera();
+                takeProfile();
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePhotoFromCamera();
+                takePhoto();
             }
         });
     }
 
-    void checkCamera() {
-        AddPeopleFragmentPermissionsDispatcher.setupTakeCameraListenerWithCheck(this);
-    }
-
     @Override
     public void initialize() {
-
     }
 
     @Override
@@ -134,12 +118,7 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_person:
-                if (checkIsEmpty()) {
-                    saveToRealm();
-                } else {
-                    showToast(getString(R.string.error_form));
-                }
-
+                checkForm();
                 return true;
         }
         return false;
@@ -147,138 +126,187 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
-        if (profileS == null) {
+        if (photo == null) {
             ivPhoto.setImageResource(R.drawable.ic_profile_circle);
         } else {
-            setProfile(profileS);
+            setProfile(photo);
         }
 
-        if (photoS == null) {
+        if (profile == null) {
             ivPhoto.setImageResource(R.drawable.ic_selfie);
         } else {
-            setProfile(photoS);
+            setProfile(profile);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(PROFILE_URI, profileS);
-        outState.putString(PHOTO_URI, photoS);
+        outState.putString(PROFILE_URI, photo);
+        outState.putString(PHOTO_URI, profile);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        profileS = savedInstanceState.getString(PROFILE_URI);
-        photoS = savedInstanceState.getString(PROFILE_URI);
+        photo = savedInstanceState.getString(PROFILE_URI);
+        profile = savedInstanceState.getString(PROFILE_URI);
     }
 
-    private boolean checkIsEmpty() {
-        if (edtName != null &&
-                edtDateBirth != null &&
-                edtDateJob != null &&
-                edtJob != null &&
-                edtJobDescription != null &&
-                edtGame != null &&
-                edtSmartPhone != null &&
-                profileS != null &&
-                photoS != null) {
+    private boolean isFormValidate(String name,
+                                String dateBirth,
+                                String dateJob,
+                                String job,
+                                String jobDescription,
+                                String game,
+                                String smartPhone) {
+
+        if (TextUtils.isEmpty(name)) {
+            showToast(getString(R.string.error_form_name));
+            return false;
+        } else if (TextUtils.isEmpty(dateBirth)) {
+            showToast(getString(R.string.error_form_date_birth));
+            return false;
+        } else if (TextUtils.isEmpty(dateJob)) {
+            showToast(getString(R.string.error_form_date_job));
+            return false;
+        } else if (TextUtils.isEmpty(job)) {
+            showToast(getString(R.string.error_form_job));
+            return false;
+        } else if (TextUtils.isEmpty(jobDescription)) {
+            showToast(getString(R.string.error_form_job_description));
+            return false;
+        } else if (TextUtils.isEmpty(game)) {
+            showToast(getString(R.string.error_form_game));
+            return false;
+        } else if (TextUtils.isEmpty(smartPhone)) {
+            showToast(getString(R.string.error_form_smartphone));
+            return false;
+        } else if (TextUtils.isEmpty(photo)) {
+            showToast(getString(R.string.error_form_photo));
+            return false;
+        } else if (TextUtils.isEmpty(profile)) {
+            showToast(getString(R.string.error_form_profile));
+            return false;
+        }else {
             return true;
         }
-        return false;
     }
 
-    private void saveToRealm() {
-        String nameS = edtName.getText().toString();
-        String dateBirthS = edtDateBirth.getText().toString();
-        String dateJobS = edtDateJob.getText().toString();
-        String jobS = edtJob.getText().toString();
-        String jobDescriptionS = edtJobDescription.getText().toString();
-        String gameS = edtGame.getText().toString();
-        String smartPhoneS = edtSmartPhone.getText().toString();
+    private void checkForm() {
 
-        PeopleModel people = new PeopleModel();
-        people.setName(nameS);
-        people.setJob(jobS);
-        people.setBirthDay(dateBirthS);
-        people.setJobStart(dateJobS);
-        people.setJobDescription(jobDescriptionS);
-        people.setGame(gameS);
-        people.setSmartPhone(smartPhoneS);
-        people.setProfile(profileS);
-        people.setPhoto(photoS);
-        getPresenter().saveIntoRealm(people);
-    }
+        String name = edtName.getText().toString();
+        String dateBirth = edtDateBirth.getText().toString();
+        String dateJob = edtDateJob.getText().toString();
+        String job = edtJob.getText().toString();
+        String jobDescription = edtJobDescription.getText().toString();
+        String game = edtGame.getText().toString();
+        String smartPhone = edtSmartPhone.getText().toString();
 
+        if (isFormValidate(name, dateBirth, dateJob, job, jobDescription, game, smartPhone)){
+            PeopleModel people = new PeopleModel();
+            people.setName(name);
+            people.setJob(job);
+            people.setBirthDay(dateBirth);
+            people.setJobStart(dateJob);
+            people.setJobDescription(jobDescription);
+            people.setGame(game);
+            people.setSmartPhone(smartPhone);
+            people.setProfile(photo);
+            people.setPhoto(profile);
 
-    private View.OnClickListener showDatePicker = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            hideKeyboard();
-            final View vv = v;
-            final Calendar calendar;
-            calendar = Calendar.getInstance();
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-            getDatePicker(vv, year, month, day);
+            saveIntoRealm(people);
         }
-    };
+    }
 
-    private void getDatePicker(final View vv,
-                               int mYear,
-                               int mMonth,
-                               int mDay) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+    private void saveIntoRealm(PeopleModel peopleModel) {
+        PeopleManager.getInstance().saveRealm(peopleModel, new PeopleManager.onSaveCallBack() {
             @Override
-            public void onDateSet(DatePicker view, int yearPick, int monthPick, int dayOfMonthPick) {
-
-                if (vv.getId() == R.id.edt_birthday) {
-                    setDateBirth(year, month + 1, dayOfMonthPick);
-                }
-                if (vv.getId() == R.id.edt_startjob) {
-                    setDateJob(year, month + 1, dayOfMonthPick);
-                }
+            public void onSaveSuccess(String message) {
+                showToast(message);
+                saveIsFinish(true);
             }
-        }, mYear, mMonth, mDay);
-        datePickerDialog.show();
+
+            @Override
+            public void onSaveError(String message) {
+                saveIsFinish(false);
+                showToast(message);
+            }
+        });
     }
 
-    private void takeProfileFromCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        String imageFilename = "IMG_Nextzy_Profile_" + timestamp + ".jpg";
-        File file = new File(Environment.getExternalStorageDirectory(),
-                "DCIM/Camera/" + imageFilename);
-        Uri uriProfile = Uri.fromFile(file);
-        profileS = uriProfile.toString();
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriProfile);
-        startActivityForResult(Intent.createChooser(intent,
-                getString(R.string.take_with)), REQUEST_CAMERA_PROFILE);
+    public void saveIsFinish(boolean isSuccess) {
+        if (isSuccess)
+            finishView();
     }
 
-    private void takePhotoFromCamera() {
+    private void finishView() {
+        getActivity().finish();
+    }
+
+    private void takeProfile() {
+        takePhotoFromCamera("IMG_Nextzy_Profile_", REQUEST_CAMERA_PROFILE);
+    }
+
+    private void takePhoto() {
+        takePhotoFromCamera("IMG_Nextzy_Photo_", REQUEST_CAMERA_PHOTO);
+    }
+
+    private void takePhotoFromCamera(String pathImage, int requestCode) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        String imageFilename = "IMG_Nextzy_Photo_" + timestamp + ".jpg";
+        String imageFilename = pathImage + timestamp + ".jpg";
         File file = new File(Environment.getExternalStorageDirectory(),
                 "DCIM/Camera/" + imageFilename);
         Uri uriPhoto = Uri.fromFile(file);
-        photoS = uriPhoto.toString();
+        if (requestCode == REQUEST_CAMERA_PROFILE){
+            profile = uriPhoto.toString();
+        }else {
+            photo = uriPhoto.toString();
+        }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto);
         startActivityForResult(Intent.createChooser(intent,
-                getString(R.string.take_with)), REQUEST_CAMERA_PHOTO);
+                getString(R.string.take_with)), requestCode);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA_PROFILE && resultCode == RESULT_OK) {
-            setProfile(profileS);
+            setProfile(profile);
         } else if (requestCode == REQUEST_CAMERA_PHOTO && resultCode == RESULT_OK) {
-            setPhoto(photoS);
+            setPhoto(photo);
         }
+    }
 
+    private View.OnClickListener showDatePicker = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            hideKeyboard();
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            getDatePicker(view, year, month, day);
+        }
+    };
+
+    private void getDatePicker(final View view,
+                               int mYear,
+                               int mMonth,
+                               int mDay) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int yearPick, int monthPick, int dayOfMonthPick) {
+                        if (view == edtDateBirth) {
+                            setDateBirth(yearPick, monthPick + 1, dayOfMonthPick);
+                        }
+                        if (view == edtDateJob) {
+                            setDateJob(yearPick, monthPick + 1, dayOfMonthPick);
+                        }
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
     private void setDateBirth(int year,
@@ -291,32 +319,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                             int monthOfYear,
                             int dayOfMonth) {
         edtDateJob.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
-    }
-
-    @Override
-    public void response(String message) {
-        Log.i("AddFragment", "Response: " + message);
-        Toast.makeText(getActivity(), " " + message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void saveIsFinish(boolean isSuccess) {
-        if (isSuccess)
-            finishView();
-    }
-
-    @Override
-    public void startRealm() {
-        realm = Realm.getDefaultInstance();
-    }
-
-    @Override
-    public void stopRealm() {
-        realm.close();
-    }
-
-    private void finishView() {
-        getActivity().finish();
     }
 
     private void setProfile(String urlProfile) {
@@ -333,12 +335,6 @@ public class AddPeopleFragment extends BaseMvpFragment<AddPeopleFragmentInterfac
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
                 .into(ivPhoto);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AddPeopleFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
 }
