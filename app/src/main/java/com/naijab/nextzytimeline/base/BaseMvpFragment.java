@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
+import com.naijab.nextzytimeline.base.exception.NotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
 
 public abstract class BaseMvpFragment<P extends BaseMvpInterface.Presenter>
@@ -37,7 +37,7 @@ public abstract class BaseMvpFragment<P extends BaseMvpInterface.Presenter>
       Bundle savedInstanceState) {
     int layoutResId = getLayoutView();
     if (getLayoutView() == 0) {
-      throw new MvpNotSetLayoutException();
+      throw new NotSetLayoutException();
     }
     return inflater.inflate(layoutResId, container, false);
   }

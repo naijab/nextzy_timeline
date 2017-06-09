@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
-import com.naijab.nextzytimeline.base.exception.MvpNotSetLayoutException;
+import com.naijab.nextzytimeline.base.exception.NotSetLayoutException;
 import com.naijab.nextzytimeline.base.exception.MvpPresenterNotCreateException;
 
 public abstract class BaseMvpActivity<P extends BaseMvpInterface.Presenter>
@@ -20,7 +20,7 @@ public abstract class BaseMvpActivity<P extends BaseMvpInterface.Presenter>
     presenter = createPresenter();
     presenter.attachView( this );
     int layoutResId = getLayoutView();
-    if( getLayoutView() == 0 ) throw new MvpNotSetLayoutException();
+    if( getLayoutView() == 0 ) throw new NotSetLayoutException();
     setContentView( layoutResId );
     bindView();
     setupInstance();
