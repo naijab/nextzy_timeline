@@ -23,7 +23,6 @@ import com.naijab.nextzytimeline.manager.PeopleModel;
 public class DetailPeopleFragment extends BaseFragment {
 
     private static final String ID_PEOPLE = "id";
-    private static final String SAVE_ID = "saveID";
 
     private int id;
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
@@ -62,6 +61,7 @@ public class DetailPeopleFragment extends BaseFragment {
     @Override
     public void setupInstance() {
         setHasOptionsMenu(true);
+        id = getArguments().getInt(ID_PEOPLE);
     }
 
     @Override
@@ -70,7 +70,6 @@ public class DetailPeopleFragment extends BaseFragment {
 
     @Override
     public void initialize() {
-        id = getArguments().getInt(ID_PEOPLE);
         getPeopleFromRealm(id);
     }
 
@@ -101,13 +100,13 @@ public class DetailPeopleFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(SAVE_ID, id);
+        outState.putInt(ID_PEOPLE, id);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        id =  savedInstanceState.getInt(SAVE_ID, 0);
+        id =  savedInstanceState.getInt(ID_PEOPLE, 0);
     }
 
     private void getPeopleFromRealm(int id) {
@@ -147,7 +146,7 @@ public class DetailPeopleFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
         intent.putExtra(ID_PEOPLE, id);
         startActivity(intent);
-        getActivity().finish();
+//        getActivity().finish();
     }
 
     private void showDeleteDialog(final int id) {
@@ -179,7 +178,5 @@ public class DetailPeopleFragment extends BaseFragment {
             }
         });
     }
-
-
 }
 

@@ -8,23 +8,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.naijab.nextzytimeline.R;
+import com.naijab.nextzytimeline.base.BaseActivity;
 import com.naijab.nextzytimeline.base.BaseMvpActivity;
 import com.naijab.nextzytimeline.ui.people.editform.fragment.EditPeopleFragment;
 
-public class EditPeopleActivity extends BaseMvpActivity<EditPeopleActivityInterface.Presenter>
-        implements EditPeopleActivityInterface.View {
+public class EditPeopleActivity extends BaseActivity{
+    private static final String ID_PEOPLE = "id";
 
     private Toolbar toolbar;
     private int id;
-    private static final String ID_PEOPLE = "id";
 
     public EditPeopleActivity() {
         super();
-    }
-
-    @Override
-    public EditPeopleActivityInterface.Presenter createPresenter() {
-        return EditPeopleActivityPresenter.create();
     }
 
     @Override
