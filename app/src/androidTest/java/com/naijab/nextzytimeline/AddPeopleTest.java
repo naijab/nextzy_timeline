@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.naijab.nextzytimeline.ui.people.addform.fragment.AddPeopleFragmentInterface;
-import com.naijab.nextzytimeline.ui.people.addform.fragment.AddPeopleFragmentPresenter;
 import com.naijab.nextzytimeline.manager.PeopleModel;
 
 import junit.framework.Assert;
