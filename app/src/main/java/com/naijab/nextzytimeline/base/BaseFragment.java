@@ -43,6 +43,8 @@ public abstract class BaseFragment extends Fragment{
         setupView();
         if (savedInstanceState == null) {
             initialize();
+        }else {
+            restoreView(savedInstanceState);
         }
     }
 
@@ -58,6 +60,9 @@ public abstract class BaseFragment extends Fragment{
     public abstract void setupView();
 
     public abstract void initialize();
+
+    public void restoreView(Bundle savedInstanceState) {
+    }
 
     public void hideKeyboard(){
         View view = this.getActivity().getCurrentFocus();
