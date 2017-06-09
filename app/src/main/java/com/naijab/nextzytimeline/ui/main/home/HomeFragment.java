@@ -73,6 +73,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initialize() {
         setupRealmByLatest();
+        setupRecyclerViewToList();
     }
 
     @Override
