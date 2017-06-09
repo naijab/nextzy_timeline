@@ -7,22 +7,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpActivity;
+import com.naijab.nextzytimeline.base.BaseActivity;
 import com.naijab.nextzytimeline.ui.people.addform.fragment.AddPeopleFragment;
 
-public class AddPeopleActivity extends BaseMvpActivity<AddPeopleActivityInterface.Presenter>
-        implements AddPeopleActivityInterface.View {
+public class AddPeopleActivity extends BaseActivity {
 
     private Toolbar toolbar;
-
-    public AddPeopleActivity() {
-        super();
-    }
-
-    @Override
-    public AddPeopleActivityInterface.Presenter createPresenter() {
-        return AddPeopleActivityPresenter.create();
-    }
 
     @Override
     public int getLayoutView() {
@@ -35,9 +25,7 @@ public class AddPeopleActivity extends BaseMvpActivity<AddPeopleActivityInterfac
     }
 
     @Override
-    public void setupInstance() {
-
-    }
+    public void setupInstance() {}
 
     @Override
     public void setupView() {
