@@ -83,5 +83,10 @@ public class DetailPeopleActivity extends BaseActivity {
         id = savedInstanceState.getInt(ID_PEOPLE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+    }
 }
 

@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseActivity;
-import com.naijab.nextzytimeline.base.BaseMvpActivity;
 import com.naijab.nextzytimeline.ui.people.editform.fragment.EditPeopleFragment;
 
 public class EditPeopleActivity extends BaseActivity{

@@ -1,5 +1,6 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -370,6 +371,9 @@ public class EditPeopleFragment extends BaseFragment {
     }
 
     private void finishView() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(ID_PEOPLE, id);
+        getActivity().setResult(Activity.RESULT_OK, returnIntent);
         getActivity().finish();
     }
 
