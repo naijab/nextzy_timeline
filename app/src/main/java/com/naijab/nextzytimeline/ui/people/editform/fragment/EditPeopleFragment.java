@@ -23,7 +23,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseFragment;
-import com.naijab.nextzytimeline.base.BaseMvpFragment;
 import com.naijab.nextzytimeline.manager.PeopleManager;
 import com.naijab.nextzytimeline.manager.PeopleModel;
 
