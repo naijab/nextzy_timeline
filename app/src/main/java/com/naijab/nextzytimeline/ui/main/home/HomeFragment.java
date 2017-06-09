@@ -59,14 +59,16 @@ public class HomeFragment extends BaseFragment {
     public void setupInstance() {
         setHasOptionsMenu(true);
         realm = PeopleManager.getInstance().getRealm();
-        realm.addChangeListener(new RealmChangeListener<Realm>() {
-            @Override
-            public void onChange(Realm element) {
-                setupRealmByLatest();
-                setupRecyclerViewToList();
-            }
-        });
+        realm.addChangeListener(realmChangeListener);
     }
+
+    private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
+        @Override
+        public void onChange(Realm element) {
+            setupRealmByLatest();
+            setupRecyclerViewToList();
+        }
+    };
 
     @Override
     public void setupView() {}
@@ -156,15 +158,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        realm.removeAllChangeListeners();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        realm.removeAllChangeListeners();
+    public void onDestroyView() {
+        super.onDestroyView();
+        realm.removeChangeListener(realmChangeListener);
     }
 }
 
