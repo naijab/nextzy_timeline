@@ -19,10 +19,13 @@ public abstract class BaseFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
+            onRestoreArguments(getArguments());
         } else {
             onRestoreInstanceState(savedInstanceState);
         }
     }
+
+    protected abstract void onRestoreArguments(Bundle arguments);
 
     @Nullable
     @Override
