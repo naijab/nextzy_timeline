@@ -127,16 +127,19 @@ public class EditPeopleFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.menu_add_person:
                 checkForm();
                 return true;
-            case R.id.home:
-                finishView();
+            case android.R.id.home:
+                getActivity().onBackPressed();
                 return true;
         }
         return false;
     }
+
+
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
@@ -160,6 +163,11 @@ public class EditPeopleFragment extends BaseFragment {
         outState.putInt(SAVE_ID, id);
         outState.putString(SAVE_PROFILE, profile);
         outState.putString(SAVE_PHOTO, photo);
+    }
+
+    @Override
+    protected void onRestoreArguments(Bundle arguments) {
+
     }
 
     @Override
@@ -376,7 +384,7 @@ public class EditPeopleFragment extends BaseFragment {
         getActivity().setResult(Activity.RESULT_OK, returnIntent);
         getActivity().finish();
     }
-
+    
     private View.OnClickListener deletePeopleListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

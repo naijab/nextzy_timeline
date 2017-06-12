@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
@@ -59,7 +60,7 @@ public class EditPeopleActivity extends BaseActivity{
 
     private void setupFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, EditPeopleFragment.newInstance(id))
+                .add(R.id.container, EditPeopleFragment.newInstance(id))
                 .commit();
     }
 
