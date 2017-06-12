@@ -12,8 +12,6 @@ import android.view.View;
 
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseFragment;
-import com.naijab.nextzytimeline.bus.RxBus;
-import com.naijab.nextzytimeline.event.IDPeopleEvent;
 import com.naijab.nextzytimeline.manager.PeopleManager;
 import com.naijab.nextzytimeline.manager.PeopleModel;
 import com.naijab.nextzytimeline.ui.main.home.adapter.PeopleAdapter;
@@ -107,11 +105,17 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
+        setupRealmByLatest();
+        setupRecyclerViewToList();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreArguments(Bundle arguments) {
     }
 
     @Override
@@ -157,6 +161,12 @@ public class HomeFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), DetailPeopleActivity.class);
         intent.putExtra(ID, item.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        realm.removeChangeListener(realmChangeListener);
     }
 }
 
