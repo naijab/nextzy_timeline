@@ -384,7 +384,7 @@ public class EditPeopleFragment extends BaseFragment {
         getActivity().setResult(Activity.RESULT_OK, returnIntent);
         getActivity().finish();
     }
-    
+
     private View.OnClickListener deletePeopleListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
