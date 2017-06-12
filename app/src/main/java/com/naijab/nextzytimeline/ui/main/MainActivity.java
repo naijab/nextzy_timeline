@@ -41,12 +41,12 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupView() {
         setupToolbar();
-        setupFragment();
         setupFab();
     }
 
     @Override
     public void initialize() {
+        setupFragment();
     }
 
     private void setupFragment() {
