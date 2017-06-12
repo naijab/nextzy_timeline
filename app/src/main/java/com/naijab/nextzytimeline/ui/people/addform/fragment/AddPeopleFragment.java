@@ -144,6 +144,11 @@ public class AddPeopleFragment extends BaseFragment {
     }
 
     @Override
+    protected void onRestoreArguments(Bundle arguments) {
+
+    }
+
+    @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         photo = savedInstanceState.getString(PROFILE_URI);
