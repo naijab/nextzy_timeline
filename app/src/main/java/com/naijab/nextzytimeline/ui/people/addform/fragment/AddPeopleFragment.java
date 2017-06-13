@@ -134,6 +134,9 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
             case R.id.menu_add_person:
                 checkForm();
                 return true;
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
         }
         return false;
     }
