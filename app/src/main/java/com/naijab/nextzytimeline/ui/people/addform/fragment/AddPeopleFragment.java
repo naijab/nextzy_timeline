@@ -361,7 +361,9 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
 
     @Override
     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-        showToast(getString(R.string.want_permission_ok));
+        if (permissionGrantedResponse == null) {
+            showToast(getString(R.string.want_permission_ok));
+        }
         setupTakeCameraListener();
     }
 
