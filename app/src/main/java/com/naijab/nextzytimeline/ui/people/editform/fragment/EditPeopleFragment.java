@@ -1,5 +1,6 @@
 package com.naijab.nextzytimeline.ui.people.editform.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -22,6 +23,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseFragment;
 import com.naijab.nextzytimeline.manager.PeopleManager;
@@ -35,7 +42,7 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
-public class EditPeopleFragment extends BaseFragment {
+public class EditPeopleFragment extends BaseFragment implements PermissionListener {
 
     private static final String ID_PEOPLE = "id";
     private static final String SAVE_ID = "saveID";
@@ -85,6 +92,14 @@ public class EditPeopleFragment extends BaseFragment {
 
     @Override
     public void setupInstance() {
+        checkPermission();
+    }
+
+    private void checkPermission() {
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(this)
+                .check();
     }
 
     @Override
@@ -420,5 +435,39 @@ public class EditPeopleFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+        showToast(getString(R.string.want_permission_ok));
+        setupTakeCameraListener();
+    }
+
+    @Override
+    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+        showToast(getString(R.string.want_permission_cancel));
+        checkPermission();
+    }
+
+    @Override
+    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, final PermissionToken permissionToken) {
+        new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.want_permission))
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        permissionToken.cancelPermissionRequest();
+                    }
+                })
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        permissionToken.continuePermissionRequest();
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override public void onDismiss(DialogInterface dialog) {
+                        permissionToken.cancelPermissionRequest();
+                    }
+                })
+                .show();
+    }
 }
 

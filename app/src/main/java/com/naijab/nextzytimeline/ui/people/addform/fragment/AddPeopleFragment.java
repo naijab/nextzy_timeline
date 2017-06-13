@@ -53,8 +53,6 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
     private FloatingActionButton fabPhoto;
     private String profile, photo;
 
-    private PermissionRequestErrorListener errorListener;
-
     public AddPeopleFragment() {
         super();
     }
@@ -95,7 +93,6 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
         Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(this)
-                .withErrorListener(errorListener)
                 .check();
     }
 
