@@ -35,5 +35,8 @@
     <string name="error_form_photo">กรุณาถ่ายรูป</string>
     <string name="error_form_profile">กรุณาถ่ายรูปประจำตัว</string>
     <string name="error_form_smartphone">กรุณากรอกยี่ห้อมือถือที่ใช้</string>
+    <string name="want_permission">เราต้องการอนุญาต Permission</string>
+    <string name="want_permission_cancel">กรุณาอนุญาต Permission</string>
+    <string name="want_permission_ok">ขอบคุณ</string>
 
 </resources>

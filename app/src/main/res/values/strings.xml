@@ -44,4 +44,8 @@
 
     <string name="change_to_english">English</string>
     <string name="change_to_thai">Thai</string>
+
+    <string name="want_permission">Please, Take enable permission</string>
+    <string name="want_permission_ok">Thank you, for enable permission</string>
+    <string name="want_permission_cancel">Sorry Please, Take enable permission</string>
 </resources>
