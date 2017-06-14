@@ -177,7 +177,7 @@
                 android:layout_below="@id/photo_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/default_padding_margin_extra_extra_large"
-                android:background="@drawable/btn_active_selector"
+                android:background="@drawable/selector_button"
                 android:drawablePadding="@dimen/default_padding_margin"
                 android:drawableStart="@drawable/ic_action_cancel"
                 android:padding="@dimen/default_padding_margin"
