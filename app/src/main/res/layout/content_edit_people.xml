@@ -23,7 +23,7 @@
                 android:layout_height="@dimen/form_profile"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
-                android:src="@color/colorAccent" />
+                android:src="@drawable/ic_profile_circle" />
 
             <LinearLayout
                 android:id="@+id/main_layout"
@@ -147,6 +147,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:background="@color/colorGreyDarker"
                 android:id="@+id/photo_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,33 +158,10 @@
                     android:id="@+id/iv_photo"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/form_photo_height"
-                    android:scaleType="centerCrop"
-                    android:src="@color/colorGreyDark" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_selfie" />
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/iv_photo"
-                    android:layout_alignRight="@id/iv_photo"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:src="@android:drawable/ic_menu_camera" />
             </RelativeLayout>
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/photo_layout"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/default_padding_margin_extra_extra_large"
-                android:background="@drawable/selector_button"
-                android:drawablePadding="@dimen/default_padding_margin"
-                android:drawableStart="@drawable/ic_action_cancel"
-                android:padding="@dimen/default_padding_margin"
-                android:text="@string/delete_people"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
