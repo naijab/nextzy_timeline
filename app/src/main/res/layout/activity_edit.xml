@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:paddingRight="@dimen/default_padding_margin"
-            app:layout_scrollFlags="scroll|enterAlways"
+            android:paddingStart="@dimen/default_padding_margin"
+            android:paddingEnd="@dimen/default_padding_margin"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <LinearLayout

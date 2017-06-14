@@ -1,13 +1,10 @@
 package com.naijab.nextzytimeline.ui.main.home.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.manager.PeopleModel;
 
@@ -17,11 +14,9 @@ public class PeopleAdapter
         extends RecyclerView.Adapter<PeopleViewHolder> {
 
     private List<PeopleModel> mList;
-    private Context context;
     private OnAdapterListener listener;
 
-    public PeopleAdapter(Context context, List<PeopleModel> item) {
-        this.context = context;
+    public PeopleAdapter(List<PeopleModel> item) {
         this.setResult(item);
     }
 
@@ -32,46 +27,23 @@ public class PeopleAdapter
 
     @Override
     public PeopleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.holder_people_home, parent, false);
-        PeopleViewHolder viewHolder = new PeopleViewHolder(view);
-        viewHolder.setOnItemClickListener(clickPeople(mList));
-        return viewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_people_home, parent, false);
+        return new PeopleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(PeopleViewHolder holder, int position) {
-        holder.tvName.setText(mList.get(position).getName());
-        holder.tvJob.setText(mList.get(position).getJob());
-        String urlPhoto = mList.get(position).getPhoto();
-        String urlProfile = mList.get(position).getProfile();
-        setImageProfile(holder, urlProfile);
-        setImagePhoto(holder, urlPhoto);
-    }
-
-    private void setImageProfile(PeopleViewHolder holder, String urlProfile) {
-        Glide.with(context)
-                .load(urlProfile)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .into(holder.ivProfile);
-    }
-
-    private void setImagePhoto(PeopleViewHolder holder, String url) {
-        Glide.with(context)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .into(holder.ivPhoto);
+        PeopleModel item = mList.get(position);
+        holder.tvName.setText(item.getName());
+        holder.tvJob.setText(item.getJob());
+        holder.setImageProfile(item.getProfile());
+        holder.setImagePhoto(item.getPhoto());
+        holder.setOnItemClickListener(clickPeople(item));
     }
 
     @Override
     public int getItemCount() {
-        return this.mList.size();
-    }
-
-    public void clear() {
-        mList.clear();
-        notifyDataSetChanged();
+        return mList != null ? mList.size() : 0;
     }
 
     public void setOnClickPeopleItem(OnAdapterListener listener) {
@@ -79,15 +51,15 @@ public class PeopleAdapter
     }
 
     public interface OnAdapterListener {
-        void onClickAdapter(List<PeopleModel> item, int position);
+        void onClickAdapter(PeopleModel item);
     }
 
-    private PeopleViewHolder.OnItemClickListener clickPeople(final List<PeopleModel> item) {
+    private PeopleViewHolder.OnItemClickListener clickPeople(final PeopleModel item) {
         return new PeopleViewHolder.OnItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view) {
                 if (listener != null) {
-                    listener.onClickAdapter(item, position);
+                    listener.onClickAdapter(item);
                 }
             }
         };

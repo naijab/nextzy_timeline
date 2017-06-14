@@ -1,7 +1,9 @@
 package com.naijab.nextzytimeline.ui.people.detail.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,22 +15,24 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpFragment;
-import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
+import com.naijab.nextzytimeline.base.BaseFragment;
 import com.naijab.nextzytimeline.manager.PeopleManager;
 import com.naijab.nextzytimeline.manager.PeopleModel;
+import com.naijab.nextzytimeline.ui.people.editform.EditPeopleActivity;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 
-public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentInterface.Presenter>
-        implements DetailPeopleFragmentInterface.View {
+public class DetailPeopleFragment extends BaseFragment {
 
+    private static final String ID_PEOPLE = "id";
+    private static final String SAVE_ID = "saveID";
+    public static final int REQUEST_ID_PEOPLE = 19;
+
+    private Realm realm;
     private int id;
     private TextView nameAndLastName, job, dateBirth, dateJob, jobDescription, game, smartPhone;
     private ImageView profile, photo;
-    private Realm realm;
-    private static final String ID_PEOPLE = "id";
-    private static final String SAVE_ID = "saveID";
 
     public DetailPeopleFragment() {
         super();
@@ -43,8 +47,9 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     }
 
     @Override
-    public DetailPeopleFragmentInterface.Presenter createPresenter() {
-        return DetailPeopleFragmentPresenter.create();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e("Check", "onCreate : " + (savedInstanceState == null));
     }
 
     @Override
@@ -68,7 +73,17 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public void setupInstance() {
         setHasOptionsMenu(true);
+        realm = PeopleManager.getInstance().getRealm();
+        realm.addChangeListener(realmChangeListener);
     }
+
+    private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
+        @Override
+        public void onChange(Realm element) {
+            Log.i("DetailFragment", "getPeople in Realm Change listener");
+            getPeopleFromRealm(id);
+        }
+    };
 
     @Override
     public void setupView() {
@@ -76,7 +91,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void initialize() {
-        id = getArguments().getInt(ID_PEOPLE);
+        Log.i("DetailFragment", "getPeople in Realm initialize: " + id);
         getPeopleFromRealm(id);
     }
 
@@ -88,9 +103,11 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_edit_person:
-                Log.i("Detail", "onOptionsItemSelected: app edit");
+            case R.id.menu_edit_people:
                 goToEditActivity();
+                return true;
+            case android.R.id.home:
+                getActivity().onBackPressed();
                 return true;
         }
         return false;
@@ -98,6 +115,7 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
 
     @Override
     public void restoreView(Bundle savedInstanceState) {
+        Log.i("DetailFragment", "getPeople in restore view");
         getPeopleFromRealm(id);
     }
 
@@ -108,13 +126,21 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     }
 
     @Override
+    protected void onRestoreArguments(Bundle arguments) {
+        Log.i("DetailFragment", "getPeople in onRestoreArguments: ");
+        id = arguments.getInt(ID_PEOPLE);
+    }
+
+    @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        int idSave = savedInstanceState.getInt(SAVE_ID, 0);
-        id = idSave;
+        Log.i("DetailFragment", "getPeople in onRestoreInstanceState: ");
+
+        id = savedInstanceState.getInt(SAVE_ID, 0);
     }
 
     private void getPeopleFromRealm(int id) {
+        Log.i("DetailFragment", "getPeopleFromRealm: " + id);
         PeopleModel people = PeopleManager.getInstance().getPeople(id);
         getPeopleByID(people);
     }
@@ -129,16 +155,6 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
         smartPhone.setText(people.getSmartPhone());
         setProfile(people.getProfile());
         setPhoto(people.getPhoto());
-    }
-
-    @Override
-    public void startRealm() {
-        realm = Realm.getDefaultInstance();
-    }
-
-    @Override
-    public void stopRealm() {
-        realm.close();
     }
 
     private void setProfile(String urlProfile) {
@@ -160,9 +176,27 @@ public class DetailPeopleFragment extends BaseMvpFragment<DetailPeopleFragmentIn
     private void goToEditActivity() {
         Intent intent = new Intent(getActivity(), EditPeopleActivity.class);
         intent.putExtra(ID_PEOPLE, id);
-        startActivity(intent);
-        getActivity().finish();
+        startActivityForResult(intent, REQUEST_ID_PEOPLE);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("ID", "onActivityResult: ");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ID_PEOPLE && resultCode == Activity.RESULT_OK){
+            Log.e("ID", "Equal");
+            id = data.getIntExtra(ID_PEOPLE, 0);
+            getPeopleFromRealm(id);
+        }else {
+            Log.e("ID", "Not Equal");
+        }
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        realm.removeChangeListener(realmChangeListener);
+    }
 }
 

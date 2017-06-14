@@ -5,21 +5,15 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpActivity;
+import com.naijab.nextzytimeline.base.BaseActivity;
 import com.naijab.nextzytimeline.ui.main.MainActivity;
 
-public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityInterface.Presenter>
-        implements SplashScreenActivityInterface.View {
+public class SplashScreenActivity extends BaseActivity {
 
     private Handler handler;
     private Runnable runnable;
     private long delayTime;
     private long time = 1000L;
-
-    @Override
-    public SplashScreenActivityInterface.Presenter createPresenter() {
-        return SplashScreenActivityPresenter.create();
-    }
 
     @Override
     public int getLayoutView() {
@@ -74,10 +68,13 @@ public class SplashScreenActivity extends BaseMvpActivity<SplashScreenActivityIn
         time = System.currentTimeMillis();
     }
 
-    public void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
         time = delayTime - (System.currentTimeMillis() - time);
     }
+
 }
+
 

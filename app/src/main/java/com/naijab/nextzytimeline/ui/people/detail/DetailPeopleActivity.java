@@ -1,33 +1,29 @@
 package com.naijab.nextzytimeline.ui.people.detail;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.TextView;
 
 import com.naijab.nextzytimeline.R;
-import com.naijab.nextzytimeline.base.BaseMvpActivity;
+import com.naijab.nextzytimeline.base.BaseActivity;
 import com.naijab.nextzytimeline.ui.people.detail.fragment.DetailPeopleFragment;
 
-public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityInterface.Presenter>
-        implements DetailPeopleActivityInterface.View {
+public class DetailPeopleActivity extends BaseActivity {
+
+    private static final String ID_PEOPLE = "id";
+    private static final String TAG_FRAGMENT_DETAIL = "DetailFragment";
+    public static final int REQUEST_ID_PEOPLE = 19;
 
     private Toolbar toolbar;
     private TextView toolbarTitle;
     private int id;
-    private static final String ID_PEOPLE = "id";
-
-    public DetailPeopleActivity() {
-        super();
-    }
-
-    @Override
-    public DetailPeopleActivityInterface.Presenter createPresenter() {
-        return DetailPeopleActivityPresenter.create();
-    }
 
     @Override
     public int getLayoutView() {
@@ -68,8 +64,9 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
     }
 
     private void setupFragment() {
+        Log.i("DetailActivity", "Fragment born ");
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, DetailPeopleFragment.newInstance(id))
+                .add(R.id.container, DetailPeopleFragment.newInstance(id), TAG_FRAGMENT_DETAIL)
                 .commit();
     }
 
@@ -92,5 +89,18 @@ public class DetailPeopleActivity extends BaseMvpActivity<DetailPeopleActivityIn
         id = savedInstanceState.getInt(ID_PEOPLE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            if (requestCode == REQUEST_ID_PEOPLE && resultCode == RESULT_OK) {
+                id = data.getIntExtra(ID_PEOPLE, 0);
+                Log.i("IDActivity", "onActivityResult: " + id);
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_DETAIL);
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }
 

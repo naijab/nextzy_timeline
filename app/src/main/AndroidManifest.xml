@@ -29,25 +29,16 @@
         <activity
             android:name=".ui.people.addform.AddPeopleActivity"
             android:label="@string/add_people">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.naijab.nextzytimeline.ui.main.MainActivity" />
         </activity>
 
         <activity
             android:name=".ui.people.detail.DetailPeopleActivity"
             android:label="">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.naijab.nextzytimeline.ui.main.MainActivity" />
         </activity>
 
         <activity
             android:name=".ui.people.editform.EditPeopleActivity"
             android:label="">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.naijab.nextzytimeline.ui.main.MainActivity" />
         </activity>
 
     </application>
