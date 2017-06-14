@@ -49,7 +49,6 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
 
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
-    private FloatingActionButton fab;
     private String profile, photo;
 
     public AddPeopleFragment() {
@@ -79,7 +78,6 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
         edtSmartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
         ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
         ivProfile = (ImageView) view.findViewById(R.id.iv_profile);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
@@ -114,12 +112,6 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
             @Override
             public void onClick(View v) {
                 takePhoto();
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkForm();
             }
         });
     }

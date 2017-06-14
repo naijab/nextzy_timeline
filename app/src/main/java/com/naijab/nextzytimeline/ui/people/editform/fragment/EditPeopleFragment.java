@@ -85,7 +85,6 @@ public class EditPeopleFragment extends BaseFragment implements PermissionListen
         edtSmartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
         ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
         ivProfile = (ImageView) view.findViewById(R.id.iv_profile);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
@@ -120,12 +119,6 @@ public class EditPeopleFragment extends BaseFragment implements PermissionListen
             @Override
             public void onClick(View v) {
                 takePhoto();
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkForm();
             }
         });
     }
