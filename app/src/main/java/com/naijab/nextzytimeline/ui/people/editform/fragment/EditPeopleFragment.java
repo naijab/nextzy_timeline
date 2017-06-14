@@ -53,8 +53,7 @@ public class EditPeopleFragment extends BaseFragment implements PermissionListen
 
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
-    private FloatingActionButton fabPhoto;
-    private Button btnDelete;
+    private FloatingActionButton fab;
     private int id;
     private String profile, photo;
 
@@ -86,8 +85,7 @@ public class EditPeopleFragment extends BaseFragment implements PermissionListen
         edtSmartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
         ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
         ivProfile = (ImageView) view.findViewById(R.id.iv_profile);
-        fabPhoto = (FloatingActionButton) view.findViewById(R.id.fab);
-        btnDelete = (Button) view.findViewById(R.id.btn_delete);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
@@ -106,24 +104,28 @@ public class EditPeopleFragment extends BaseFragment implements PermissionListen
     public void setupView() {
         edtDateBirth.setOnClickListener(showDatePicker);
         edtDateJob.setOnClickListener(showDatePicker);
-        btnDelete.setOnClickListener(deletePeopleListener);
         setupTakeCameraListener();
     }
 
     private void setupTakeCameraListener() {
         ivProfile.setImageResource(R.drawable.ic_profile_circle);
         ivPhoto.setImageResource(R.drawable.ic_selfie);
-
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takeProfile();
             }
         });
-        fabPhoto.setOnClickListener(new View.OnClickListener() {
+        ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePhoto();
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkForm();
             }
         });
     }

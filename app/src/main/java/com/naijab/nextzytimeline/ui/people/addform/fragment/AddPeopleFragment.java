@@ -26,7 +26,6 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.naijab.nextzytimeline.R;
 import com.naijab.nextzytimeline.base.BaseFragment;
@@ -50,7 +49,7 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
 
     private EditText edtName, edtJob, edtDateBirth, edtDateJob, edtJobDescription, edtGame, edtSmartPhone;
     private ImageView ivProfile, ivPhoto;
-    private FloatingActionButton fabPhoto;
+    private FloatingActionButton fab;
     private String profile, photo;
 
     public AddPeopleFragment() {
@@ -80,7 +79,7 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
         edtSmartPhone = (EditText) view.findViewById(R.id.edt_your_phone);
         ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
         ivProfile = (ImageView) view.findViewById(R.id.iv_profile);
-        fabPhoto = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
     }
 
     @Override
@@ -111,10 +110,16 @@ public class AddPeopleFragment extends BaseFragment implements PermissionListene
                 takeProfile();
             }
         });
-        fabPhoto.setOnClickListener(new View.OnClickListener() {
+        ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePhoto();
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkForm();
             }
         });
     }
